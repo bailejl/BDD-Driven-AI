@@ -8,25 +8,31 @@ const sectionNameMap = {
     "financial information": FormSections.Financial,
 }
 
-Given(/^"(.*)" fills out the form with their information$/, (userNameAlias) => {
+Given(/^"(.*)" fills out the form with their information$/, (userNameAlias:string) => {
     const userData = dataManager.getData(userNameAlias);
     creditFormPage.open();
     creditFormPage.filloutForm(userData);
 });
 
-Given(/^they navigate the "(.*)" section of the form$/, (formSectionName) => {
+Given(
+  /^they navigate the "(.*)" section of the form$/,
+  (formSectionName: string) => {
     creditFormPage.goToSection(sectionNameMap[formSectionName]);
-});
+  }
+);
 
 Given('they see no error messages in the form section', () => {
     expect(creditFormPage.txtPageHelperTexts).not.toExist();
 });
 
-Given(/^"(.*)" fills out the personal information section of the form$/, (userNameAlias) => {
+Given(
+  /^"(.*)" fills out the personal information section of the form$/,
+  (userNameAlias: string) => {
     const userData = dataManager.getData(userNameAlias);
     creditFormPage.open();
     creditFormPage.filloutPersonalSection(userData);
-});
+  }
+);
 
 When('they submit their form', () => {
     creditFormPage.submitForm();
@@ -36,7 +42,7 @@ When('they attept to continue to next section', () => {
     creditFormPage.btnSubmit.click();
 });
 
-Then(/^they see '(.*)' name error messages$/, (errorName) => {
+Then(/^they see '(.*)' name error messages$/, (errorName: string) => {
     const msgMap = dataManager.getNonCachedData(errorName)
     expect(creditFormPage.txtFirstNameHelperText).toHaveText(msgMap['firstName']);
     expect(creditFormPage.txtMiddleInitialHelperText).toHaveText(msgMap['middleInitial']);
