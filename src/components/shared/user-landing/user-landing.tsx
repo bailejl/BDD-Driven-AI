@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import React from 'react';
 import {
   BrowserRouter as Router,
@@ -9,8 +9,8 @@ import {
   useRouteMatch,
   useLocation,
 } from "react-router-dom";
-import CreditFormIntro from '../credit-form-intro/credit-form-intro';
-import FormWizardContext from '../form-wizard-context/form-wizard-context';
+import CreditFormIntro from '../../forms/credit-form-intro/credit-form-intro';
+import FormWizardContext from '../../forms/form-wizard-context/form-wizard-context';
 import UserAppStatus from '../user-app-status/user-app-status';
 
 import './user-landing.module.scss';

@@ -2,7 +2,7 @@
 const { generate } = require('multiple-cucumber-html-reporter');
 const { removeSync } = require('fs-extra');
 const cucumberJson = require('wdio-cucumberjs-json-reporter').default;
-const browserLogs = require('../tools/testing/browser-logs');
+const browserLogs = require('./tools/testing/browser-logs');
 
 import dataManager from './data/data-manager';
 

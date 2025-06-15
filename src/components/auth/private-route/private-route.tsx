@@ -12,7 +12,7 @@ import {
 
 import './private-route.module.scss';
 
-import {useAuth} from '@first-bank-of-change/fake-security';
+import {useAuth} from '@services';
 
 /* eslint-disable-next-line */
 export interface PrivateRouteProps {

@@ -1,5 +1,5 @@
-import { useFormData, useDB } from '@first-bank-of-change/data';
-import { Typography } from '@material-ui/core';
+import { useFormData, useDB } from '@services';
+import { Typography } from '@mui/material';
 import React from 'react';
 
 import './credit-form-complete.module.scss';

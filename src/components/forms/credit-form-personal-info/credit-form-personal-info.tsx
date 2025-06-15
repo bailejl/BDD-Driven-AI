@@ -1,11 +1,9 @@
-import { useFormData } from '@first-bank-of-change/data';
-import { Button, TextField, Typography } from '@material-ui/core';
+import { useFormData } from '@services';
+import { Button, TextField, Typography } from '@mui/material';
 import React from 'react';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -97,26 +95,24 @@ export function CreditFormPersonalInfo(props: CreditFormPersonalInfoProps) {
           helperText={errors.lastName?.message}
           value={cachedData.lastName}
         />
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <KeyboardDatePicker
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DatePicker
             name="dateOfBirth"
-            style={{ display: 'flex', margin: '0 0 25px 0' }}
-            disableToolbar
-            variant="inline"
+            sx={{ display: 'flex', margin: '0 0 25px 0' }}
             format="MM/dd/yyyy"
-            margin="normal"
-            id="date-of-birth"
             label="Date of Birth"
             value={cachedData.dateOfBirth || null}
             onChange={handleDateChange}
-            KeyboardButtonProps={{
-              'aria-label': 'change date',
+            slotProps={{
+              textField: {
+                required: true,
+                id: "date-of-birth",
+                error: errors.dateOfBirth?.message !== undefined,
+                helperText: errors.dateOfBirth?.message
+              }
             }}
-            required
-            error={errors.dateOfBirth?.message !== undefined}
-            helperText={errors.dateOfBirth?.message}
           />
-        </MuiPickersUtilsProvider>
+        </LocalizationProvider>
         <TextField name="ssn" required id="ssn" label="SSN"
           style={{ display: 'flex', margin: '0 0 25px 0' }}
           inputRef={register({ required: true })}

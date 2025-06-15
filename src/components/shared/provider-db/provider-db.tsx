@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useProviderDB, dbContext } from '@first-bank-of-change/data';
+import { useProviderDB, dbContext } from '@services';
 
 // Emulates a DB for the simple app.  This makes it available to the 
 // children elements of this element.

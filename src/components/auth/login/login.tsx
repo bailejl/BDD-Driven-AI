@@ -7,10 +7,10 @@ import {
   useLocation
 } from "react-router-dom";
 
-import { useAuth } from '@first-bank-of-change/fake-security';
-import { Box, TextField, Typography } from '@material-ui/core';
+import { useAuth } from '@services';
+import { Box, TextField, Typography } from '@mui/material';
 import classes from './login.module.scss';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { useState } from 'react';
 
 /* eslint-disable-next-line */

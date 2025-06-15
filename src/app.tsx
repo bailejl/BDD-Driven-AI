@@ -18,7 +18,7 @@ import {
   UserLanding,
   SideNav,
   ProviderDB,
-} from '@first-bank-of-change/ui';
+} from '@components';
 
 /*
 * Main app layout with components enulating a remote DB/API and auth server.
