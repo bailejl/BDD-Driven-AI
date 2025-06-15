@@ -1,5 +1,11 @@
-// Import the module
-const config = require('./wdio.conf.ts').config;
+// Import the module using ES6 import
+import { config } from './wdio.conf.js';
+
+// Override for headless mode - use local webdriver instead of docker selenium
+delete config.hostname;
+delete config.port;
+delete config.path;
+config.services = [];
 
 config.capabilities[0]['goog:chromeOptions'] = {
     args: [
@@ -13,4 +19,4 @@ config.capabilities[0]['goog:chromeOptions'] = {
     ],
 }
 
-exports.config = config;
+export { config };

@@ -1,8 +1,11 @@
 // Import the module
-const { generate } = require('multiple-cucumber-html-reporter');
-const { removeSync } = require('fs-extra');
-const cucumberJson = require('wdio-cucumberjs-json-reporter').default;
-const browserLogs = require('./tools/testing/browser-logs');
+import { generate } from 'multiple-cucumber-html-reporter';
+import * as fs from 'fs-extra';
+import cucumberJson from 'wdio-cucumberjs-json-reporter';
+// Use createRequire for CommonJS modules
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const browserLogs = require('./tools/testing/browser-logs.js');
 
 import dataManager from './data/data-manager';
 
@@ -52,7 +55,7 @@ function logConsoleOutput(suppressErrors: boolean) {
 }
 
 
-exports.config = {
+export const config = {
     //
     // ====================
     // Runner Configuration
@@ -74,7 +77,7 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        './features/**/*.feature'
+        './*.feature'
     ],
     // Patterns to exclude.
     exclude: [
@@ -166,7 +169,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'http://localhost',
+    baseUrl: 'http://localhost:4200',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -252,7 +255,7 @@ exports.config = {
      */
     onPrepare: function (_config: any, _capabilities: any) {
         // Remove the `.tmp/` folder that holds the json and report files
-        removeSync('.tmp/')
+        fs.remove('.tmp/')
     },
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
