@@ -1,28 +1,60 @@
 {
   "implicitDependencies": {
     "workspace.json": "*",
-    "package.json": { "dependencies": "*", "devDependencies": "*" },
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
     "nx.json": "*"
   },
-  "affected": { "defaultBase": "master" },
+  "affected": {
+    "defaultBase": "master"
+  },
   "npmScope": "first-bank-of-change",
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
+      "options": {}
     }
   },
   "projects": {
-    "declarative-gherkin": { "tags": [], "implicitDependencies": ["ui"] },
+    "declarative-gherkin": {
+      "tags": [],
+      "implicitDependencies": [
+        "ui"
+      ]
+    },
     "declarative-gherkin-e2e": {
       "tags": [],
-      "implicitDependencies": ["declarative-gherkin"]
+      "implicitDependencies": [
+        "declarative-gherkin"
+      ]
     },
-    "ui": { "tags": [] },
-    "fake-security": { "tags": [] },
-    "data": { "tags": [] }
+    "ui": {
+      "tags": []
+    },
+    "fake-security": {
+      "tags": []
+    },
+    "data": {
+      "tags": []
+    }
+  },
+  "targetDefaults": {
+    "build": {
+      "cache": true
+    },
+    "lint": {
+      "cache": true
+    },
+    "test": {
+      "cache": true
+    },
+    "e2e": {
+      "cache": true
+    }
   }
 }
