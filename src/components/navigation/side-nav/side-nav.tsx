@@ -1,7 +1,7 @@
 import { Divider, Link, List, ListItem, ListItemText, Paper } from '@mui/material';
 import React from 'react';
 import { Link as RouterLink, LinkProps as RouterLinkProps, useLocation } from 'react-router-dom';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 
 import './side-nav.module.scss';
 import { useAuth } from '@services';

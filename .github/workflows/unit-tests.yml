@@ -15,18 +15,16 @@ jobs:
     steps:
       # Checks out a copy of your repository on the ubuntu-latest machine
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '24'
+          cache: 'npm'
 
-      - name: Install depdendencies
-        run: cd first-bank-of-change && npm ci
-
-      - name: Install Narwhal/NX
-        run: cd first-bank-of-change && npm install -g nx
+      - name: Install dependencies
+        run: npm ci
 
       # Runs the unit test action
       - name: Run Unit Tests

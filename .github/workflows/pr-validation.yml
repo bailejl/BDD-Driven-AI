@@ -48,10 +48,9 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        cache-dependency-path: 'package-lock.json'
         
     - name: Install dependencies
-      working-directory: ./first-bank-of-change
       run: npm ci
       
     - name: Validate upgrade branch requirements
@@ -97,7 +96,7 @@ jobs:
           
           # Check if main branch has Nx updates by looking for package.json changes
           git fetch origin main
-          NX_VERSION=$(git show origin/main:first-bank-of-change/package.json | jq -r '.devDependencies["@nrwl/cli"] // .devDependencies["nx"] // "12.3.6"')
+          NX_VERSION=$(git show origin/main:package.json | jq -r '.devDependencies["@nrwl/cli"] // .devDependencies["nx"] // "not-found"')
           
           if [[ "$NX_VERSION" =~ ^12\. ]]; then
             echo "❌ React upgrade requires Nx migration to be completed first"
@@ -121,26 +120,21 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        cache-dependency-path: 'package-lock.json'
         
     - name: Install dependencies
-      working-directory: ./first-bank-of-change
       run: npm ci
       
     - name: Run unit tests
-      working-directory: ./first-bank-of-change
       run: npm run test
       
     - name: Run linting
-      working-directory: ./first-bank-of-change
       run: npm run lint
       
     - name: Run build
-      working-directory: ./first-bank-of-change
       run: npm run build
       
     - name: Check for critical security vulnerabilities
-      working-directory: ./first-bank-of-change
       run: |
         # Allow moderate/low vulnerabilities but fail on high/critical
         npm audit --audit-level=high || {
@@ -170,10 +164,9 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        cache-dependency-path: 'package-lock.json'
         
     - name: Install dependencies
-      working-directory: ./first-bank-of-change
       run: npm ci
       
     - name: Wait for Selenium
@@ -181,8 +174,7 @@ jobs:
         timeout 60s bash -c 'until curl -f http://localhost:4444/wd/hub/status; do sleep 2; done'
         
     - name: Run E2E tests
-      working-directory: ./first-bank-of-change
-      run: npm run e2e-headless
+      run: npm run e2e:headless
       env:
         SELENIUM_HOST: localhost
         
@@ -192,8 +184,8 @@ jobs:
       with:
         name: e2e-failure-artifacts
         path: |
-          first-bank-of-change/.tmp/
-          first-bank-of-change/allure-results/
+          .tmp/
+          allure-results/
         retention-days: 7
 
   merge-readiness:

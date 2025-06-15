@@ -23,22 +23,18 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        cache-dependency-path: 'package-lock.json'
         
     - name: Install dependencies
-      working-directory: ./first-bank-of-change
       run: npm ci
       
     - name: Run unit tests
-      working-directory: ./first-bank-of-change
       run: npm run test
       
     - name: Run linting
-      working-directory: ./first-bank-of-change
       run: npm run lint
       
     - name: Run build
-      working-directory: ./first-bank-of-change
       run: npm run build
       
     - name: Upload test coverage
@@ -46,7 +42,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: test-coverage
-        path: first-bank-of-change/coverage/
+        path: coverage/
         retention-days: 7
 
   e2e-tests:
@@ -70,10 +66,9 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        cache-dependency-path: 'package-lock.json'
         
     - name: Install dependencies
-      working-directory: ./first-bank-of-change
       run: npm ci
       
     - name: Wait for Selenium
@@ -81,8 +76,7 @@ jobs:
         timeout 60s bash -c 'until curl -f http://localhost:4444/wd/hub/status; do sleep 2; done'
         
     - name: Run E2E tests
-      working-directory: ./first-bank-of-change
-      run: npm run e2e-headless
+      run: npm run e2e:headless
       env:
         SELENIUM_HOST: localhost
         
@@ -91,7 +85,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: e2e-screenshots
-        path: first-bank-of-change/.tmp/
+        path: .tmp/
         retention-days: 7
 
   security-audit:
@@ -106,18 +100,15 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        cache-dependency-path: 'package-lock.json'
         
     - name: Install dependencies
-      working-directory: ./first-bank-of-change
       run: npm ci
       
     - name: Run security audit
-      working-directory: ./first-bank-of-change
       run: npm audit --audit-level=high
       
     - name: Check for high/critical vulnerabilities
-      working-directory: ./first-bank-of-change
       run: |
         AUDIT_RESULT=$(npm audit --audit-level=high --json | jq '.metadata.vulnerabilities.high + .metadata.vulnerabilities.critical')
         if [ "$AUDIT_RESULT" -gt 0 ]; then
@@ -139,23 +130,19 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        cache-dependency-path: 'package-lock.json'
         
     - name: Install dependencies
-      working-directory: ./first-bank-of-change
       run: npm ci
       
     - name: Check code formatting
-      working-directory: ./first-bank-of-change
       run: npx prettier --check "**/*.{ts,tsx,js,jsx,json,md}"
       
     - name: Check TypeScript compilation
-      working-directory: ./first-bank-of-change
       run: npx tsc --noEmit
       
     - name: Check for unused dependencies
-      working-directory: ./first-bank-of-change
-      run: npx depcheck --ignores="@types/*,@nrwl/*,@wdio/*"
+      run: npx depcheck --ignores="@types/*,@wdio/*"
 
   parallel-upgrade-validation:
     runs-on: ubuntu-latest

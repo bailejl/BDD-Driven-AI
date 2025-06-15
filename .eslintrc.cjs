@@ -4,11 +4,12 @@ module.exports = {
     browser: true,
     es2020: true,
     node: true,
+    jest: true,
   },
   extends: [
     'eslint:recommended',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'node_modules'],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
@@ -16,8 +17,18 @@ module.exports = {
       jsx: true,
     },
   },
+  plugins: ['@typescript-eslint', 'react', 'react-hooks'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'node_modules'],
   rules: {
-    'no-unused-vars': 'warn',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
     'no-console': 'warn',
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
   },
 }
