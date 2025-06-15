@@ -1,0 +1,280 @@
+name: PR Validation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [ main ]
+
+env:
+  NODE_VERSION: '24'
+
+jobs:
+  pr-info:
+    runs-on: ubuntu-latest
+    outputs:
+      is-upgrade-branch: ${{ steps.check-branch.outputs.is-upgrade-branch }}
+      upgrade-type: ${{ steps.check-branch.outputs.upgrade-type }}
+      
+    steps:
+    - name: Check PR branch type
+      id: check-branch
+      run: |
+        BRANCH_NAME="${{ github.head_ref }}"
+        echo "Branch name: $BRANCH_NAME"
+        
+        if [[ "$BRANCH_NAME" =~ ^upgrade\/ ]]; then
+          echo "is-upgrade-branch=true" >> $GITHUB_OUTPUT
+          UPGRADE_TYPE=$(echo "$BRANCH_NAME" | sed 's/upgrade\///')
+          echo "upgrade-type=$UPGRADE_TYPE" >> $GITHUB_OUTPUT
+          echo "✅ Detected upgrade branch: $UPGRADE_TYPE"
+        else
+          echo "is-upgrade-branch=false" >> $GITHUB_OUTPUT
+          echo "upgrade-type=" >> $GITHUB_OUTPUT
+          echo "📝 Regular feature/fix branch"
+        fi
+
+  validation:
+    runs-on: ubuntu-latest
+    needs: pr-info
+    
+    steps:
+    - name: Checkout PR code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        
+    - name: Install dependencies
+      working-directory: ./first-bank-of-change
+      run: npm ci
+      
+    - name: Validate upgrade branch requirements
+      if: needs.pr-info.outputs.is-upgrade-branch == 'true'
+      run: |
+        UPGRADE_TYPE="${{ needs.pr-info.outputs.upgrade-type }}"
+        echo "Validating upgrade branch: $UPGRADE_TYPE"
+        
+        # Check for progress file
+        PROGRESS_FILE="PROGRESS_upgrade-${UPGRADE_TYPE}.md"
+        if [ ! -f "$PROGRESS_FILE" ]; then
+          echo "❌ Missing required progress file: $PROGRESS_FILE"
+          echo "Please create this file to track upgrade progress"
+          exit 1
+        fi
+        
+        # Check progress file has completion marker
+        if ! grep -q "COMPLETED" "$PROGRESS_FILE"; then
+          echo "⚠️ Progress file doesn't indicate completion"
+          echo "Please add 'COMPLETED' status to progress file when ready for merge"
+        fi
+        
+        # Validate allowed upgrade types
+        case "$UPGRADE_TYPE" in
+          eslint-9|testing-framework|dev-tooling|nx-workspace|react-19)
+            echo "✅ Valid upgrade type: $UPGRADE_TYPE"
+            ;;
+          *)
+            echo "❌ Invalid upgrade type: $UPGRADE_TYPE"
+            echo "Allowed types: eslint-9, testing-framework, dev-tooling, nx-workspace, react-19"
+            exit 1
+            ;;
+        esac
+        
+    - name: Check dependency order for upgrade branches
+      if: needs.pr-info.outputs.is-upgrade-branch == 'true'
+      run: |
+        UPGRADE_TYPE="${{ needs.pr-info.outputs.upgrade-type }}"
+        
+        # Check if React upgrade is being merged before Nx
+        if [ "$UPGRADE_TYPE" = "react-19" ]; then
+          echo "Checking if Nx migration dependency is satisfied..."
+          
+          # Check if main branch has Nx updates by looking for package.json changes
+          git fetch origin main
+          NX_VERSION=$(git show origin/main:first-bank-of-change/package.json | jq -r '.devDependencies["@nrwl/cli"] // .devDependencies["nx"] // "12.3.6"')
+          
+          if [[ "$NX_VERSION" =~ ^12\. ]]; then
+            echo "❌ React upgrade requires Nx migration to be completed first"
+            echo "Current Nx version in main: $NX_VERSION"
+            echo "Please wait for upgrade/nx-workspace to be merged before proceeding"
+            exit 1
+          else
+            echo "✅ Nx dependency satisfied (version: $NX_VERSION)"
+          fi
+        fi
+
+  mandatory-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout PR code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        
+    - name: Install dependencies
+      working-directory: ./first-bank-of-change
+      run: npm ci
+      
+    - name: Run unit tests
+      working-directory: ./first-bank-of-change
+      run: npm run test
+      
+    - name: Run linting
+      working-directory: ./first-bank-of-change
+      run: npm run lint
+      
+    - name: Run build
+      working-directory: ./first-bank-of-change
+      run: npm run build
+      
+    - name: Check for critical security vulnerabilities
+      working-directory: ./first-bank-of-change
+      run: |
+        # Allow moderate/low vulnerabilities but fail on high/critical
+        npm audit --audit-level=high || {
+          echo "❌ High or critical security vulnerabilities found"
+          echo "Please run 'npm audit fix' or address manually before merging"
+          exit 1
+        }
+
+  e2e-validation:
+    runs-on: ubuntu-latest
+    if: contains(github.head_ref, 'upgrade/') || contains(github.event.pull_request.title, '[e2e]')
+    
+    services:
+      selenium:
+        image: selenium/standalone-chrome:latest
+        ports:
+          - 4444:4444
+          - 7900:7900
+        options: --shm-size=2gb
+    
+    steps:
+    - name: Checkout PR code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        
+    - name: Install dependencies
+      working-directory: ./first-bank-of-change
+      run: npm ci
+      
+    - name: Wait for Selenium
+      run: |
+        timeout 60s bash -c 'until curl -f http://localhost:4444/wd/hub/status; do sleep 2; done'
+        
+    - name: Run E2E tests
+      working-directory: ./first-bank-of-change
+      run: npm run e2e-headless
+      env:
+        SELENIUM_HOST: localhost
+        
+    - name: Upload E2E artifacts on failure
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: e2e-failure-artifacts
+        path: |
+          first-bank-of-change/.tmp/
+          first-bank-of-change/allure-results/
+        retention-days: 7
+
+  merge-readiness:
+    runs-on: ubuntu-latest
+    needs: [pr-info, validation, mandatory-tests]
+    if: always()
+    
+    steps:
+    - name: Check all required jobs passed
+      run: |
+        echo "PR Info: ${{ needs.pr-info.result }}"
+        echo "Validation: ${{ needs.validation.result }}"
+        echo "Mandatory Tests: ${{ needs.mandatory-tests.result }}"
+        
+        if [ "${{ needs.pr-info.result }}" != "success" ] || \
+           [ "${{ needs.validation.result }}" != "success" ] || \
+           [ "${{ needs.mandatory-tests.result }}" != "success" ]; then
+          echo "❌ One or more required checks failed"
+          exit 1
+        fi
+        
+        echo "✅ All required checks passed - PR ready for review"
+        
+    - name: Comment on PR with status
+      if: needs.pr-info.outputs.is-upgrade-branch == 'true'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const upgradeType = '${{ needs.pr-info.outputs.upgrade-type }}';
+          const prNumber = context.payload.pull_request.number;
+          
+          const comment = `
+          ## 🔄 Upgrade Branch Validation
+          
+          **Upgrade Type:** \`${upgradeType}\`
+          
+          ### ✅ Validation Results
+          - [x] Progress file exists
+          - [x] Unit tests pass
+          - [x] Linting passes  
+          - [x] Build succeeds
+          - [x] No critical security vulnerabilities
+          
+          ### 📋 Pre-merge Checklist
+          - [ ] All tests are passing
+          - [ ] Progress file marked as COMPLETED
+          - [ ] UPGRADE_PLANS.md updated with lessons learned
+          - [ ] No merge conflicts with main
+          
+          **Ready for merge when all checklist items are complete!**
+          `;
+          
+          github.rest.issues.createComment({
+            issue_number: prNumber,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });
+
+  upgrade-conflict-detection:
+    runs-on: ubuntu-latest
+    if: contains(github.head_ref, 'upgrade/')
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Check for conflicting upgrade branches
+      run: |
+        # Get all remote upgrade branches
+        git fetch origin
+        UPGRADE_BRANCHES=$(git branch -r | grep 'origin/upgrade/' | sed 's/origin\///' | grep -v '${{ github.head_ref }}' || true)
+        
+        if [ -n "$UPGRADE_BRANCHES" ]; then
+          echo "⚠️ Other upgrade branches in progress:"
+          echo "$UPGRADE_BRANCHES"
+          echo ""
+          echo "Please coordinate with other upgrade work to avoid conflicts."
+          echo "See PARALLEL_WORKFLOW.md for coordination guidelines."
+        else
+          echo "✅ No conflicting upgrade branches detected"
+        fi
