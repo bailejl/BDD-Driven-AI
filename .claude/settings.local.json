@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__ide__getDiagnostics",
+      "Bash(make npm run lint)",
+      "Bash(make npm run e2e-dev)",
+      "Bash(make npm audit)",
+      "Bash(make npm run test)"
+    ],
+    "deny": []
+  }
+}
