@@ -25,6 +25,18 @@ This is a Declarative Gherkin training project built with React, TypeScript, and
 3. **Test thoroughly** before requesting merge
 4. **Update UPGRADE_PLANS.md** with progress and lessons learned
 
+### CI/CD Pipeline
+
+**IMPORTANT**: GitHub Actions pipeline automatically validates all changes:
+
+- ✅ **Pull Request Validation** - Unit tests, linting, build, security audit
+- ✅ **Upgrade Branch Support** - Special validation for parallel upgrade work
+- ✅ **E2E Testing** - Automated browser testing with Selenium
+- ✅ **Deployment Pipeline** - Automatic staging, manual production deployment
+- ✅ **Quality Gates** - Fails on high/critical security vulnerabilities
+
+See `.github/README.md` for detailed pipeline documentation.
+
 ## Commands
 
 All commands should be run from the `first-bank-of-change/` directory using the Makefile wrapper:
