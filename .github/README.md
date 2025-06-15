@@ -15,7 +15,7 @@ This directory contains the GitHub Actions workflows for the Cucumber Declarativ
 - **parallel-upgrade-validation** - Special validation for upgrade branches
 
 **Key Features:**
-- Runs on Node.js 24
+- Runs on Node.js 18 (compatible with current dependencies)
 - Uses npm cache for faster builds
 - Uploads test coverage and E2E screenshots on failure
 - Fails on high/critical security vulnerabilities
@@ -84,9 +84,10 @@ The pipeline has special support for the parallel upgrade strategy defined in `P
 ## Environment Configuration
 
 ### Node.js Version
-- **Version:** 24 (latest LTS)
-- **Cache:** npm dependencies cached by package-lock.json hash
+- **Version:** 18 (LTS - compatible with current dependencies)
+- **Cache:** npm dependencies cached by package.json hash  
 - **Working Directory:** `first-bank-of-change/`
+- **Installation:** Uses `npm install --legacy-peer-deps` for ESLint compatibility
 
 ### Security Requirements
 - **Audit Level:** Fails on high/critical vulnerabilities
@@ -142,7 +143,8 @@ Add these to your README.md to show pipeline status:
 **Tests failing on PR:**
 1. Check unit test output in CI logs
 2. Ensure all dependencies are in package.json
-3. Verify Node.js version compatibility
+3. Verify Node.js version compatibility (using Node.js 18)
+4. Check if package-lock.json conflicts with --legacy-peer-deps
 
 **E2E tests timing out:**
 1. Check Selenium container startup logs
@@ -171,9 +173,14 @@ Add these to your README.md to show pipeline status:
 
 ### Regular Tasks
 - Monitor security vulnerability reports
-- Update Node.js version in workflows when new LTS available
+- Update Node.js version in workflows when dependency compatibility allows
 - Review and update dependency versions quarterly
 - Clean up old workflow runs and artifacts
+
+### Node.js Version Notes
+- Currently using Node.js 18 due to native dependency compatibility issues
+- Node.js 24 upgrade blocked by fibers package compilation (used by Sass)
+- Consider upgrading after Nx workspace migration resolves dependencies
 
 ### Workflow Updates
 - Test changes in feature branches first

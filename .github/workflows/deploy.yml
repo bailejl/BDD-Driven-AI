@@ -15,7 +15,7 @@ on:
         - production
 
 env:
-  NODE_VERSION: '24'
+  NODE_VERSION: '18'
 
 jobs:
   post-merge-validation:
@@ -30,11 +30,11 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        cache-dependency-path: 'first-bank-of-change/package.json'
         
     - name: Install dependencies
       working-directory: ./first-bank-of-change
-      run: npm ci
+      run: npm install --legacy-peer-deps
       
     - name: Run comprehensive test suite
       working-directory: ./first-bank-of-change
@@ -90,11 +90,11 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        cache-dependency-path: 'first-bank-of-change/package.json'
         
     - name: Install dependencies
       working-directory: ./first-bank-of-change
-      run: npm ci
+      run: npm install --legacy-peer-deps
       
     - name: Wait for Selenium
       run: |
@@ -129,11 +129,11 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        cache-dependency-path: 'first-bank-of-change/package.json'
         
     - name: Install dependencies
       working-directory: ./first-bank-of-change
-      run: npm ci
+      run: npm install --legacy-peer-deps
       
     - name: Build production assets
       working-directory: ./first-bank-of-change
