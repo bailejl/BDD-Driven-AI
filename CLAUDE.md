@@ -6,72 +6,60 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a Declarative Gherkin training project built with React, TypeScript, and Cucumber. It demonstrates how to write concise, business-readable test scenarios using the Declarative Gherkin methodology. The project uses a fictional "First Bank of Change" credit application as the demo application.
 
-## Parallel Upgrade Strategy
-
-**IMPORTANT**: Multiple AI agents can work on upgrades simultaneously using feature branches. Check UPGRADE_PLANS.md for detailed instructions.
-
-### Active Upgrade Branches
-
-- `upgrade/eslint-9` - ESLint 9 migration (Independent)
-- `upgrade/testing-framework` - Jest/ts-jest updates (Independent)  
-- `upgrade/dev-tooling` - Node.js/Docker/CI updates (Independent)
-- `upgrade/nx-workspace` - Nx migration (Critical path - must complete first)
-- `upgrade/react-19` - React ecosystem (Depends on Nx completion)
-
-### Branch Coordination Rules
-
-1. **Always check for existing upgrade branches** before starting work
-2. **Create branch from main** unless specified otherwise
-3. **Test thoroughly** before requesting merge
-4. **Update UPGRADE_PLANS.md** with progress and lessons learned
-
-### CI/CD Pipeline
-
-**IMPORTANT**: GitHub Actions pipeline automatically validates all changes:
-
-- ✅ **Pull Request Validation** - Unit tests, linting, build, security audit
-- ✅ **Upgrade Branch Support** - Special validation for parallel upgrade work
-- ✅ **E2E Testing** - Automated browser testing with Selenium
-- ✅ **Deployment Pipeline** - Automatic staging, manual production deployment
-- ✅ **Quality Gates** - Fails on high/critical security vulnerabilities
-
-See `.github/README.md` for detailed pipeline documentation.
-
 ## Commands
 
-All commands should be run from the `first-bank-of-change/` directory using the Makefile wrapper:
+All commands should be run from the **root directory** (not from subdirectories):
 
 ### Development
 
-- `make npm run start` - Start the React app (accessible at <http://localhost:4200>)
-- `make npm run build` - Build the application
-- `make npm run test` - Run all unit tests
-- `make npm run lint` - Run linting checks
+- `npm run dev` - Start the React app with Vite (accessible at <http://localhost:5173>)
+- `npm run build` - Build the application for production
+- `npm run preview` - Preview the production build
+- `npm run test` - Run all unit tests with Jest
+- `npm run test:watch` - Run tests in watch mode
+- `npm run lint` - Run linting checks with ESLint
+- `npm run lint:fix` - Fix auto-fixable linting issues
+- `npm run type-check` - Run TypeScript type checking
 
 ### E2E Testing
 
-All `make npm run e2e` commands automatically start the app for testing, so no need run `make npm run start` before running the tests. All `make npm run e2e-dev-*` commands do not automatically start the app for testing, so you need to run `make npm run start` before running the tests.
+All `npm run e2e` commands automatically start the app for testing, so no need to run `npm run dev` before running the tests.
 
 - `docker compose up selenium` - Start Selenium container with VNC (view at <http://localhost:7900/?autoconnect=1&resize=scale&password=secret>)
-- `make npm run e2e` - Run full E2E test suite (requires selenium container)
-- `make npm run e2e-dev` - Run E2E tests excluding broken scenarios
-- `make npm run e2e-headless` - Run E2E tests in headless mode
+- `npm run e2e` - Run full E2E test suite (requires selenium container)
+- `npm run e2e:headless` - Run E2E tests in headless mode
+- `npm run snippets` - Generate Cucumber step definition snippets
 
 ### Dependencies
 
-- `make npm install` - Install Node.js dependencies
+- `npm install` - Install Node.js dependencies
 
 ## Architecture
 
 ### Core Structure
 
-- **Nx Workspace**: Monorepo structure with multiple libraries and applications
-- **React Application**: Main app in `apps/declarative-gherkin/`
-- **Shared Libraries**:
+- **Modern React App**: Simplified single-page application built with Vite
+- **Source Structure**: All application code in `src/` directory
+- **Component Organization**: Feature-based component structure
+- **Modern Build System**: Vite for fast development and optimized production builds
 
-  - `libs/ui/` - Reusable React components
-  - `libs/data/` - Data management and fake database
-  - `libs/fake-security/` - Mock authentication system
+### Directory Structure
+
+```
+src/
+├── components/          # Feature-organized React components
+│   ├── auth/           # Authentication components (login, private routes)
+│   ├── forms/          # Credit application form components
+│   ├── navigation/     # Header, navigation components
+│   └── shared/         # Shared/reusable components
+├── services/           # Business logic and data services
+├── pages/             # Page-level components
+├── assets/            # Static assets
+├── styles/            # Global styles
+├── hooks/             # Custom React hooks
+├── types/             # TypeScript type definitions
+└── utils/             # Utility functions
+```
 
 ### Test Architecture
 
@@ -79,12 +67,22 @@ All `make npm run e2e` commands automatically start the app for testing, so no n
 - **Step Definitions**: Located in `features/step-definitions/`
 - **Page Objects**: Located in `features/pageobjects/` following WebdriverIO patterns
 - **Data Management**: Centralized test data in `features/data/data.json`
+- **Unit Tests**: Jest tests co-located with components (`*.spec.tsx`)
+
+### Build System
+
+- **Vite**: Modern build tool for fast development and optimized production builds
+- **TypeScript**: Full type checking and compilation
+- **SCSS**: Styling with Sass support
+- **SVG Components**: SVG files imported as React components via vite-plugin-svgr
+- **Path Aliases**: Clean imports using `@components`, `@services`, etc.
 
 ### Key Concepts
 
 - **Declarative Gherkin**: Business-readable test scenarios without technical implementation details
 - **Centralized Data Management**: Test data organized by personas with meaningful aliases
-- **Docker Integration**: Uses 3 Musketeers pattern with Docker Compose for consistent environments
+- **Docker Integration**: Uses Docker Compose for consistent E2E testing environments
+- **Functional Programming**: Arrow functions and functional patterns throughout
 
 ### Test Data Pattern
 
@@ -101,32 +99,32 @@ This allows tests to be self-documenting and business-readable while referencing
 
 ### Required Commands After Every Change
 
-All commands should be run from the `first-bank-of-change/` directory using the Makefile wrapper:
+All commands should be run from the **root directory**:
 
 ```bash
 # 1. ALWAYS run tests first - NO EXCEPTIONS
-make npm run test
+npm run test
 
 # 2. ALWAYS run quality checks - NO EXCEPTIONS
-make npm run lint
+npm run lint
 
 # 3. ALWAYS run E2E tests - NO EXCEPTIONS
-make npm run e2e-headless
+npm run e2e:headless
 ```
 
 ### Workflow Enforcement Rules
 
-1. **NEVER proceed to the next task** until both `make npm run test` and `make npm run lint` pass from the `first-bank-of-change/` directory using the Makefile wrapper
+1. **NEVER proceed to the next task** until both `npm run test` and `npm run lint` pass from the root directory
 2. **NEVER skip this workflow** - even for "small changes" or "quick fixes"
 3. **ALWAYS run the full test suite** - no selective testing
 4. **ALWAYS verify quality standards** - no exceptions for any file type
 
 ### Quality Gates - ALL Must Pass
 
-- ✅ **All tests pass**: `make npm run test` returns success
+- ✅ **All tests pass**: `npm run test` returns success
 - ✅ **No linting errors**: ESLint finds no issues
-- ✅ **Proper formatting**: Prettier formatting is applied
-- ✅ **No console warnings**: All console usage is intentional
+- ✅ **Build succeeds**: `npm run build` completes successfully
+- ✅ **Type checking passes**: `npm run type-check` finds no errors
 - ✅ **Functional patterns**: Code follows functional programming constraints
 
 ### Failure Response Protocol
@@ -142,7 +140,7 @@ If ANY quality gate fails:
 
 **IMPORTANT**: This project uses Acceptance Test Driven Development (ATDD) with Cucumber/WebdriverIO. Before implementing any feature:
 
-1. **Read the feature specifications** in `first-bank-of-change/features/*.feature`
+1. **Read the feature specifications** in `features/*.feature`
 2. **Write Cucumber acceptance tests** that describe the expected behavior in BDD style
 3. **Implement features to satisfy the acceptance tests**
 4. **Validate each test passes** before moving to the next
@@ -159,7 +157,7 @@ The feature file contains comprehensive Gherkin scenarios that define the expect
 - **MANDATORY**: Use vanilla TypeScript
 - **MANDATORY**: Implement functional programming patterns throughout
 - **MANDATORY**: Use arrow functions exclusively for function definitions
-- **MANDATORY**: Avoid classes - use factory functions and closures instead, page objects are accepatble for testing
+- **MANDATORY**: Avoid classes - use factory functions and closures instead (page objects are acceptable for testing)
 - **MANDATORY**: Markdown formatting rules: use Markdown for documentation, no HTML tags
 - **MANDATORY**: Markdown needs to be markdownlint compliant with the default rules
 - **NO SEMICOLONS** (enforced by Prettier configuration)
@@ -173,40 +171,51 @@ The feature file contains comprehensive Gherkin scenarios that define the expect
 - Consistent arrow function spacing
 - No duplicate imports
 
+### Technology Stack
+
+- **React 19**: Latest React with modern patterns
+- **TypeScript 5**: Full type safety
+- **Material-UI v6**: UI component library with Emotion styling
+- **React Router v7**: Client-side routing
+- **Vite**: Build tool and development server
+- **Jest**: Unit testing framework
+- **WebdriverIO**: E2E testing framework
+- **Cucumber**: BDD testing with Gherkin syntax
+
 ## Implementation Process - ATDD Workflow
 
 Follow this Acceptance Test Driven Development workflow:
 
 ### 1. Scenario Analysis
 
-For each feature in `first-bank-of-change/features/*.feature`:
+For each feature in `features/*.feature`:
 
 - Read and understand the Gherkin scenario
 - Identify the Given/When/Then acceptance criteria
 - Note any data tables or example values
 - Understand the expected behavior completely
-- Data used in the scenario are noted in `first-bank-of-change/features/data/data.json`
+- Data used in the scenario are noted in `features/data/data.json`
   - Use name or aliases in the data file to associate with steps in the scenarios
 
 ### 2. Implementation to Satisfy Existing Tests
 
-- **Review existing Cucumber step definitions** in step-definitions/*.steps.ts
+- **Review existing Cucumber step definitions** in `features/step-definitions/*.steps.ts`
 - **Run the E2E tests** to see which scenarios are currently failing
 - **Implement application features** to make the failing tests pass. Implement just enough application code to make the test pass
-- **After test passes, run quality checks**: `make npm run quality` in the `first-bank-of-change` directory
+- **After test passes, run quality checks**: `npm run lint` in the root directory
 - **Focus on the React components and business logic** that the tests are exercising
 - Refactor while keeping tests green and code quality high
 
 ### 3. Validation
 
 - Ensure each Cucumber test passes completely before moving on
-- **Verify code passes ESLint and Prettier checks**
+- **Verify code passes ESLint and TypeScript checks**
 - Verify edge cases mentioned in the feature scenarios
 - Confirm the implementation matches the expected behavior exactly
 
 ## Success Criteria
 
-The application should satisfy ALL scenarios in `first-bank-of-change/features/*.feature`:
+The application should satisfy ALL scenarios in `features/*.feature`:
 
 **Each scenario must pass its acceptance criteria before the feature is considered complete.**
 
@@ -214,14 +223,14 @@ The application should satisfy ALL scenarios in `first-bank-of-change/features/*
 
 ### Prerequisites for E2E Testing
 
-- Run `make npm install` first to install dependencies
+- Run `npm install` first to install dependencies
 - Start Selenium container: `docker compose up selenium`
 - Then run E2E tests to see failing scenarios
 
 ### Step File Structure Example
 
 ```javascript
-// first-bank-of-change/features/step-definitions/common.steps.ts
+// features/step-definitions/common.steps.ts
 import { Given, When, Then } from '@cucumber/cucumber';
 import dataManager from '../data/data-manager';
 import homePage from '../pageobjects/home.page';
@@ -250,7 +259,7 @@ Given(/^"(.*)" logs in with this mod '(.*)'$/, (userNameAlias, modName) => {
 ### Page Objects Example
 
 ```javascript
-// first-bank-of-change/features/pageobjects/credit-form.page.ts
+// features/pageobjects/credit-form.page.ts
 import Page from './page';
 
 // The sections of the credit form mapped to URL paths
@@ -351,48 +360,48 @@ export default new CreditFormPage();
 
 ### Features Test Data
 
-Here is an example of features test data used by the `features` test suite. This data includes information about the user's financial details and other relevant information. Data consists of personas and data chunks. The example below has one persona followed by one data chunk. The persona is named "Kelly Baddy". The data chunk contains data used typically to modify a persona or can stand alone. Perosonas have a name and aliases. The data chunk contains name and no aliases.
+Here is an example of features test data used by the `features` test suite. This data includes information about the user's financial details and other relevant information. Data consists of personas and data chunks. The example below has one persona followed by one data chunk. The persona is named "Kelly Baddy". The data chunk contains data used typically to modify a persona or can stand alone. Personas have a name and aliases. The data chunk contains name and no aliases.
 
 ```json
-  [
-    {
-        "name": "Kelly Baddy",
-        "aliases": [
-            "Kelly Baddy w/ the ability to break things"
-        ],
-        "firstName": "Kelly",
-        "middleInitial": "A",
-        "lastName": "Baddy",
-        "dateOfBirth": "10/11/1980",
-        "ssn": "555-22-5555",
-        "countryOfCitizenShip": "GB",
-        "countryOfCitizenShipSecondary": "US",
-        "currentEmployerName": "Acme Oil",
-        "workPhone": "(555)111-2222",
-        "yearsEmployed": 10,
-        "monthsEmployed": 1,
-        "occupation": "CIO",
-        "monthlyHousingPayment": 1800,
-        "checkingAmount": 2000,
-        "savingsAmount": 2000,
-        "investmentsAmount": 20000,
-        "monthlyIncome": 5000,
-        "username": "kelly_baddy",
-        "password": "GhekinIsFun"
-    },
-    {
-        "name": "failing back-end ratio",
-        "monthlyHousingPayment": 18001,
-        "monthlyIncome": 50000
-    }
-  ]
+[
+  {
+      "name": "Kelly Baddy",
+      "aliases": [
+          "Kelly Baddy w/ the ability to break things"
+      ],
+      "firstName": "Kelly",
+      "middleInitial": "A",
+      "lastName": "Baddy",
+      "dateOfBirth": "10/11/1980",
+      "ssn": "555-22-5555",
+      "countryOfCitizenShip": "GB",
+      "countryOfCitizenShipSecondary": "US",
+      "currentEmployerName": "Acme Oil",
+      "workPhone": "(555)111-2222",
+      "yearsEmployed": 10,
+      "monthsEmployed": 1,
+      "occupation": "CIO",
+      "monthlyHousingPayment": 1800,
+      "checkingAmount": 2000,
+      "savingsAmount": 2000,
+      "investmentsAmount": 20000,
+      "monthlyIncome": 5000,
+      "username": "kelly_baddy",
+      "password": "GhekinIsFun"
+  },
+  {
+      "name": "failing back-end ratio",
+      "monthlyHousingPayment": 18001,
+      "monthlyIncome": 50000
+  }
+]
 ```
 
 ## Implementation Priority
 
 **CRITICAL**: Follow ATDD methodology strictly:
 
-1. **Start by reading** a feature file completely from `first-bank-of-change/features/*.feature`
+1. **Start by reading** a feature file completely from `features/*.feature`
 2. **Implement scenarios in order** as listed in the feature file
 3. **Do not proceed** to the next scenario until the current one passes
 4. **Reference the feature file continuously** during implementation
@@ -408,3 +417,9 @@ All implementation must:
 - Pass both unit and acceptance tests
 
 **NO EXCEPTIONS**: Code that doesn't pass quality checks cannot proceed to the next scenario.
+
+# important-instruction-reminders
+Do what has been asked; nothing more, nothing less.
+NEVER create files unless they're absolutely necessary for achieving your goal.
+ALWAYS prefer editing an existing file to creating a new one.
+NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
