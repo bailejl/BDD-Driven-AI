@@ -5,7 +5,12 @@
       "Bash(make npm run lint)",
       "Bash(make npm run e2e-dev)",
       "Bash(make npm audit)",
-      "Bash(make npm run test)"
+      "Bash(make npm run test)",
+      "Bash(npm install:*)",
+      "Bash(npm info:*)",
+      "Bash(ls:*)",
+      "Bash(npx eslint:*)",
+      "Bash(git push:*)"
     ],
     "deny": []
   }
