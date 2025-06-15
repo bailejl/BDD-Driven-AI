@@ -25,7 +25,6 @@ All commands should be run from the **root directory** (not from subdirectories)
 
 All `npm run e2e` commands automatically start the app for testing, so no need to run `npm run dev` before running the tests.
 
-- `docker compose up selenium` - Start Selenium container with VNC (view at <http://localhost:7900/?autoconnect=1&resize=scale&password=secret>)
 - `npm run e2e` - Run full E2E test suite (requires selenium container)
 - `npm run e2e:headless` - Run E2E tests in headless mode
 - `npm run snippets` - Generate Cucumber step definition snippets
@@ -118,6 +117,7 @@ npm run e2e:headless
 2. **NEVER skip this workflow** - even for "small changes" or "quick fixes"
 3. **ALWAYS run the full test suite** - no selective testing
 4. **ALWAYS verify quality standards** - no exceptions for any file type
+5. **ALWAYS verify e2e before a push** ensure `npm run e2e:headless` passes from the root directory
 
 ### Quality Gates - ALL Must Pass
 
@@ -224,7 +224,6 @@ The application should satisfy ALL scenarios in `features/*.feature`:
 ### Prerequisites for E2E Testing
 
 - Run `npm install` first to install dependencies
-- Start Selenium container: `docker compose up selenium`
 - Then run E2E tests to see failing scenarios
 
 ### Step File Structure Example

@@ -1,7 +1,7 @@
 import { Given, When, Then } from '@cucumber/cucumber';
 import HomePage from '../pageobjects/home.page';
 import Header from '../pageobjects/header';
-const cucumberJson = require('wdio-cucumberjs-json-reporter').default;
+import cucumberJson from 'wdio-cucumberjs-json-reporter';
 
 When('They go to the home page', function () {
     HomePage.open();

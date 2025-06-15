@@ -1,4 +1,4 @@
-import * as testData from './data.json';
+import testData from './data.json';
 import { DataTable } from '@cucumber/cucumber';
 
 type Persona = {
