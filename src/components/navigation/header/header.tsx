@@ -7,7 +7,7 @@ import {
 
 
 import './header.module.scss';
-import { ReactComponent as Logo } from './logo.svg';
+import Logo from './logo.svg?react';
 
 /* eslint-disable-next-line */
 export interface HeaderProps { }

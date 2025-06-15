@@ -3,7 +3,7 @@ import React from 'react';
 import './login.module.scss';
 
 import {
-  useHistory,
+  useNavigate,
   useLocation
 } from "react-router-dom";
 
@@ -18,7 +18,7 @@ export interface LoginProps { }
 
 // Uses the emulating auth service to provide a basic login and user session.
 export function Login(props: LoginProps) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const auth = useAuth();
   const location = useLocation();
   const [username, setUserName] = useState(null);
@@ -30,7 +30,7 @@ export function Login(props: LoginProps) {
   const login = (username: string, password: string) => {
     auth.signin(username, password,
       () => {
-        history.replace(from);
+        navigate(from, { replace: true });
       },
       (failMsg) => {
         setFailMsg(failMsg);

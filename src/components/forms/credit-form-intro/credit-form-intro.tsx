@@ -1,12 +1,10 @@
 import { Typography } from '@mui/material';
 import React from 'react';
 import {
-  BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
   Link,
-  useParams,
-  useRouteMatch
+  useParams
 } from "react-router-dom";
 import CreditFormComplete from '../credit-form-complete/credit-form-complete';
 import CreditFormEmploymentInfo from '../credit-form-employment-info/credit-form-employment-info';
@@ -19,28 +17,17 @@ export interface CreditFormIntroProps { }
 
 // This routes to different pages within the new credit card application form.
 export function CreditFormIntro(props: CreditFormIntroProps) {
-  // The `path` lets us build <Route> paths that are
-  // relative to the parent route, while the `url` lets
-  // us build relative links.
-  const { path, url } = useRouteMatch();
+  // React Router v7 uses relative paths automatically in nested routes
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', padding: '0 0 0 40px'}}>
       <Typography style={{ display: 'flex'}} variant="h4">New Credit Card Application</Typography>
-      <Switch>
-        <Route exact path={path}>
-          <CreditFormPersonalInfo />
-        </Route>
-        <Route path={`${path}/page2`}>
-          <CreditFormEmploymentInfo />
-        </Route>
-        <Route path={`${path}/page3`}>
-          <CreditFormFinancialInfo />
-        </Route>
-        <Route path={`${path}/complete`}>
-          <CreditFormComplete />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route index element={<CreditFormPersonalInfo />} />
+        <Route path="page2" element={<CreditFormEmploymentInfo />} />
+        <Route path="page3" element={<CreditFormFinancialInfo />} />
+        <Route path="complete" element={<CreditFormComplete />} />
+      </Routes>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import styles from './app.module.scss';
 
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
 } from "react-router-dom";
 
@@ -32,20 +32,12 @@ export function App() {
             <Header />
             <main className={styles.mainFrame}>
               <SideNav />
-              <Switch>
-                <Route path="/" exact>
-                  <Introduction />
-                </Route>
-                <Route path="/login">
-                  <Login />
-                </Route>
-                <PrivateRoute path="/user" allowedUserName="*">
-                  <UserLanding />
-                </PrivateRoute>
-                <PrivateRoute path="/admin" allowedUserName="admin">
-                  <AdminLanding />
-                </PrivateRoute>
-              </Switch>
+              <Routes>
+                <Route path="/" element={<Introduction />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/user/*" element={<PrivateRoute allowedUserName="*"><UserLanding /></PrivateRoute>} />
+                <Route path="/admin/*" element={<PrivateRoute allowedUserName="admin"><AdminLanding /></PrivateRoute>} />
+              </Routes>
             </main>
           </ProviderAuth>
         </ProviderDB>
