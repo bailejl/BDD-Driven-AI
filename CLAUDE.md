@@ -6,6 +6,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a Declarative Gherkin training project built with React, TypeScript, and Cucumber. It demonstrates how to write concise, business-readable test scenarios using the Declarative Gherkin methodology. The project uses a fictional "First Bank of Change" credit application as the demo application.
 
+## Parallel Upgrade Strategy
+
+**IMPORTANT**: Multiple AI agents can work on upgrades simultaneously using feature branches. Check UPGRADE_PLANS.md for detailed instructions.
+
+### Active Upgrade Branches
+
+- `upgrade/eslint-9` - ESLint 9 migration (Independent)
+- `upgrade/testing-framework` - Jest/ts-jest updates (Independent)  
+- `upgrade/dev-tooling` - Node.js/Docker/CI updates (Independent)
+- `upgrade/nx-workspace` - Nx migration (Critical path - must complete first)
+- `upgrade/react-19` - React ecosystem (Depends on Nx completion)
+
+### Branch Coordination Rules
+
+1. **Always check for existing upgrade branches** before starting work
+2. **Create branch from main** unless specified otherwise
+3. **Test thoroughly** before requesting merge
+4. **Update UPGRADE_PLANS.md** with progress and lessons learned
+
 ## Commands
 
 All commands should be run from the `first-bank-of-change/` directory using the Makefile wrapper:
@@ -20,7 +39,6 @@ All commands should be run from the `first-bank-of-change/` directory using the 
 ### E2E Testing
 
 All `make npm run e2e` commands automatically start the app for testing, so no need run `make npm run start` before running the tests. All `make npm run e2e-dev-*` commands do not automatically start the app for testing, so you need to run `make npm run start` before running the tests.
-
 
 - `docker compose up selenium` - Start Selenium container with VNC (view at <http://localhost:7900/?autoconnect=1&resize=scale&password=secret>)
 - `make npm run e2e` - Run full E2E test suite (requires selenium container)
