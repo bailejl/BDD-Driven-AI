@@ -5,7 +5,7 @@ import { makeStyles } from '@mui/material/styles';
 
 
 import {
-  useHistory,
+  useNavigate,
 } from "react-router-dom";
 
 import { useAuth } from '@services';
@@ -17,7 +17,7 @@ export interface AuthButtonProps { }
 
 // based on code from https://reactrouter.com/web/example/auth-workflow
 export function AuthButton(props: AuthButtonProps) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const auth = useAuth();
   const theme = useTheme();
 
@@ -36,7 +36,7 @@ export function AuthButton(props: AuthButtonProps) {
     <div style={{ display: 'flex' }}>
       <Button id="signout-button" aria-label="person" className={classes.contrastColor}
         onClick={() => {
-          auth.signout(() => history.push("/"));
+          auth.signout(() => navigate("/"));
         }}>
         <Typography variant="button">Sign Out</Typography>
       </Button>
@@ -45,7 +45,7 @@ export function AuthButton(props: AuthButtonProps) {
       <div style={{ display: 'flex' }}>
         <Button id="signin-button" aria-label="person" className={classes.contrastColor}
           onClick={() => {
-            history.push("/login")
+            navigate("/login")
           }}>
           <Typography variant="button">Sign In</Typography>
         </Button>

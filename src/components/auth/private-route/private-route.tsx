@@ -1,12 +1,7 @@
 import React from 'react';
 
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useHistory,
+  Navigate,
   useLocation
 } from "react-router-dom";
 
@@ -19,26 +14,20 @@ export interface PrivateRouteProps {
 }
 
 // based on code from https://reactrouter.com/web/example/auth-workflow
-export function PrivateRoute( { children, ...rest }) {
+export function PrivateRoute( { children, allowedUserName }) {
   const auth = useAuth();
+  const location = useLocation();
 
-  const isAllowed = auth !== null && (auth.user === rest.allowedUserName || 
-     (rest.allowedUserName === "*" && auth.user !== null));
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        isAllowed  ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location }
-            }}
-          />
-        )
-      }
+  const isAllowed = auth !== null && (auth.user === allowedUserName || 
+     (allowedUserName === "*" && auth.user !== null));
+     
+  return isAllowed ? (
+    children
+  ) : (
+    <Navigate
+      to="/login"
+      state={{ from: location }}
+      replace
     />
   );
 }

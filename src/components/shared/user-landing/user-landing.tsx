@@ -1,12 +1,10 @@
 import { Typography } from '@mui/material';
 import React from 'react';
 import {
-  BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
   Link,
   useParams,
-  useRouteMatch,
   useLocation,
 } from "react-router-dom";
 import CreditFormIntro from '../../forms/credit-form-intro/credit-form-intro';
@@ -20,7 +18,7 @@ export interface UserLandingProps {}
 
 // When a user account successfully logs in, they will arrive at this page.
 export function UserLanding(props: UserLandingProps) {
-  const { path, url } = useRouteMatch();
+  // React Router v7 uses relative paths automatically
   const location = useLocation();
 
   return (
@@ -31,16 +29,14 @@ export function UserLanding(props: UserLandingProps) {
       </Typography>
     </div>
     ) : (
-      <Switch>
-        <Route path={`${path}/form`}>
+      <Routes>
+        <Route path="form/*" element={
           <FormWizardContext>
             <CreditFormIntro />
           </FormWizardContext>
-        </Route>
-        <Route path={`${path}/status`}>
-          <UserAppStatus />
-        </Route>
-      </Switch>
+        } />
+        <Route path="status" element={<UserAppStatus />} />
+      </Routes>
     )
   );
 }

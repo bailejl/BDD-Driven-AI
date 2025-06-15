@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
-  useHistory,
+  useNavigate,
 } from "react-router-dom";
 
 import './credit-form-employment-info.module.scss';
@@ -41,7 +41,7 @@ export function CreditFormEmploymentInfo(props: CreditFormEmploymentInfoProps) {
     resolver: yupResolver(schema),
   });
   const formData = useFormData();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [countryOfCitizenShip, setCountryOfCitizenShip] = React.useState('');
   const [countryOfCitizenShipSecondary, setCountryOfCitizenShipSecondary] = React.useState('');
 
@@ -53,7 +53,7 @@ export function CreditFormEmploymentInfo(props: CreditFormEmploymentInfoProps) {
     console.log("onSubmit")
     console.dir(data);
     formData.appendFormData(data);
-    history.push("/user/form/page3");
+    navigate("/user/form/page3");
   }
 
   // These input fields need special handling to get similar behaviors to 

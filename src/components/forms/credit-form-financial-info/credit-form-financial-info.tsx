@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
-  useHistory,
+  useNavigate,
 } from "react-router-dom";
 
 import './credit-form-financial-info.module.scss';
@@ -37,7 +37,7 @@ export function CreditFormFinancialInfo(props: CreditFormFinancialInfoProps) {
     resolver: yupResolver(schema),
   });
   const formData = useFormData();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const cachedData = formData.data;
 
@@ -48,7 +48,7 @@ export function CreditFormFinancialInfo(props: CreditFormFinancialInfoProps) {
     console.log("onSubmit")
     console.dir(data);
     formData.appendFormData(data);
-    history.push("/user/form/complete");
+    navigate("/user/form/complete");
   }
 
   return (

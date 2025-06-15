@@ -1,7 +1,6 @@
 import { Box, Link, Typography } from '@mui/material';
 import React from 'react';
 import {
-  useHistory,
   Link as RouterLink
 } from "react-router-dom";
 
@@ -13,7 +12,7 @@ export interface IntroductionProps { }
 // This is the first page to introduce people to the demo, so 
 // they get the most out of it.
 export function Introduction(props: IntroductionProps) {
-  const history = useHistory();
+  // Removed useHistory as it's no longer needed
 
   return (
     <div style={{ display: 'flex', flexGrow: 1 }}>

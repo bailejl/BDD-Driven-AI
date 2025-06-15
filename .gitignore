@@ -44,3 +44,6 @@ Thumbs.db
 .ash_history
 
 .vscode
+
+# Backup directory
+.backup/

@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
-  useHistory,
+  useNavigate,
 } from "react-router-dom";
 
 import './credit-form-personal-info.module.scss';
@@ -39,7 +39,7 @@ export function CreditFormPersonalInfo(props: CreditFormPersonalInfoProps) {
     resolver: yupResolver(schema),
   });
   const formData = useFormData();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const cachedData = formData.data;
 
@@ -56,7 +56,7 @@ export function CreditFormPersonalInfo(props: CreditFormPersonalInfoProps) {
     console.log("onSubmit")
     console.dir(data);
     formData.appendFormData(data);
-    history.push("/user/form/page2");
+    navigate("/user/form/page2");
   }
 
   // Handles cached data similary to other inputs, due to issue with date field
