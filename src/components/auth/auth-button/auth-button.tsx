@@ -1,14 +1,14 @@
 import React from 'react';
-import { Button, Typography } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/core/styles';
+import { Button, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { makeStyles } from '@mui/material/styles';
 
 
 import {
   useHistory,
 } from "react-router-dom";
 
-import { useAuth } from '@first-bank-of-change/fake-security';
+import { useAuth } from '@services';
 
 import './auth-button.module.scss';
 

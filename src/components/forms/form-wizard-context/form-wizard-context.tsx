@@ -1,5 +1,5 @@
 import React from 'react';
-import {useProviderFormData, formDataContext} from '@first-bank-of-change/data';
+import {useProviderFormData, formDataContext} from '@services';
 
 import './form-wizard-context.module.scss';
 

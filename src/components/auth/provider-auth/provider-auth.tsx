@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './provider-auth.module.scss';
-import {useProvideAuth, authContext} from '@first-bank-of-change/fake-security';
+import {useProvideAuth, authContext} from '@services';
 
 // This is a simple auth service based on the code from:
 // https://reactrouter.com/web/example/auth-workflow

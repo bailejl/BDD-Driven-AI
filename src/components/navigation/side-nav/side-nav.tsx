@@ -1,10 +1,10 @@
-import { Divider, Link, List, ListItem, ListItemText, Paper } from '@material-ui/core';
+import { Divider, Link, List, ListItem, ListItemText, Paper } from '@mui/material';
 import React from 'react';
 import { Link as RouterLink, LinkProps as RouterLinkProps, useLocation } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/material/styles';
 
 import './side-nav.module.scss';
-import { useAuth } from '@first-bank-of-change/fake-security';
+import { useAuth } from '@services';
 
 interface ListItemLinkProps {
   icon?: React.ReactElement;
