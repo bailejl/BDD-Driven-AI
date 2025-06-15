@@ -15,7 +15,7 @@ jobs:
     steps:
       # Checks out a copy of your repository on the ubuntu-latest machine
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup node
         uses: actions/setup-node@v4
@@ -31,4 +31,5 @@ jobs:
         run: cd first-bank-of-change && npm install -g nx
 
       - name: Run e2e Tests
+        working-directory: ./first-bank-of-change
         run: npm run e2e-headless
