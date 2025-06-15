@@ -1,0 +1,200 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '24'
+  
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        
+    - name: Install dependencies
+      working-directory: ./first-bank-of-change
+      run: npm ci
+      
+    - name: Run unit tests
+      working-directory: ./first-bank-of-change
+      run: npm run test
+      
+    - name: Run linting
+      working-directory: ./first-bank-of-change
+      run: npm run lint
+      
+    - name: Run build
+      working-directory: ./first-bank-of-change
+      run: npm run build
+      
+    - name: Upload test coverage
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-coverage
+        path: first-bank-of-change/coverage/
+        retention-days: 7
+
+  e2e-tests:
+    runs-on: ubuntu-latest
+    needs: test
+    
+    services:
+      selenium:
+        image: selenium/standalone-chrome:latest
+        ports:
+          - 4444:4444
+          - 7900:7900
+        options: --shm-size=2gb
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        
+    - name: Install dependencies
+      working-directory: ./first-bank-of-change
+      run: npm ci
+      
+    - name: Wait for Selenium
+      run: |
+        timeout 60s bash -c 'until curl -f http://localhost:4444/wd/hub/status; do sleep 2; done'
+        
+    - name: Run E2E tests
+      working-directory: ./first-bank-of-change
+      run: npm run e2e-headless
+      env:
+        SELENIUM_HOST: localhost
+        
+    - name: Upload E2E screenshots
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: e2e-screenshots
+        path: first-bank-of-change/.tmp/
+        retention-days: 7
+
+  security-audit:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        
+    - name: Install dependencies
+      working-directory: ./first-bank-of-change
+      run: npm ci
+      
+    - name: Run security audit
+      working-directory: ./first-bank-of-change
+      run: npm audit --audit-level=high
+      
+    - name: Check for high/critical vulnerabilities
+      working-directory: ./first-bank-of-change
+      run: |
+        AUDIT_RESULT=$(npm audit --audit-level=high --json | jq '.metadata.vulnerabilities.high + .metadata.vulnerabilities.critical')
+        if [ "$AUDIT_RESULT" -gt 0 ]; then
+          echo "❌ High or critical vulnerabilities found: $AUDIT_RESULT"
+          exit 1
+        else
+          echo "✅ No high or critical vulnerabilities found"
+        fi
+
+  quality-checks:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        
+    - name: Install dependencies
+      working-directory: ./first-bank-of-change
+      run: npm ci
+      
+    - name: Check code formatting
+      working-directory: ./first-bank-of-change
+      run: npx prettier --check "**/*.{ts,tsx,js,jsx,json,md}"
+      
+    - name: Check TypeScript compilation
+      working-directory: ./first-bank-of-change
+      run: npx tsc --noEmit
+      
+    - name: Check for unused dependencies
+      working-directory: ./first-bank-of-change
+      run: npx depcheck --ignores="@types/*,@nrwl/*,@wdio/*"
+
+  parallel-upgrade-validation:
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'upgrade/')
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Validate upgrade branch
+      run: |
+        BRANCH_NAME="${GITHUB_REF##*/}"
+        echo "Validating upgrade branch: $BRANCH_NAME"
+        
+        # Check if branch follows naming convention
+        if [[ ! "$BRANCH_NAME" =~ ^upgrade\/(eslint-9|testing-framework|dev-tooling|nx-workspace|react-19)$ ]]; then
+          echo "❌ Invalid upgrade branch name. Must be one of: upgrade/eslint-9, upgrade/testing-framework, upgrade/dev-tooling, upgrade/nx-workspace, upgrade/react-19"
+          exit 1
+        fi
+        
+        # Check for progress file
+        if [ ! -f "PROGRESS_${BRANCH_NAME}.md" ]; then
+          echo "❌ Missing progress file: PROGRESS_${BRANCH_NAME}.md"
+          exit 1
+        fi
+        
+        echo "✅ Upgrade branch validation passed"
+        
+    - name: Check for upgrade conflicts
+      run: |
+        # Check if dependent branches are trying to merge before dependencies
+        BRANCH_NAME="${GITHUB_REF##*/}"
+        if [[ "$BRANCH_NAME" == "upgrade/react-19" ]]; then
+          # Check if Nx migration is complete
+          git fetch origin main
+          if ! git merge-base --is-ancestor origin/main HEAD; then
+            echo "Checking for Nx migration completion..."
+            # This would need to check if upgrade/nx-workspace has been merged
+            # For now, just warn
+            echo "⚠️ Ensure Nx migration is complete before merging React upgrade"
+          fi
+        fi
