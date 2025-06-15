@@ -30,14 +30,12 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        cache-dependency-path: 'package-lock.json'
         
     - name: Install dependencies
-      working-directory: ./first-bank-of-change
       run: npm ci
       
     - name: Run comprehensive test suite
-      working-directory: ./first-bank-of-change
       run: |
         echo "🧪 Running unit tests..."
         npm run test
@@ -49,7 +47,6 @@ jobs:
         npm run build
         
     - name: Security audit on main
-      working-directory: ./first-bank-of-change
       run: |
         echo "🔒 Running security audit..."
         npm audit --audit-level=moderate
@@ -90,10 +87,9 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        cache-dependency-path: 'package-lock.json'
         
     - name: Install dependencies
-      working-directory: ./first-bank-of-change
       run: npm ci
       
     - name: Wait for Selenium
@@ -101,8 +97,7 @@ jobs:
         timeout 60s bash -c 'until curl -f http://localhost:4444/wd/hub/status; do sleep 2; done'
         
     - name: Run E2E smoke tests
-      working-directory: ./first-bank-of-change
-      run: npm run e2e-headless
+      run: npm run e2e:headless
       env:
         SELENIUM_HOST: localhost
         
@@ -112,8 +107,8 @@ jobs:
       with:
         name: main-e2e-failure-artifacts
         path: |
-          first-bank-of-change/.tmp/
-          first-bank-of-change/allure-results/
+          .tmp/
+          allure-results/
         retention-days: 14
 
   build-and-package:
@@ -129,21 +124,19 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-        cache-dependency-path: 'first-bank-of-change/package-lock.json'
+        cache-dependency-path: 'package-lock.json'
         
     - name: Install dependencies
-      working-directory: ./first-bank-of-change
       run: npm ci
       
     - name: Build production assets
-      working-directory: ./first-bank-of-change
       run: npm run build
       
     - name: Create build artifact
       uses: actions/upload-artifact@v4
       with:
         name: production-build
-        path: first-bank-of-change/dist/
+        path: dist/
         retention-days: 30
         
     - name: Create deployment package
@@ -152,12 +145,12 @@ jobs:
         mkdir -p deployment-package
         
         # Copy build artifacts
-        cp -r first-bank-of-change/dist/ deployment-package/
+        cp -r dist/ deployment-package/
         
         # Copy deployment configuration
-        cp first-bank-of-change/package.json deployment-package/
-        cp first-bank-of-change/docker-compose.yaml deployment-package/
-        cp first-bank-of-change/npm.Dockerfile deployment-package/
+        cp package.json deployment-package/
+        cp docker-compose.yaml deployment-package/ || true
+        cp npm.Dockerfile deployment-package/ || true
         
         # Create deployment archive
         tar -czf deployment-package.tar.gz deployment-package/

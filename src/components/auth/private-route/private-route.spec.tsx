@@ -6,7 +6,7 @@ import {
   BrowserRouter as Router,
 } from "react-router-dom";
 
-import UserLanding from '../user-landing/user-landing';
+import UserLanding from '../../shared/user-landing/user-landing';
 
 describe('PrivateRoute', () => {
   it('should render successfully', () => {

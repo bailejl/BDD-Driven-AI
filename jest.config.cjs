@@ -11,7 +11,7 @@ module.exports = {
     '^.+\\.(js|jsx)$': 'babel-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  moduleNameMapping: {
+  moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@components/(.*)$': '<rootDir>/src/components/$1',
     '^@components$': '<rootDir>/src/components/index.ts',
@@ -22,7 +22,8 @@ module.exports = {
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
     '^@types/(.*)$': '<rootDir>/src/types/$1',
     '^@styles/(.*)$': '<rootDir>/src/styles/$1',
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy'
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '\\.svg\\?react$': '<rootDir>/src/__mocks__/svg-mock.js'
   },
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   collectCoverageFrom: [
