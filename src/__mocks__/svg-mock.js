@@ -1,5 +1,5 @@
-import React from 'react'
+const React = require('react')
 
-const SvgMock = (props) => <svg {...props} data-testid="svg-mock" />
+const SvgMock = (props) => React.createElement('svg', { ...props, 'data-testid': 'svg-mock' })
 
-export default SvgMock
+module.exports = SvgMock

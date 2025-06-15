@@ -1,22 +1,25 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 
 import Login from './login';
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // use actual for all non-hook parts
-  useLocation: () => ({
-    from: { pathname: "/user" },
-  }),
+// Mock the auth service
+jest.mock('@services', () => ({
+  useAuth: () => ({
+    user: null,
+    signin: jest.fn(),
+    signout: jest.fn()
+  })
 }));
-
-afterAll(() => {
-  jest.unmock('react-router-dom');
-});
 
 describe('Login', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Login />);
+    const { baseElement } = render(
+      <MemoryRouter>
+        <Login />
+      </MemoryRouter>
+    );
     expect(baseElement).toBeTruthy();
   });
 });
