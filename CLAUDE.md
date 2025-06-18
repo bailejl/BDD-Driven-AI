@@ -25,9 +25,92 @@ All commands should be run from the **root directory** (not from subdirectories)
 
 All `npm run e2e` commands automatically start the app for testing, so no need to run `npm run dev` before running the tests.
 
-- `npm run e2e` - Run full E2E test suite (requires selenium container)
+- `npm run e2e` - Run full E2E test suite with HTML server, does not exit
+- `npm run e2e:ci` - Run full E2E test suite without HTML server, exit after all tests run
 - `npm run e2e:headless` - Run E2E tests in headless mode
+- `npm run e2e:debug` - Run E2E tests with Playwright Inspector for debugging UI issues
+- `npm run e2e:ui` - Run tests with Playwright's UI mode for interactive debugging
 - `npm run snippets` - Generate Cucumber step definition snippets
+
+If you are going to manually run `npx playwright test` of any type, ensure `CI=true` is set. This cause the tests exit immeidately 
+after the tests are complete. This speeds up feedback loops.
+
+### Browser Debugging for UI Issues
+
+When working on UI issues, use the following approaches to see and interact with the browser:
+
+#### 1. Interactive Debugging Mode
+
+```bash
+# Debug all tests with browser visible
+npm run e2e:debug
+
+# Debug specific test scenarios
+npx playwright test --grep "User sees errors" --debug
+
+# Debug a specific feature file
+npx playwright test features/credit-application.feature --debug
+```
+
+This opens the Playwright Inspector where you can:
+- Step through each test action
+- See the browser window
+- Inspect elements and selectors
+- Take screenshots at any point
+- Modify timeouts on the fly
+
+#### 2. UI Mode for Visual Testing
+
+```bash
+# Run in UI mode for a visual test runner
+npm run e2e:ui
+```
+
+This provides:
+- Visual test tree
+- Live browser preview
+- Test execution timeline
+- Error traces with screenshots
+- Time-travel debugging
+
+#### 3. Headed Mode (Browser Always Visible)
+
+```bash
+# Run tests with browser visible (not in debug mode)
+npx playwright test --headed
+
+# Run specific browser
+npx playwright test --headed --project=chromium
+```
+
+#### 4. Taking Screenshots for Analysis
+
+Add these to your test code when debugging:
+
+```typescript
+// Take a screenshot at any point
+await page.screenshot({ path: 'screenshots/debug-issue.png' });
+
+// Take full page screenshot
+await page.screenshot({ path: 'screenshots/full-page.png', fullPage: true });
+
+// Screenshot specific element
+await page.locator('.error-message').screenshot({ path: 'screenshots/error.png' });
+```
+
+#### 5. Slow Down Execution
+
+```bash
+# Slow down execution to see what's happening
+npx playwright test --headed --slow-mo=1000  # 1 second delay between actions
+```
+
+#### 6. Browser Developer Tools
+
+```typescript
+// Pause test and open DevTools
+await page.pause();  // This will pause execution and let you inspect
+```
 
 ### Dependencies
 
@@ -108,7 +191,7 @@ npm run test
 npm run lint
 
 # 3. ALWAYS run E2E tests - NO EXCEPTIONS
-npm run e2e:headless
+npm run e2e:ci
 ```
 
 ### Workflow Enforcement Rules
@@ -117,7 +200,7 @@ npm run e2e:headless
 2. **NEVER skip this workflow** - even for "small changes" or "quick fixes"
 3. **ALWAYS run the full test suite** - no selective testing
 4. **ALWAYS verify quality standards** - no exceptions for any file type
-5. **ALWAYS verify e2e before a push** ensure `npm run e2e:headless` passes from the root directory
+5. **ALWAYS verify e2e before a push** ensure `npm run e2e:ci` passes from the root directory
 
 ### Quality Gates - ALL Must Pass
 
@@ -394,6 +477,31 @@ Here is an example of features test data used by the `features` test suite. This
       "monthlyIncome": 50000
   }
 ]
+```
+
+## Claude Code Browser Usage
+
+When Claude Code needs to debug UI issues, it can:
+
+1. **Launch a visible browser** using `npm run e2e:debug` or `npx playwright test --headed`
+2. **Take screenshots** during test execution to analyze UI problems
+3. **Use the Read tool** to view screenshot files and understand visual issues
+4. **Add pause points** in tests to inspect the browser state
+
+Example workflow for Claude Code to debug UI issues:
+
+```bash
+# 1. Start the dev server (if needed)
+npm run dev
+
+# 2. Run specific test in debug mode
+npx playwright test --grep "failing test name" --debug --project=chromium
+
+# 3. Or take screenshots in the test code
+await page.screenshot({ path: 'debug-screenshot.png' });
+
+# 4. Use Read tool to view the screenshot
+# Claude Code can then analyze the visual state
 ```
 
 ## Implementation Priority

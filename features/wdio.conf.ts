@@ -316,6 +316,7 @@ export const config = {
         logConsoleOutput(false);
         logs.reset();
         // Clear any existing data in the data manager, so we start new
+        console.log("clear cache")
         dataManager.clearCache();
     },
     /**

@@ -19,7 +19,20 @@
       "Bash(npm install:*)",
       "Bash(npm test)",
       "Bash(npm:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(git push:*)",
+      "Bash(npx playwright:*)",
+      "Bash(TS_NODE_PROJECT=features/support/tsconfig.json npx cucumber-js --config features/cucumber.config.cjs --dry-run)",
+      "Bash(TS_NODE_PROJECT=features/support/tsconfig.json npx cucumber-js --config features/cucumber.config.cjs --dry-run --verbose)",
+      "Bash(TS_NODE_PROJECT=features/support/tsconfig.json npx cucumber-js --config features/cucumber.config.cjs --dry-run --tags \"@wip or not @wip\" --format progress)",
+      "Bash(node:*)",
+      "Bash(nvm use:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx cucumber-js:*)",
+      "Bash(sed:*)",
+      "WebFetch(domain:vitalets.github.io)",
+      "WebFetch(domain:github.com)",
+      "Bash(npx:*)"
     ],
     "deny": []
   }

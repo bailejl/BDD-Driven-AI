@@ -1,8 +1,6 @@
 import React from 'react';
 import { Button, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { makeStyles } from '@mui/styles';
-
 
 import {
   useNavigate,
@@ -21,20 +19,12 @@ export function AuthButton(props: AuthButtonProps) {
   const auth = useAuth();
   const theme = useTheme();
 
-  const butonTheme = {
-    color: theme.palette.primary.contrastText
-  }
-  const useStyles = makeStyles({
-    contrastColor: {
-      color: theme.palette.primary.contrastText,
-    },
-  });
-
-  const classes = useStyles();
-
   return auth != null && auth.user ? (
     <div style={{ display: 'flex' }}>
-      <Button id="signout-button" aria-label="person" className={classes.contrastColor}
+      <Button 
+        id="signout-button" 
+        aria-label="person" 
+        style={{ color: theme.palette.primary.contrastText }}
         onClick={() => {
           auth.signout(() => navigate("/"));
         }}>
@@ -43,7 +33,10 @@ export function AuthButton(props: AuthButtonProps) {
     </div>
   ) : (
       <div style={{ display: 'flex' }}>
-        <Button id="signin-button" aria-label="person" className={classes.contrastColor}
+        <Button 
+          id="signin-button" 
+          aria-label="person" 
+          style={{ color: theme.palette.primary.contrastText }}
           onClick={() => {
             navigate("/login")
           }}>

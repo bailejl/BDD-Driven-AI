@@ -36,7 +36,7 @@ export function CreditFormComplete(props: CreditFormCompleteProps) {
     msg = 'Sorry, our systems are unavailable at this time. We will email your credit card status later.';
   } else {
     title = 'Sorry to inform you...';
-    msg = 'Your application cannot proceed.  We will mail you a detailed letter.';
+    msg = 'Your application cannot proceed. We will mail you a detailed letter.';
   }
 
   return (

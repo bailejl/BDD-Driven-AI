@@ -1,5 +1,4 @@
 import { Given, When, Then } from '@cucumber/cucumber';
-import dataManager from '../data/data-manager';
 import { default as creditFormPage,  FormSections } from '../pageobjects/credit-form.page';
 
 const sectionNameMap = {
@@ -8,7 +7,7 @@ const sectionNameMap = {
     "financial information": FormSections.Financial,
 }
 
-Given(/^"(.*)" fills out the form with their information$/, (userNameAlias:string) => {
+Given(/^"(.*)" fills out the form with their information$/, ({dataManager}, userNameAlias:string) => {
     const userData = dataManager.getData(userNameAlias);
     creditFormPage.open();
     creditFormPage.filloutForm(userData);

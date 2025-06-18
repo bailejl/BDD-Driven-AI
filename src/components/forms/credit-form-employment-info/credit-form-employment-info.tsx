@@ -37,9 +37,10 @@ const schema = yup.object().shape({
 
 // This creates the employment section of the new creadit card application form
 export function CreditFormEmploymentInfo(props: CreditFormEmploymentInfoProps) {
-  const { register, handleSubmit, setValue, errors } = useForm<EmploymentInputs>({
+  const { register, handleSubmit, setValue, formState } = useForm<EmploymentInputs>({
     resolver: yupResolver(schema),
   });
+  const { errors = {} } = formState || {};
   const formData = useFormData();
   const navigate = useNavigate();
   const [countryOfCitizenShip, setCountryOfCitizenShip] = React.useState('');
@@ -380,42 +381,57 @@ export function CreditFormEmploymentInfo(props: CreditFormEmploymentInfoProps) {
         <FormHelperText>{errors.countryOfCitizenShip?.message}</FormHelperText>
         </FormControl>
 
-        <TextField name="currentEmployerName" required id="standard-required" label="Employer Name"
+        <TextField 
+          {...register("currentEmployerName")}
+          required 
+          id="standard-required" 
+          label="Employer Name"
           style={{ display: 'flex', margin: '0 0 25px 0' }}
-          inputRef={register({ required: true })}
           error={errors.currentEmployerName?.message !== undefined}
           helperText={errors.currentEmployerName?.message}
-          value={cachedData.currentEmployerName}
+          defaultValue={cachedData.currentEmployerName}
         />
-        <TextField name="workPhone" required id="standard-required" label="Work Phone"
+        <TextField 
+          {...register("workPhone")}
+          required 
+          id="standard-required" 
+          label="Work Phone"
           style={{ display: 'flex', margin: '0 0 25px 0' }}
-          inputRef={register({ required: true })}
           error={errors.workPhone?.message !== undefined}
           helperText={errors.workPhone?.message}
-          value={cachedData.workPhone}
+          defaultValue={cachedData.workPhone}
         />
         <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row' }}>
-          <TextField name="yearsEmployed" required id="standard-required" label="Years Employed"
+          <TextField 
+            {...register("yearsEmployed")}
+            required 
+            id="standard-required" 
+            label="Years Employed"
             style={{ display: 'flex', margin: '0 0 25px 0' }}
-            inputRef={register({ required: true })}
             error={errors.yearsEmployed?.message !== undefined}
             helperText={errors.yearsEmployed?.message}
-            value={cachedData.yearsEmployed}
+            defaultValue={cachedData.yearsEmployed}
           />
-          <TextField name="monthsEmployed" required id="standard-required" label="Months Employed"
+          <TextField 
+            {...register("monthsEmployed")}
+            required 
+            id="standard-required" 
+            label="Months Employed"
             style={{ display: 'flex', margin: '0 0 25px 0' }}
-            inputRef={register({ required: true })}
             error={errors.monthsEmployed?.message !== undefined}
             helperText={errors.monthsEmployed?.message}
-            value={cachedData.monthsEmployed}
+            defaultValue={cachedData.monthsEmployed}
           />
         </div>
-        <TextField name="occupation" required id="standard-required" label="Occupation"
+        <TextField 
+          {...register("occupation")}
+          required 
+          id="standard-required" 
+          label="Occupation"
           style={{ display: 'flex', margin: '0 0 25px 0' }}
-          inputRef={register({ required: true })}
           error={errors.occupation?.message !== undefined}
           helperText={errors.occupation?.message}
-          value={cachedData.occupation}
+          defaultValue={cachedData.occupation}
         />
         <div style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'row' }}>
           <Button variant="contained">
