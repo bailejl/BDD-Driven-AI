@@ -33,9 +33,10 @@ export interface CreditFormFinancialInfoProps { }
 
 // Generates the financial info part of the new credit card application form
 export function CreditFormFinancialInfo(props: CreditFormFinancialInfoProps) {
-  const { register, handleSubmit, errors } = useForm<FinancialInputs>({
+  const { register, handleSubmit, formState } = useForm<FinancialInputs>({
     resolver: yupResolver(schema),
   });
+  const { errors = {} } = formState || {};
   const formData = useFormData();
   const navigate = useNavigate();
 
@@ -58,40 +59,55 @@ export function CreditFormFinancialInfo(props: CreditFormFinancialInfoProps) {
       </Typography>
       <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}
         style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
-        <TextField name="monthlyIncome" required id="standard-required" label="Monthly Income"
+        <TextField 
+          {...register("monthlyIncome")}
+          required 
+          id="standard-required" 
+          label="Monthly Income"
           style={{ display: 'flex', margin: '10px 0 25px 0' }}
-          inputRef={register({ required: true })}
           error={errors.monthlyIncome?.message !== undefined}
           helperText={errors.monthlyIncome?.message}
-          value={cachedData.monthlyIncome}
+          defaultValue={cachedData.monthlyIncome}
         />
-        <TextField name="monthlyHousingPayment" required id="standard-required" label="Monthly Housing Cost"
+        <TextField 
+          {...register("monthlyHousingPayment")}
+          required 
+          id="standard-required" 
+          label="Monthly Housing Cost"
           style={{ display: 'flex', margin: '0 0 25px 0' }}
-          inputRef={register({ required: true })}
           error={errors.monthlyHousingPayment?.message !== undefined}
           helperText={errors.monthlyHousingPayment?.message}
-          value={cachedData.monthlyHousingPayment}
+          defaultValue={cachedData.monthlyHousingPayment}
         />
-        <TextField name="checkingAmount" required id="standard-required" label="Amount in Checking"
+        <TextField 
+          {...register("checkingAmount")}
+          required 
+          id="standard-required" 
+          label="Amount in Checking"
           style={{ display: 'flex', margin: '0 0 25px 0' }}
-          inputRef={register({ required: true })}
           error={errors.checkingAmount?.message !== undefined}
           helperText={errors.checkingAmount?.message}
-          value={cachedData.checkingAmount}
+          defaultValue={cachedData.checkingAmount}
         />
-        <TextField name="savingsAmount" required id="standard-required" label="Amount in Savings"
+        <TextField 
+          {...register("savingsAmount")}
+          required 
+          id="standard-required" 
+          label="Amount in Savings"
           style={{ display: 'flex', margin: '0 0 25px 0' }}
-          inputRef={register({ required: true })}
           error={errors.savingsAmount?.message !== undefined}
           helperText={errors.savingsAmount?.message}
-          value={cachedData.savingsAmount}
+          defaultValue={cachedData.savingsAmount}
         />
-        <TextField name="investmentsAmount" required id="standard-required" label="Amount in Investments"
+        <TextField 
+          {...register("investmentsAmount")}
+          required 
+          id="standard-required" 
+          label="Amount in Investments"
           style={{ display: 'flex', margin: '0 0 25px 0' }}
-          inputRef={register({ required: true })}
           error={errors.investmentsAmount?.message !== undefined}
           helperText={errors.investmentsAmount?.message}
-          value={cachedData.investmentsAmount}
+          defaultValue={cachedData.investmentsAmount}
         />
         <div style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'row' }}>
           {/* <Button variant="contained">

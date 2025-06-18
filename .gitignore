@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+/build
 
 # dependencies
 /node_modules
@@ -47,3 +48,9 @@ Thumbs.db
 
 # Backup directory
 .backup/
+
+# e2e reports
+/.tmp
+/test-results
+/playwright-report
+/.features-gen

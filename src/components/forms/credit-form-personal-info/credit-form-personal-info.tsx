@@ -35,9 +35,10 @@ export interface CreditFormPersonalInfoProps { }
 
 // Creates the personal info section of the new credit card application form
 export function CreditFormPersonalInfo(props: CreditFormPersonalInfoProps) {
-  const { register, handleSubmit, setValue, errors } = useForm<PersonalInputs>({
+  const { register, handleSubmit, setValue, formState } = useForm<PersonalInputs>({
     resolver: yupResolver(schema),
   });
+  const { errors = {} } = formState || {};
   const formData = useFormData();
   const navigate = useNavigate();
 
@@ -74,26 +75,35 @@ export function CreditFormPersonalInfo(props: CreditFormPersonalInfoProps) {
       </Typography>
       <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}
         style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
-        <TextField name="firstName" required id="first-name" label="First Name"
+        <TextField 
+          {...register("firstName")}
+          required 
+          id="first-name" 
+          label="First Name"
           style={{ display: 'flex', margin: '10px 0 25px 0' }}
-          inputRef={register({ required: true })}
           error={errors.firstName?.message !== undefined}
           helperText={errors.firstName?.message}
-          value={cachedData.firstName}
+          defaultValue={cachedData.firstName}
         />
-        <TextField name="middleInitial" required id="middle-initial" label="Middle Initial"
+        <TextField 
+          {...register("middleInitial")}
+          required 
+          id="middle-initial" 
+          label="Middle Initial"
           style={{ display: 'flex', margin: '0 0 25px 0' }}
-          inputRef={register({ required: true })}
           error={errors.middleInitial?.message !== undefined}
           helperText={errors.middleInitial?.message}
-          value={cachedData.middleInitial}
+          defaultValue={cachedData.middleInitial}
         />
-        <TextField name="lastName" required id="last-name" label="Last Name"
+        <TextField 
+          {...register("lastName")}
+          required 
+          id="last-name" 
+          label="Last Name"
           style={{ display: 'flex', margin: '0 0 25px 0' }}
-          inputRef={register({ required: true })}
           error={errors.lastName?.message !== undefined}
           helperText={errors.lastName?.message}
-          value={cachedData.lastName}
+          defaultValue={cachedData.lastName}
         />
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
@@ -113,12 +123,15 @@ export function CreditFormPersonalInfo(props: CreditFormPersonalInfoProps) {
             }}
           />
         </LocalizationProvider>
-        <TextField name="ssn" required id="ssn" label="SSN"
+        <TextField 
+          {...register("ssn")}
+          required 
+          id="ssn" 
+          label="SSN"
           style={{ display: 'flex', margin: '0 0 25px 0' }}
-          inputRef={register({ required: true })}
           error={errors.ssn?.message !== undefined}
           helperText={errors.ssn?.message}
-          value={cachedData.ssn}
+          defaultValue={cachedData.ssn}
         />
         <div style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'row' }}>
           <Button variant="contained">
