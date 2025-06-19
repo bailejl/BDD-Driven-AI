@@ -100,7 +100,7 @@ describe('AuthButton', () => {
   })
 
   it('should handle missing auth context gracefully', () => {
-    useAuth.mockReturnValue(null)
+    mockUseAuth.mockReturnValue(null)
 
     const { baseElement } = render(
       <MemoryRouter>
