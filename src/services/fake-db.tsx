@@ -1,4 +1,4 @@
-import { useContext, createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { v4 as uuid } from 'uuid';
 import { ApplicationData } from "./application-data";
 
@@ -10,9 +10,7 @@ export interface DBContextType {
 
 export const dbContext = createContext<DBContextType | null>(null);
 
-export const useDB = () => {
-  return useContext(dbContext)
-}
+export const useDB = () => useContext(dbContext)
 
 // Emulates a simple DB for app data and provided via a hook.
 export const useProviderDB = () => {
@@ -28,9 +26,7 @@ export const useProviderDB = () => {
   }
 
   const deleteApplication = (deleteApp: ApplicationData) => {
-    const newAppData = applications.filter((app) => {
-      return deleteApp && deleteApp.id && app.id === deleteApp.id;
-    })
+    const newAppData = applications.filter((app) => deleteApp && deleteApp.id && app.id === deleteApp.id)
     setApplciations(newAppData);
   }
 

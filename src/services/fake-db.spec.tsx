@@ -1,7 +1,6 @@
-import { renderHook, act } from '@testing-library/react'
+import { act, renderHook } from '@testing-library/react'
 import { useProviderDB } from './fake-db'
-import { createApplicationData } from './application-data'
-import { ApplicationData } from './application-data'
+import { ApplicationData, createApplicationData } from './application-data'
 
 // Mock uuid to return predictable IDs
 let uuidCounter = 0

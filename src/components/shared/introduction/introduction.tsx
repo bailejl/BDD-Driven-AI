@@ -11,10 +11,10 @@ export interface IntroductionProps { }
 
 // This is the first page to introduce people to the demo, so 
 // they get the most out of it.
-export const Introduction = () => {
+export const Introduction = () => 
   // Removed useHistory as it's no longer needed
 
-  return (
+   (
     <div style={{ display: 'flex', flexGrow: 1 }}>
       <Box display="flex" flexDirection="column">
         <Typography id="title" variant="h4" style={{ display: 'flex', justifyContent: 'center' }} >
@@ -25,7 +25,7 @@ export const Introduction = () => {
           credit card application form.  Several declarative Gherkin examples use simplistic examples,
           which fail for more complex situations.  Thus, this example has a good amount of data and
           pages, which creates a complex set of behaviors.  Even with these complexities, the declarative
-          Gherkin remain concise and easy to understand.  Let's look at how this web-based system
+          Gherkin remain concise and easy to understand.  Let&apos;s look at how this web-based system
           works.
         </Typography>
         <Typography id="application-title" variant="h5" style={{ display: 'flex' }}>
@@ -44,7 +44,7 @@ export const Introduction = () => {
           Using the App
         </Typography>
         <Typography variant="body1">
-          To login as a user, use any username, except "admin" with the password "GhekinIsFun".
+          To login as a user, use any username, except &quot;admin&quot; with the password &quot;GhekinIsFun&quot;.
           <Link component={RouterLink} to="/user"
             style={{ display: 'flex' }}>
             Go to User Homepage
@@ -63,10 +63,10 @@ export const Introduction = () => {
           <li>Industry/Corporate Terms Wiki</li>
           <li>Cucumber Logging</li>
         </ul>
-        Please read "docs/declarative-gherkin.md" for more details.
+        Please read &quot;docs/declarative-gherkin.md&quot; for more details.
       </Box>
     </div>
-  );
-}
+  )
+
 
 export default Introduction;

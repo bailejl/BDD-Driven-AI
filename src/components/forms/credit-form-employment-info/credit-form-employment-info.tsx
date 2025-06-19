@@ -1,4 +1,4 @@
-import { useFormData, createApplicationData } from '@services';
+import { createApplicationData, useFormData } from '@services';
 import { Button, FormControl, FormHelperText, InputLabel, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { useForm } from "react-hook-form";
@@ -131,7 +131,7 @@ export const CreditFormEmploymentInfo = () => {
           <option value='CN'>China</option>
           <option value='CO'>Colombia</option>
           <option value='CR'>Costa Rica</option>
-          <option value='CI'>Côte D' Ivoire</option>
+          <option value='CI'>Côte D&apos; Ivoire</option>
           <option value='HR'>Croatia</option>
           <option value='CU'>Cuba</option>
           <option value='CY'>Cyprus</option>
@@ -271,7 +271,7 @@ export const CreditFormEmploymentInfo = () => {
           <option value='CN'>China</option>
           <option value='CO'>Colombia</option>
           <option value='CR'>Costa Rica</option>
-          <option value='CI'>Côte D' Ivoire</option>
+          <option value='CI'>Côte D&apos; Ivoire</option>
           <option value='HR'>Croatia</option>
           <option value='CU'>Cuba</option>
           <option value='CY'>Cyprus</option>

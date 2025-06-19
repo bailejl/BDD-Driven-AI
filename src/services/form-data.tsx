@@ -1,4 +1,4 @@
-import { useContext, createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { ApplicationData, createApplicationData } from "./application-data";
 import * as userData from "./user-data.json";
 
@@ -17,9 +17,7 @@ export const formDataContext = createContext<FormDataContextType | null>(null);
   valid for the next stage of processing
 */
 
-export const useFormData = () => {
-  return useContext(formDataContext)
-}
+export const useFormData = () => useContext(formDataContext)
 
 interface UserData {
   creditScore: number
@@ -57,17 +55,11 @@ export const useProviderFormData = () => {
     const newData = Object.assign(data, dataFragment);
     return setData(newData);
   }
-  const isValid = () => {
-    return Object.keys(data).every((key) => {
-      return (data as unknown as Record<string, unknown>)[key] !== undefined 
+  const isValid = () => Object.keys(data).every((key) => (data as unknown as Record<string, unknown>)[key] !== undefined 
       || key === 'countryOfCitizenShipSecondary' 
-      || key === 'id';
-    })
-  }
-  const isApproved = () => {
-    return isAcceptableCreditScore(data) 
-    && isAcceptableBackEndRatio(data) 
-  }
+      || key === 'id')
+  const isApproved = () => isAcceptableCreditScore(data) 
+    && isAcceptableBackEndRatio(data)
   return {
     data,
     appendFormData,

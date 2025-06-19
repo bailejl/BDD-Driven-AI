@@ -12,11 +12,9 @@ jest.mock('@services', () => ({
 }));
 
 // Mock UserLanding to avoid complex routing issues
-jest.mock('../../shared/user-landing/user-landing', () => {
-  return function MockUserLanding() {
+jest.mock('../../shared/user-landing/user-landing', () => function MockUserLanding() {
     return <div data-testid="mock-user-landing">User Landing</div>;
-  };
-});
+  });
 
 const MockUserLanding = () => <div data-testid="mock-user-landing">User Landing</div>;
 

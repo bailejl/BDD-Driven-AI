@@ -10,8 +10,7 @@ import './admin-landing.module.scss';
 export interface AdminLandingProps {}
 
 // Admin landing is not being used, may be used in the future.
-export const AdminLanding = () => {
-  return (
+export const AdminLanding = () => (
     <div>
       <h1>Welcome to admin-landing!</h1>
       <Typography variant="body2">
@@ -22,7 +21,6 @@ export const AdminLanding = () => {
         </Typography>
 
     </div>
-  );
-}
+  )
 
 export default AdminLanding;
