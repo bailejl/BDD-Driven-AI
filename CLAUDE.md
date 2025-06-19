@@ -2,120 +2,130 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Table of Contents
+
+1. [Project Overview](#project-overview)
+2. [🚨 MANDATORY WORKFLOW - NO EXCEPTIONS 🚨](#-mandatory-workflow---no-exceptions-)
+3. [Commands](#commands)
+4. [Development Approach](#development-approach)
+5. [Architecture](#architecture)
+6. [Technical Constraints](#technical-constraints)
+7. [Implementation Process - ATDD Workflow](#implementation-process---atdd-workflow)
+8. [Testing and Debugging](#testing-and-debugging)
+9. [Success Criteria](#success-criteria)
+10. [Important Instruction Reminders](#important-instruction-reminders)
+
 ## Project Overview
 
 This is a Declarative Gherkin training project built with React, TypeScript, and Cucumber. It demonstrates how to write concise, business-readable test scenarios using the Declarative Gherkin methodology. The project uses a fictional "First Bank of Change" credit application as the demo application.
+
+## 🚨 MANDATORY WORKFLOW - NO EXCEPTIONS 🚨
+
+**CRITICAL**: After EVERY single code change, you MUST run both test and quality scripts. This is NON-NEGOTIABLE.
+
+### Required Commands After Every Change
+
+All commands should be run from the **root directory**:
+
+```bash
+# 1. ALWAYS run tests first - NO EXCEPTIONS. CRITCAL - Check for warnings in logs and fix them. Ensure we have 90% or better coverage.
+npm run test -- --coverage --verbose=false
+
+# 2. ALWAYS run quality checks - NO EXCEPTIONS
+npm run lint
+
+# 3. ALWAYS run E2E tests - NO EXCEPTIONS
+npm run e2e:ci
+```
+
+### Workflow Enforcement Rules
+
+1. **NEVER proceed to the next task** until both `npm run test` and `npm run lint` pass from the root directory
+2. **NEVER skip this workflow** - even for "small changes" or "quick fixes"
+3. **ALWAYS run the full test suite** - no selective testing
+4. **ALWAYS verify quality standards** - no exceptions for any file type
+5. **ALWAYS verify e2e before a push** ensure `npm run e2e:ci` passes from the root directory
+
+### Quality Gates - ALL Must Pass
+
+- ✅ **All tests pass**: `npm run test` returns success
+- ✅ **No linting errors**: ESLint finds no issues
+- ✅ **Build succeeds**: `npm run build` completes successfully
+- ✅ **Type checking passes**: `npm run type-check` finds no errors
+- ✅ **Functional patterns**: Code follows functional programming constraints
+- ✅ **No Wanrings**: check logs of the Quality Gate processes and ensure there are no logs. CRITICAL - treat warning like errors.
+
+### Failure Response Protocol
+
+If ANY quality gate fails:
+
+1. **STOP** all other work immediately
+2. **FIX** the failing quality check first
+3. **RE-RUN** both test and quality scripts
+4. **ONLY THEN** proceed with next task
 
 ## Commands
 
 All commands should be run from the **root directory** (not from subdirectories):
 
-### Development
+### Development Commands
 
+- `npm install` - Install Node.js dependencies
 - `npm run dev` - Start the React app with Vite (accessible at <http://localhost:4200>)
 - `npm run build` - Build the application for production
 - `npm run preview` - Preview the production build
+
+### Testing Commands
+
+#### Unit Testing
+
 - `npm run test` - Run all unit tests with Jest
 - `npm run test:watch` - Run tests in watch mode
-- `npm run lint` - Run linting checks with ESLint
-- `npm run lint:fix` - Fix auto-fixable linting issues
-- `npm run type-check` - Run TypeScript type checking
 
-### E2E Testing
+#### E2E Testing
 
 All `npm run e2e` commands automatically start the app for testing, so no need to run `npm run dev` before running the tests.
 
-- `npm run e2e` - Run full E2E test suite with HTML server, does not exit. IMPORTANT, never run `npm run e2e` as it does not exit after tests are done. Run `npm run e2e:ci`, as it exits immediately after the tests complete.
-- `npm run e2e:ci` - Run full E2E test suite without HTML server, exit after all tests run
+- `npm run e2e:ci` - Run full E2E test suite without HTML server, exit after all tests run (**RECOMMENDED FOR CI**)
+- `npm run e2e` - Run full E2E test suite with HTML server, does not exit. **IMPORTANT**: never run `npm run e2e` as it does not exit after tests are done
 - `npm run e2e:debug` - Run E2E tests with Playwright Inspector for debugging UI issues
 - `npm run e2e:ui` - Run tests with Playwright's UI mode for interactive debugging
 - `npm run snippets` - Generate Cucumber step definition snippets
 
-If you are going to manually run `npx playwright test` of any type, ensure `CI=true` is set. This cause the tests exit immediately
-after the tests are complete. This speeds up feedback loops.
+**Note**: If you are going to manually run `npx playwright test` of any type, ensure `CI=true` is set. This causes the tests to exit immediately after completion, speeding up feedback loops.
 
-### Browser Debugging for UI Issues
+### Quality Assurance Commands
 
-When working on UI issues, use the following approaches to see and interact with the browser:
+- `npm run lint` - Run linting checks with ESLint
+- `npm run lint:fix` - Fix auto-fixable linting issues
+- `npm run type-check` - Run TypeScript type checking
 
-#### 1. Interactive Debugging Mode
+## Development Approach
 
-```bash
-# Debug all tests with browser visible
-npm run e2e:debug
+**IMPORTANT**: This project uses Acceptance Test Driven Development (ATDD) with Playwright-BDD/Playwright. Before implementing any feature:
 
-# Debug specific test scenarios
-npx playwright test --grep "User sees errors" --debug
+1. **Read the feature specifications** in `features/*.feature`
+2. **Write Cucumber acceptance tests** that describe the expected behavior in BDD style
+3. **Implement features to satisfy the acceptance tests**
+4. **Validate each test passes** before moving to the next
+5. **Reference the feature file continuously** during development to ensure requirements are met
 
-# Debug a specific feature file
-npx playwright test features/credit-application.feature --debug
-```
+The feature file contains comprehensive Gherkin scenarios that define the expected behavior. Translate these into Playwright-BDD/Playwright as executable specifications.
 
-This opens the Playwright Inspector where you can:
-- Step through each test action
-- See the browser window
-- Inspect elements and selectors
-- Take screenshots at any point
-- Modify timeouts on the fly
-
-#### 2. UI Mode for Visual Testing
-
-```bash
-# Run in UI mode for a visual test runner
-npm run e2e:ui
-```
-
-This provides:
-- Visual test tree
-- Live browser preview
-- Test execution timeline
-- Error traces with screenshots
-- Time-travel debugging
-
-#### 3. Headed Mode (Browser Always Visible)
-
-```bash
-# Run tests with browser visible (not in debug mode)
-npx playwright test --headed
-
-# Run specific browser
-npx playwright test --headed --project=chromium
-```
-
-#### 4. Taking Screenshots for Analysis
-
-Add these to your test code when debugging:
-
-```typescript
-// Take a screenshot at any point
-await page.screenshot({ path: 'screenshots/debug-issue.png' });
-
-// Take full page screenshot
-await page.screenshot({ path: 'screenshots/full-page.png', fullPage: true });
-
-// Screenshot specific element
-await page.locator('.error-message').screenshot({ path: 'screenshots/error.png' });
-```
-
-#### 5. Slow Down Execution
-
-```bash
-# Slow down execution to see what's happening
-npx playwright test --headed --slow-mo=1000  # 1 second delay between actions
-```
-
-#### 6. Browser Developer Tools
-
-```typescript
-// Pause test and open DevTools
-await page.pause();  // This will pause execution and let you inspect
-```
-
-### Dependencies
-
-- `npm install` - Install Node.js dependencies
+**All development must satisfy the acceptance criteria defined in the feature files.**
 
 ## Architecture
+
+### Technology Stack
+
+- **React 19**: Latest React with modern patterns
+- **TypeScript 5**: Full type safety
+- **Material-UI v6**: UI component library with Emotion styling
+- **React Router v7**: Client-side routing
+- **Vite**: Build tool and development server
+- **Jest**: Unit testing framework
+- **Playwright**: E2E testing framework
+- **Cucumber**: BDD testing with Gherkin syntax
 
 ### Core Structure
 
@@ -126,7 +136,7 @@ await page.pause();  // This will pause execution and let you inspect
 
 ### Directory Structure
 
-```
+```text
 src/
 ├── components/          # Feature-organized React components
 │   ├── auth/           # Authentication components (login, private routes)
@@ -173,64 +183,6 @@ Test scenarios use personas with descriptive aliases like:
 
 This allows tests to be self-documenting and business-readable while referencing specific test data configurations.
 
-## 🚨 MANDATORY WORKFLOW - NO EXCEPTIONS 🚨
-
-**CRITICAL**: After EVERY single code change, you MUST run both test and quality scripts. This is NON-NEGOTIABLE.
-
-### Required Commands After Every Change
-
-All commands should be run from the **root directory**:
-
-```bash
-# 1. ALWAYS run tests first - NO EXCEPTIONS. CRITCAL - Check for warnings in logs and fix them. Ensure we have 90% or better coverage.
-npm run test -- --coverage --verbose=false
-
-# 2. ALWAYS run quality checks - NO EXCEPTIONS
-npm run lint
-
-# 3. ALWAYS run E2E tests - NO EXCEPTIONS
-npm run e2e:ci
-```
-
-### Workflow Enforcement Rules
-
-1. **NEVER proceed to the next task** until both `npm run test` and `npm run lint` pass from the root directory
-2. **NEVER skip this workflow** - even for "small changes" or "quick fixes"
-3. **ALWAYS run the full test suite** - no selective testing
-4. **ALWAYS verify quality standards** - no exceptions for any file type
-5. **ALWAYS verify e2e before a push** ensure `npm run e2e:ci` passes from the root directory
-
-### Quality Gates - ALL Must Pass
-
-- ✅ **All tests pass**: `npm run test` returns success
-- ✅ **No linting errors**: ESLint finds no issues
-- ✅ **Build succeeds**: `npm run build` completes successfully
-- ✅ **Type checking passes**: `npm run type-check` finds no errors
-- ✅ **Functional patterns**: Code follows functional programming constraints
-
-### Failure Response Protocol
-
-If ANY quality gate fails:
-
-1. **STOP** all other work immediately
-2. **FIX** the failing quality check first
-3. **RE-RUN** both test and quality scripts
-4. **ONLY THEN** proceed with next task
-
-## Development Approach
-
-**IMPORTANT**: This project uses Acceptance Test Driven Development (ATDD) with Playwright-BDD/Playwright. Before implementing any feature:
-
-1. **Read the feature specifications** in `features/*.feature`
-2. **Write Cucumber acceptance tests** that describe the expected behavior in BDD style
-3. **Implement features to satisfy the acceptance tests**
-4. **Validate each test passes** before moving to the next
-5. **Reference the feature file continuously** during development to ensure requirements are met
-
-The feature file contains comprehensive Gherkin scenarios that define the expected behavior. Translate these into Playwright-BDD/Playwright as executable specifications.
-
-**All development must satisfy the acceptance criteria defined in the feature files.**
-
 ## Technical Constraints
 
 ### Code Style Requirements
@@ -238,7 +190,7 @@ The feature file contains comprehensive Gherkin scenarios that define the expect
 - **MANDATORY**: Use vanilla TypeScript
 - **MANDATORY**: Implement functional programming patterns throughout
 - **MANDATORY**: Use arrow functions exclusively for function definitions
-- **MANDATORY**: Avoid classes - use factory functions and closures instead (code uner `features` is acceptable for testing)
+- **MANDATORY**: Avoid classes - use factory functions and closures instead (code under `features` is acceptable for testing)
 - **MANDATORY**: Markdown formatting rules: use Markdown for documentation, no HTML tags
 - **MANDATORY**: Markdown needs to be markdownlint compliant with the default rules
 - **NO SEMICOLONS** (enforced by Prettier configuration)
@@ -251,17 +203,6 @@ The feature file contains comprehensive Gherkin scenarios that define the expect
 - No var declarations
 - Consistent arrow function spacing
 - No duplicate imports
-
-### Technology Stack
-
-- **React 19**: Latest React with modern patterns
-- **TypeScript 5**: Full type safety
-- **Material-UI v6**: UI component library with Emotion styling
-- **React Router v7**: Client-side routing
-- **Vite**: Build tool and development server
-- **Jest**: Unit testing framework
-- **Playwright**: E2E testing framework
-- **Cucumber**: BDD testing with Gherkin syntax
 
 ## Implementation Process - ATDD Workflow
 
@@ -294,20 +235,37 @@ For each feature in `features/*.feature`:
 - Verify edge cases mentioned in the feature scenarios
 - Confirm the implementation matches the expected behavior exactly
 
-## Success Criteria
+### Implementation Priority
 
-The application should satisfy ALL scenarios in `features/*.feature`:
+**CRITICAL**: Follow ATDD methodology strictly:
 
-**Each scenario must pass its acceptance criteria before the feature is considered complete.**
+1. **Start by reading** a feature file completely from `features/*.feature`
+2. **Implement scenarios in order** as listed in the feature file
+3. **Do not proceed** to the next scenario until the current one passes
+4. **Reference the feature file continuously** during implementation
+5. **Validate behavior** matches the Gherkin scenarios exactly
 
-## Acceptance Test Setup
+All implementation must:
 
-### Prerequisites for E2E Testing
+- **Satisfy the acceptance criteria** in the feature file scenarios
+- Use functional programming patterns exclusively
+- Include comprehensive error handling
+- Provide clear progress feedback as specified in scenarios
+- Handle all edge cases mentioned in the feature scenarios
+- Pass both unit and acceptance tests
+
+**NO EXCEPTIONS**: Code that doesn't pass quality checks cannot proceed to the next scenario.
+
+## Testing and Debugging
+
+### Acceptance Test Setup
+
+#### Prerequisites for E2E Testing
 
 - Run `npm install` first to install dependencies
 - Then run E2E tests to see failing scenarios
 
-### Step File Structure Example
+#### Step File Structure Example
 
 ```javascript
 // features/step-definitions/common.playwright.steps.ts
@@ -383,7 +341,86 @@ Here is an example of features test data used by the `features` test suite. This
 ]
 ```
 
-## Claude Code Browser Usage
+### Browser Debugging for UI Issues
+
+When working on UI issues, use the following approaches to see and interact with the browser:
+
+#### Interactive Debugging Mode
+
+```bash
+# Debug all tests with browser visible
+npm run e2e:debug
+
+# Debug specific test scenarios
+npx playwright test --grep "User sees errors" --debug
+
+# Debug a specific feature file
+npx playwright test features/credit-application.feature --debug
+```
+
+This opens the Playwright Inspector where you can:
+
+- Step through each test action
+- See the browser window
+- Inspect elements and selectors
+- Take screenshots at any point
+- Modify timeouts on the fly
+
+#### UI Mode for Visual Testing
+
+```bash
+# Run in UI mode for a visual test runner
+npm run e2e:ui
+```
+
+This provides:
+
+- Visual test tree
+- Live browser preview
+- Test execution timeline
+- Error traces with screenshots
+- Time-travel debugging
+
+#### Headed Mode (Browser Always Visible)
+
+```bash
+# Run tests with browser visible (not in debug mode)
+npx playwright test --headed
+
+# Run specific browser
+npx playwright test --headed --project=chromium
+```
+
+#### Taking Screenshots for Analysis
+
+Add these to your test code when debugging:
+
+```typescript
+// Take a screenshot at any point
+await page.screenshot({ path: 'screenshots/debug-issue.png' });
+
+// Take full page screenshot
+await page.screenshot({ path: 'screenshots/full-page.png', fullPage: true });
+
+// Screenshot specific element
+await page.locator('.error-message').screenshot({ path: 'screenshots/error.png' });
+```
+
+#### Slow Down Execution
+
+```bash
+# Slow down execution to see what's happening
+npx playwright test --headed --slow-mo=1000  # 1 second delay between actions
+```
+
+#### Browser Developer Tools
+
+```typescript
+// Pause test and open DevTools
+await page.pause();  // This will pause execution and let you inspect
+```
+
+### Claude Code Browser Usage
 
 When Claude Code needs to debug UI issues, it can:
 
@@ -408,28 +445,14 @@ await page.screenshot({ path: 'debug-screenshot.png' });
 # Claude Code can then analyze the visual state
 ```
 
-## Implementation Priority
+## Success Criteria
 
-**CRITICAL**: Follow ATDD methodology strictly:
+The application should satisfy ALL scenarios in `features/*.feature`:
 
-1. **Start by reading** a feature file completely from `features/*.feature`
-2. **Implement scenarios in order** as listed in the feature file
-3. **Do not proceed** to the next scenario until the current one passes
-4. **Reference the feature file continuously** during implementation
-5. **Validate behavior** matches the Gherkin scenarios exactly
+**Each scenario must pass its acceptance criteria before the feature is considered complete.**
 
-All implementation must:
+## Important Instruction Reminders
 
-- **Satisfy the acceptance criteria** in the feature file scenarios
-- Use functional programming patterns exclusively
-- Include comprehensive error handling
-- Provide clear progress feedback as specified in scenarios
-- Handle all edge cases mentioned in the feature scenarios
-- Pass both unit and acceptance tests
-
-**NO EXCEPTIONS**: Code that doesn't pass quality checks cannot proceed to the next scenario.
-
-# important-instruction-reminders
 Do what has been asked; nothing more, nothing less.
 NEVER create files unless they're absolutely necessary for achieving your goal.
 ALWAYS prefer editing an existing file to creating a new one.
