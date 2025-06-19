@@ -28,7 +28,7 @@ export function CreditFormComplete(props: CreditFormCompleteProps) {
   let title;
   let msg;
   if (validForm && approvedForm) {
-    db.addUpdateApplciation(formData.data);
+    db?.addUpdateApplciation(formData.data);
     title = 'Sucess!';
     msg = 'Thank you, your application was submitted for further processing.';
   } else if (hasErrored) {

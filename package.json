@@ -52,12 +52,13 @@
     "yup": "^1.0.0"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^11.1.0",
     "@jest/globals": "^30.0.0",
     "@mui/styles": "^6.4.12",
     "@playwright/test": "^1.49.1",
-    "@cucumber/cucumber": "^11.1.0",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^16.0.0",
+    "@types/jest": "^30.0.0",
     "@types/node": "^24.0.1",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",

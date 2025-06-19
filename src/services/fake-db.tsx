@@ -2,7 +2,7 @@ import { useContext, createContext, useState } from "react";
 import { v4 as uuid } from 'uuid';
 import { ApplicationData } from "./application-data";
 
-export const dbContext = createContext(null);
+export const dbContext = createContext<any>(null);
 
 export function useDB() {
   return useContext(dbContext);

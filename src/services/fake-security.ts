@@ -2,12 +2,12 @@
 
 import { useContext, createContext, useState } from "react";
 
-export const authContext = createContext(null);
+export const authContext = createContext<any>(null);
 
 // This provides the core auth functions
 const fakeAuth = {
   isAuthenticated: false,
-  signin(username: string, password: string, successCb, failCb) {
+  signin(username: string, password: string, successCb: any, failCb: any) {
     if (username === null || username === undefined || password === null ||
        password === undefined ||
        password !== "GhekinIsFun") {
@@ -20,7 +20,7 @@ const fakeAuth = {
     localStorage.setItem('user', username);
     setTimeout(successCb, 100); // fake async
   },
-  signout(cb) {
+  signout(cb: any) {
     fakeAuth.isAuthenticated = false;
     localStorage.removeItem('user');
     setTimeout(cb, 100);
@@ -34,7 +34,7 @@ export function useAuth() {
 // This provides the auth unctions via a hook.
 export function useProvideAuth() {
   // TODO need to change the username to null to get rid of the auto login
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<string | null>(null);
   // const [password, setPassword] = useState(null);
 
   const storedUser = localStorage.getItem('user');
@@ -42,19 +42,19 @@ export function useProvideAuth() {
     setUser(storedUser);
   }
 
-  const signin = (username, password, successCb, failCb) => {
+  const signin = (username: any, password: any, successCb: any, failCb: any) => {
     return fakeAuth.signin(username, password,
       () => {
         setUser(username);
         successCb();
       },
-      (failMsg) => {
+      (failMsg: any) => {
         setUser(null);
         failCb(failMsg);
       });
   };
 
-  const signout = cb => {
+  const signout = (cb: any) => {
     return fakeAuth.signout(() => {
       setUser(null);
       cb();
