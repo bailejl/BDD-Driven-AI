@@ -182,8 +182,8 @@ This allows tests to be self-documenting and business-readable while referencing
 All commands should be run from the **root directory**:
 
 ```bash
-# 1. ALWAYS run tests first - NO EXCEPTIONS. CRITCAL - Check for warnings in logs and fix them. 
-npm run test
+# 1. ALWAYS run tests first - NO EXCEPTIONS. CRITCAL - Check for warnings in logs and fix them. Ensure we have 90% or better coverage.
+npm run test -- --coverage --verbose=false
 
 # 2. ALWAYS run quality checks - NO EXCEPTIONS
 npm run lint

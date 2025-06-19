@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+.git/
+*.min.js
+*.min.css
+coverage/
+.husky/
+playwright-report/
+test-results/
+features/step-definitions/
+*.html
