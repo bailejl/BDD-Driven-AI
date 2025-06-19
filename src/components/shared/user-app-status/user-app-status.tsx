@@ -6,7 +6,7 @@ import './user-app-status.module.scss';
 export interface UserAppStatusProps {}
 
 // Is a placeholder for future features.
-export const UserAppStatus = (props: UserAppStatusProps) => {
+export const UserAppStatus = () => {
   return (
     <div>
       <h1>Welcome to user-app-status!</h1>

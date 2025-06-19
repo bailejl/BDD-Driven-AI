@@ -3,8 +3,6 @@ import React from 'react';
 import {
   Routes,
   Route,
-  Link,
-  useParams,
   useLocation,
 } from "react-router-dom";
 import CreditFormIntro from '../../forms/credit-form-intro/credit-form-intro';
@@ -17,7 +15,7 @@ import './user-landing.module.scss';
 export interface UserLandingProps {}
 
 // When a user account successfully logs in, they will arrive at this page.
-export const UserLanding = (props: UserLandingProps) => {
+export const UserLanding = () => {
   // React Router v7 uses relative paths automatically
   const location = useLocation();
 

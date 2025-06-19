@@ -1,5 +1,5 @@
 import { useFormData, createApplicationData } from '@services';
-import { Button, FormControl, FormHelperText, InputLabel, NativeSelect, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
+import { Button, FormControl, FormHelperText, InputLabel, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
@@ -36,7 +36,7 @@ const schema = yup.object().shape({
 });
 
 // This creates the employment section of the new creadit card application form
-export const CreditFormEmploymentInfo = (props: CreditFormEmploymentInfoProps) => {
+export const CreditFormEmploymentInfo = () => {
   const { register, handleSubmit, setValue, formState } = useForm<EmploymentInputs>({
     resolver: yupResolver(schema),
   });

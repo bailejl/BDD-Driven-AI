@@ -17,7 +17,7 @@ import { useState } from 'react';
 export interface LoginProps { }
 
 // Uses the emulating auth service to provide a basic login and user session.
-export const Login = (props: LoginProps) => {
+export const Login = () => {
   const navigate = useNavigate();
   const auth = useAuth();
   const location = useLocation();
