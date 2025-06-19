@@ -49,11 +49,11 @@ export function CreditFormPersonalInfo(props: CreditFormPersonalInfoProps) {
   const handleDateChange = (date: Date | null) => {
     console.log('set date');
     console.dir(date);
-    setValue('dateOfBirth', date, { shouldDirty: true });
+    setValue('dateOfBirth', date || new Date(), { shouldDirty: true });
   };
 
   // Move to the next page on completion.
-  const onSubmit = (data) => {
+  const onSubmit = (data: PersonalInputs) => {
     console.log("onSubmit")
     console.dir(data);
     formData.appendFormData(data);

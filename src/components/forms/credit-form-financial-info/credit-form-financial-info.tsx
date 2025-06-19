@@ -45,7 +45,7 @@ export function CreditFormFinancialInfo(props: CreditFormFinancialInfoProps) {
   // This is the end of the form, so the submit button
   // TODO need to figure our the best way to do inversion of control, so a 
   // section is not aware of the form controls
-  const onSubmit = (data) => {
+  const onSubmit = (data: FinancialInputs) => {
     console.log("onSubmit")
     console.dir(data);
     formData.appendFormData(data);

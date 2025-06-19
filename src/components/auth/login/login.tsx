@@ -21,7 +21,7 @@ export function Login(props: LoginProps) {
   const navigate = useNavigate();
   const auth = useAuth();
   const location = useLocation();
-  const [username, setUserName] = useState(null);
+  const [username, setUserName] = useState<string | null>(null);
   // TODO replace with a null to remove the auto password populate  
   const [password, setPassword] = useState("");
   const [failMsg, setFailMsg] = useState("");
@@ -32,21 +32,21 @@ export function Login(props: LoginProps) {
       () => {
         navigate(from, { replace: true });
       },
-      (failMsg) => {
+      (failMsg: string) => {
         setFailMsg(failMsg);
       });
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    login(username, password);
+    login(username || '', password);
   }
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(event.target.value);
   }
 
-  const handlePasswordChange = (event) => {
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   }
   return (

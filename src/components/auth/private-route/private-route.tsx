@@ -14,7 +14,7 @@ export interface PrivateRouteProps {
 }
 
 // based on code from https://reactrouter.com/web/example/auth-workflow
-export function PrivateRoute( { children, allowedUserName }) {
+export function PrivateRoute( { children, allowedUserName }: { children: any, allowedUserName: string }) {
   const auth = useAuth();
   const location = useLocation();
 

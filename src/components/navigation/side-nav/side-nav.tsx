@@ -32,7 +32,7 @@ function ListItemLink(props: ListItemLinkProps) {
 
   return (
     <li>
-      <ListItem id={id} button component={renderLink} selected={isSelected}>
+      <ListItem id={id} component={renderLink}>
         <ListItemText primary={primary}/>
       </ListItem>
     </li>

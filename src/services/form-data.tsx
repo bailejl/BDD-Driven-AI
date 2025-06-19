@@ -2,8 +2,9 @@ import { useContext, createContext, useState } from "react";
 import { ApplicationData } from "./application-data";
 import * as userData from "./user-data.json";
 
+type FormDataContextType = any;
 
-export const formDataContext = createContext(null);
+export const formDataContext = createContext<FormDataContextType>(null);
 
 /*
   This handles data used by the credit application form for a new credit card.
@@ -15,13 +16,13 @@ export function useFormData() {
   return useContext(formDataContext);
 }
 
-function getUserData(firstName, lastName) {
-  return userData['default'][firstName + lastName];
+function getUserData(firstName: string, lastName: string) {
+  return (userData as any)['default'][firstName + lastName];
 }
 
 // This function emulates a call to a remote credit score system.  It will 
 // even fail, if the user is "Kelly Baddy".
-function isAcceptableCreditScore(data) {
+function isAcceptableCreditScore(data: any) {
   if (data.firstName === 'Kelly' && data.lastName === 'Baddy') {
     throw new Error('Credit scroe system unavailable.');
   }
@@ -33,7 +34,7 @@ function isAcceptableCreditScore(data) {
 }
 
 // This does a monthly debt to income check and ensure is acceptable.
-function isAcceptableBackEndRatio(data) {
+function isAcceptableBackEndRatio(data: any) {
   if (data && data.monthlyHousingPayment && data.monthlyIncome) {
     const backEndRatio = data.monthlyHousingPayment/data.monthlyIncome
     console.log("backEndRatio", backEndRatio)
@@ -47,13 +48,13 @@ function isAcceptableBackEndRatio(data) {
 export function useProviderFormData() {
   const [data, setData] = useState<ApplicationData>(new ApplicationData());
 
-  const appendFormData = (dataFragment) => {
+  const appendFormData = (dataFragment: any) => {
     const newData = Object.assign(data, dataFragment);
     return setData(newData);
   }
   const isValid = () => {
     return Object.keys(data).every((key) => {
-      return data[key] !== undefined 
+      return (data as any)[key] !== undefined 
       || key === 'countryOfCitizenShipSecondary' 
       || key === 'id';
     })

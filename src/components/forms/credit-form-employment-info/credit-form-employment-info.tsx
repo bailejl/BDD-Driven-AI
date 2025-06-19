@@ -50,7 +50,7 @@ export function CreditFormEmploymentInfo(props: CreditFormEmploymentInfoProps) {
   const cachedData = formData.data;
 
   // Submit this stage of the form and go to the next page
-  const onSubmit = (data) => {
+  const onSubmit = (data: EmploymentInputs) => {
     console.log("onSubmit")
     console.dir(data);
     formData.appendFormData(data);
@@ -59,7 +59,7 @@ export function CreditFormEmploymentInfo(props: CreditFormEmploymentInfoProps) {
 
   // These input fields need special handling to get similar behaviors to 
   // other inputs, specifically how cached data is handled.
-  const handleChangecountryOfCitizenShip = (e) => {
+  const handleChangecountryOfCitizenShip = (e: any) => {
     const newSelection = e.target.value;
     setValue("countryOfCitizenShip", newSelection, { shouldDirty: true });
     setCountryOfCitizenShip(newSelection);
@@ -69,7 +69,7 @@ export function CreditFormEmploymentInfo(props: CreditFormEmploymentInfoProps) {
 
   // These input fields need special handling to get similar behaviors to 
   // other inputs, specifically how cached data is handled.
-  const handleChangecountryOfCitizenShipSecondary = (e) => {
+  const handleChangecountryOfCitizenShipSecondary = (e: any) => {
     const newSelection = e.target.value;
     setCountryOfCitizenShipSecondary(newSelection)
     setValue("countryOfCitizenShipSecondary", newSelection, { shouldDirty: true });
