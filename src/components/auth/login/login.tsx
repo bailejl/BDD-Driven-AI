@@ -1,17 +1,13 @@
-import React from 'react';
-
-import './login.module.scss';
+import React, { useState } from 'react';
 
 import {
-  useNavigate,
-  useLocation
+  useLocation,
+  useNavigate
 } from "react-router-dom";
 
 import { useAuth } from '@services';
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import classes from './login.module.scss';
-import { Button } from '@mui/material';
-import { useState } from 'react';
 
 /* eslint-disable-next-line */
 export interface LoginProps { }

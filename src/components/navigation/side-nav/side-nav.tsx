@@ -19,10 +19,13 @@ const ListItemLink = (props: ListItemLinkProps) => {
   const { primary, to, id } = props;
 
   const renderLink = React.useMemo(
-    () =>
-      React.forwardRef<HTMLAnchorElement, Omit<RouterLinkProps, 'to'>>((itemProps, ref) => (
+    () => {
+      const RouterLinkComponent = React.forwardRef<HTMLAnchorElement, Omit<RouterLinkProps, 'to'>>((itemProps, ref) => (
         <RouterLink id={id} to={to} ref={ref} {...itemProps} />
-      )),
+      ));
+      RouterLinkComponent.displayName = 'RouterLinkComponent';
+      return RouterLinkComponent;
+    },
     [to, id],
   );
 

@@ -1,6 +1,6 @@
 // Code here is based on code from: https://reactrouter.com/web/example/auth-workflow
 
-import { useContext, createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 export interface AuthContextType {
   user: string | null
@@ -33,9 +33,7 @@ const fakeAuth = {
   }
 };
 
-export const useAuth = () => {
-  return useContext(authContext)
-}
+export const useAuth = () => useContext(authContext)
 
 // This provides the auth unctions via a hook.
 export const useProvideAuth = () => {
@@ -48,8 +46,7 @@ export const useProvideAuth = () => {
     setUser(storedUser);
   }
 
-  const signin = (username: string, password: string, successCb: () => void, failCb: (msg: string) => void) => {
-    return fakeAuth.signin(username, password,
+  const signin = (username: string, password: string, successCb: () => void, failCb: (msg: string) => void) => fakeAuth.signin(username, password,
       () => {
         setUser(username);
         successCb();
@@ -58,14 +55,11 @@ export const useProvideAuth = () => {
         setUser(null);
         failCb(failMsg);
       });
-  };
 
-  const signout = (cb: () => void) => {
-    return fakeAuth.signout(() => {
+  const signout = (cb: () => void) => fakeAuth.signout(() => {
       setUser(null);
       cb();
     });
-  };
 
   return {
     user,
@@ -73,6 +67,4 @@ export const useProvideAuth = () => {
     signout
   };
 }
-export const fakeSecurity = (): string => {
-  return 'fake-security'
-}
+export const fakeSecurity = (): string => 'fake-security'

@@ -3,9 +3,9 @@ import React from 'react';
 import styles from './app.module.scss';
 
 import {
+  Route,
   BrowserRouter as Router,
   Routes,
-  Route,
 } from "react-router-dom";
 
 import {
@@ -15,16 +15,15 @@ import {
   Login,
   PrivateRoute,
   ProviderAuth,
-  UserLanding,
-  SideNav,
   ProviderDB,
+  SideNav,
+  UserLanding,
 } from '@components';
 
 /*
 * Main app layout with components enulating a remote DB/API and auth server.
 */
-export const App = () => {
-  return (
+export const App = () => (
     <div className={styles.app}>
       <Router>
         <ProviderDB>
@@ -43,7 +42,6 @@ export const App = () => {
         </ProviderDB>
       </Router>
     </div>
-  );
-}
+  )
 
 export default App;

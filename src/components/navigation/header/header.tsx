@@ -13,8 +13,7 @@ import Logo from './logo.svg?react';
 export interface HeaderProps { }
 
 // This is the header used across all the pages on the site.
-export const Header = () => {
-  return (
+export const Header = () => (
     <header>
       <Box display="flex" flexWrap="nowrap" flexDirection="row"
         alignItems="center" justifyContent="space-between" padding="0 10px">
@@ -27,7 +26,6 @@ export const Header = () => {
         <AuthButton />
       </Box>
     </header>
-  );
-}
+  )
 
 export default Header;
