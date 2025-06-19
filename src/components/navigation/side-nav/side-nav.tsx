@@ -1,10 +1,9 @@
-import { Divider, Link, List, ListItem, ListItemText, Paper } from '@mui/material';
+import { List, ListItem, ListItemText, Paper } from '@mui/material';
 import React from 'react';
 import { Link as RouterLink, LinkProps as RouterLinkProps, useLocation } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 
 import './side-nav.module.scss';
-import { useAuth } from '@services';
 
 interface ListItemLinkProps {
   icon?: React.ReactElement;
@@ -17,7 +16,7 @@ interface ListItemLinkProps {
 
 // Builds a valid list item for Material Design to consume
 const ListItemLink = (props: ListItemLinkProps) => {
-  const { icon, primary, to, id } = props;
+  const { primary, to, id } = props;
 
   const renderLink = React.useMemo(
     () =>
@@ -28,7 +27,6 @@ const ListItemLink = (props: ListItemLinkProps) => {
   );
 
   // Used to highlight the list item, if it matches the current page.
-  const isSelected = props.pathname !== undefined && props.pathname.startsWith(props.pathPrefix);
 
   return (
     <li>
@@ -51,7 +49,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const SideNav = (props: SideNavProps) => {
+export const SideNav = () => {
   const classes = useStyles();
   const location = useLocation();
 

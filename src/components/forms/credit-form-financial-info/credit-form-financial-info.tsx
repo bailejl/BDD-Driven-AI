@@ -1,6 +1,5 @@
 import { useFormData, createApplicationData } from '@services';
-import { Button, MenuItem, TextField, Typography } from '@mui/material';
-import React from 'react';
+import { Button, TextField, Typography } from '@mui/material';
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -32,7 +31,7 @@ const schema = yup.object().shape({
 export interface CreditFormFinancialInfoProps { }
 
 // Generates the financial info part of the new credit card application form
-export const CreditFormFinancialInfo = (props: CreditFormFinancialInfoProps) => {
+export const CreditFormFinancialInfo = () => {
   const { register, handleSubmit, formState } = useForm<FinancialInputs>({
     resolver: yupResolver(schema),
   });

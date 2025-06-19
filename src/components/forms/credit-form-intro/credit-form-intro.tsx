@@ -2,9 +2,7 @@ import { Typography } from '@mui/material';
 import React from 'react';
 import {
   Routes,
-  Route,
-  Link,
-  useParams
+  Route
 } from "react-router-dom";
 import CreditFormComplete from '../credit-form-complete/credit-form-complete';
 import CreditFormEmploymentInfo from '../credit-form-employment-info/credit-form-employment-info';
@@ -16,7 +14,7 @@ import './credit-form-intro.module.scss';
 export interface CreditFormIntroProps { }
 
 // This routes to different pages within the new credit card application form.
-export const CreditFormIntro = (props: CreditFormIntroProps) => {
+export const CreditFormIntro = () => {
   // React Router v7 uses relative paths automatically in nested routes
 
   return (

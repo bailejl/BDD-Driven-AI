@@ -10,7 +10,7 @@ export interface CreditFormCompleteProps { }
 // This form show up after the user submits their new credit card application.
 // It runs validations on the data provided and let's them know if 
 // their application will go to the next round of processing or not.
-export const CreditFormComplete = (props: CreditFormCompleteProps) => {
+export const CreditFormComplete = () => {
   const formData = useFormData();
   const db = useDB();
 
@@ -20,8 +20,8 @@ export const CreditFormComplete = (props: CreditFormCompleteProps) => {
   let hasErrored = false;
   try {
     approvedForm = formData?.isApproved();
-  } catch (e) {
-    console.warn('Unable to process credit applciation, due to error.', e);
+  } catch {
+    // Expected error for certain users (e.g., Kelly Baddy)
     hasErrored = true;
   }
 

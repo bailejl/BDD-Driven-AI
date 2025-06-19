@@ -13,7 +13,7 @@ jest.mock('react-hook-form', () => ({
     setValue: jest.fn(),
     errors: {}
   }),
-  Controller: ({ children }: any) => children
+  Controller: ({ children }: { children: React.ReactNode }) => children
 }));
 
 // Mock the form data service
@@ -35,9 +35,10 @@ jest.mock('@services', () => ({
     appendFormData: jest.fn()
   }),
   formDataContext: {
-    Provider: ({ children }: any) => children,
-    Consumer: ({ children }: any) => children({})
-  }
+    Provider: ({ children }: { children: React.ReactNode }) => children,
+    Consumer: ({ children }: { children: (value: unknown) => React.ReactNode }) => children({})
+  },
+  createApplicationData: () => ({})
 }));
 
 describe('CreditFormEmploymentInfo', () => {

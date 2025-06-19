@@ -14,7 +14,7 @@ import './auth-button.module.scss';
 export interface AuthButtonProps { }
 
 // based on code from https://reactrouter.com/web/example/auth-workflow
-export const AuthButton = (props: AuthButtonProps) => {
+export const AuthButton = () => {
   const navigate = useNavigate();
   const auth = useAuth();
   const theme = useTheme();

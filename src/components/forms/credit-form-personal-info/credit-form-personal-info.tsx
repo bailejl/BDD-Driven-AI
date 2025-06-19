@@ -34,7 +34,7 @@ const schema = yup.object().shape({
 export interface CreditFormPersonalInfoProps { }
 
 // Creates the personal info section of the new credit card application form
-export const CreditFormPersonalInfo = (props: CreditFormPersonalInfoProps) => {
+export const CreditFormPersonalInfo = () => {
   const { register, handleSubmit, setValue, formState } = useForm<PersonalInputs>({
     resolver: yupResolver(schema),
   });

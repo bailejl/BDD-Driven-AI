@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 
 import App from './app';
 
@@ -30,16 +29,16 @@ jest.mock('@services', () => ({
     getApplication: jest.fn()
   }),
   formDataContext: {
-    Provider: ({ children }: any) => children,
-    Consumer: ({ children }: any) => children({})
+    Provider: ({ children }: { children: React.ReactNode }) => children,
+    Consumer: ({ children }: { children: (value: unknown) => React.ReactNode }) => children({})
   },
   dbContext: {
-    Provider: ({ children }: any) => children,
-    Consumer: ({ children }: any) => children({})
+    Provider: ({ children }: { children: React.ReactNode }) => children,
+    Consumer: ({ children }: { children: (value: unknown) => React.ReactNode }) => children({})
   },
   authContext: {
-    Provider: ({ children }: any) => children,
-    Consumer: ({ children }: any) => children({})
+    Provider: ({ children }: { children: React.ReactNode }) => children,
+    Consumer: ({ children }: { children: (value: unknown) => React.ReactNode }) => children({})
   }
 }));
 
