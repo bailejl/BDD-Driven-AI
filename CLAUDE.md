@@ -147,7 +147,7 @@ src/
 
 - **Feature Files**: Located in `features/*.feature` using Declarative Gherkin syntax
 - **Step Definitions**: Located in `features/step-definitions/`
-- **Page Objects**: Located in `features/pageobjects/` following WebdriverIO patterns
+- **Page Objects**: Located in `features/pageobjects/` following Playwright patterns
 - **Data Management**: Centralized test data in `features/data/data.json`
 - **Unit Tests**: Jest tests co-located with components (`*.spec.tsx`)
 
@@ -221,7 +221,7 @@ If ANY quality gate fails:
 
 ## Development Approach
 
-**IMPORTANT**: This project uses Acceptance Test Driven Development (ATDD) with Cucumber/WebdriverIO. Before implementing any feature:
+**IMPORTANT**: This project uses Acceptance Test Driven Development (ATDD) with Playwright-BDD/Playwright. Before implementing any feature:
 
 1. **Read the feature specifications** in `features/*.feature`
 2. **Write Cucumber acceptance tests** that describe the expected behavior in BDD style
@@ -229,7 +229,7 @@ If ANY quality gate fails:
 4. **Validate each test passes** before moving to the next
 5. **Reference the feature file continuously** during development to ensure requirements are met
 
-The feature file contains comprehensive Gherkin scenarios that define the expected behavior. Translate these into Cucumber/WebdriverIO as executable specifications.
+The feature file contains comprehensive Gherkin scenarios that define the expected behavior. Translate these into Playwright-BDD/Playwright as executable specifications.
 
 **All development must satisfy the acceptance criteria defined in the feature files.**
 
@@ -262,7 +262,7 @@ The feature file contains comprehensive Gherkin scenarios that define the expect
 - **React Router v7**: Client-side routing
 - **Vite**: Build tool and development server
 - **Jest**: Unit testing framework
-- **WebdriverIO**: E2E testing framework
+- **Playwright**: E2E testing framework
 - **Cucumber**: BDD testing with Gherkin syntax
 
 ## Implementation Process - ATDD Workflow
@@ -312,132 +312,38 @@ The application should satisfy ALL scenarios in `features/*.feature`:
 ### Step File Structure Example
 
 ```javascript
-// features/step-definitions/common.steps.ts
-import { Given, When, Then } from '@cucumber/cucumber';
-import dataManager from '../data/data-manager';
-import homePage from '../pageobjects/home.page';
-import loginPage from '../pageobjects/login.page';
+// features/step-definitions/common.playwright.steps.ts
+import HomePage from '../pageobjects/home.playwright.page';
+import LoginPage from '../pageobjects/login.playwright.page';
+import { Given } from '../fixtures/test';
 
-Given(/^"(.*)" logs in$/, (userNameAlias) => {
-    const userData = dataManager.getData(userNameAlias, true);
-    homePage.open();
-    loginPage.login(userData.username, userData.password);
+Given('{string} logs in', async ({ page, dataManager }, userNameAlias: string) => {
+  const userData = dataManager.getData(userNameAlias, true);
+  const homePage = new HomePage(page);
+  const loginPage = new LoginPage(page);
+  
+  await homePage.open();
+  await loginPage.login(userData.username, userData.password);
 });
 
-Given(/^"(.*)" logs in with these mods$/, (userNameAlias, table) => {
-    const modDataNames = dataManager.getDataTableColumnValues(table, 0);
-    const userData = dataManager.getDataWithMods(userNameAlias, modDataNames);
-    homePage.open();
-    loginPage.login(userData.username, userData.password);
+Given('{string} logs in with these mods', async ({ page, dataManager }, userNameAlias: string, table: any) => {
+  const modDataNames = dataManager.getDataTableColumnValues(table, 0);
+  const userData = dataManager.getDataWithMods(userNameAlias, modDataNames);
+  const homePage = new HomePage(page);
+  const loginPage = new LoginPage(page);
+  
+  await homePage.open();
+  await loginPage.login(userData.username, userData.password);
 });
 
-Given(/^"(.*)" logs in with this mod '(.*)'$/, (userNameAlias, modName) => {
-    const userData = dataManager.getDataWithMods(userNameAlias, [modName]);
-    homePage.open();
-    loginPage.login(userData.username, userData.password);
+Given('{string} logs in with this mod {string}', async ({ page, dataManager }, userNameAlias: string, modName: string) => {
+  const userData = dataManager.getDataWithMods(userNameAlias, [modName]);
+  const homePage = new HomePage(page);
+  const loginPage = new LoginPage(page);
+  
+  await homePage.open();
+  await loginPage.login(userData.username, userData.password);
 });
-```
-
-### Page Objects Example
-
-```javascript
-// features/pageobjects/credit-form.page.ts
-import Page from './page';
-
-// The sections of the credit form mapped to URL paths
-export enum FormSections {
-    Personal = "user/form",
-    Employment = "user/form/page2",
-    Financial = "user/form/page3"
-}
-
-class CreditFormPage extends Page {
-
-    get txtPageHelperTexts () { return $('.Mui-error') }
-
-    // Personal section elements
-    get tfFirstName () { return $('[name="firstName"]') }
-    get txtFirstNameHelperText () { return $('#first-name-helper-text') }
-    get tfMiddleInitial () { return $('[name="middleInitial"]') }
-    get txtMiddleInitialHelperText () { return $('#middle-initial-helper-text') }
-    get tfLastName () { return $('[name="lastName"]') }
-    get txtLastNameHelperText () { return $('#last-name-helper-text') }
-    get tfDateOfBirth () { return $('[name="dateOfBirth"]') }
-    get txtDateOfBirthHelperText () { return $('#date-of-birth-helper-text') }
-    get tfSsn () { return $('[name="ssn"]') }
-    get txtSsnHelperText () { return $('#ssn-helper-text') }
-
-    // Employment section elements
-    get slctCountryOfCitizenShip () { return $('[name="countryOfCitizenShip"]') }
-    get slctCountryOfCitizenShipSecondary () { return $('[name="countryOfCitizenShipSecondary"]') }
-    get tfCurrentEmployerName () { return $('[name="currentEmployerName"]') }
-    get tfWorkPhone () { return $('[name="workPhone"]') }
-    get tfYearsEmployed () { return $('[name="yearsEmployed"]') }
-    get tfMonthsEmployed () { return $('[name="monthsEmployed"]') }
-    get tfOccupation () { return $('[name="occupation"]') }
-
-    // Financial section elements
-    get tfMonthlyIncome () { return $('[name="monthlyIncome"]') }
-    get tfMonthlyHousingPayment () { return $('[name="monthlyHousingPayment"]') }
-    get tfCheckingAmount () { return $('[name="checkingAmount"]') }
-    get tfSavingsAmount () { return $('[name="savingsAmount"]') }
-    get tfInvestmentsAmount () { return $('[name="investmentsAmount"]') }
-
-    // Completion Page
-    get txtResponseMsg () { return $('#response-msg') }
-    get txtResponseTitle () { return $('#response-title') }
-
-    get btnContinue () { return $('button[type="submit"]') }
-    get btnSubmit () { return $('button[type="submit"]') }
-
-
-    open () {
-        super.open('user/form');
-    }
-
-    goToSection (section: FormSections) {
-        super.open(section);
-    }
-
-    submitForm() {
-        this.btnSubmit.click();
-    }
-
-    filloutForm (data) {
-        this.filloutPersonalSection(data);
-        this.btnContinue.click();
-        this.filloutEmploymentSection(data);
-        this.btnContinue.click();
-        this.filloutFinancialSection(data);
-    }
-    
-    filloutPersonalSection (data) {
-        this.tfFirstName.setValue(data['firstName']);
-        this.tfMiddleInitial.setValue(data['middleInitial']);
-        this.tfLastName.setValue(data['lastName']);
-        this.tfDateOfBirth.setValue(data['dateOfBirth']);
-        this.tfSsn.setValue(data['ssn']);
-    }
-
-    filloutEmploymentSection(data) {
-        this.slctCountryOfCitizenShip.selectByAttribute('value', data['countryOfCitizenShip']);
-        this.slctCountryOfCitizenShipSecondary.selectByAttribute('value', data['countryOfCitizenShipSecondary']);
-        this.tfCurrentEmployerName.setValue(data['currentEmployerName']);
-        this.tfWorkPhone.setValue(data['workPhone']);
-        this.tfYearsEmployed.setValue(data['yearsEmployed']);
-        this.tfMonthsEmployed.setValue(data['monthsEmployed']);
-        this.tfOccupation.setValue(data['occupation']);
-    }
-
-    filloutFinancialSection(data) {
-        this.tfMonthlyIncome.setValue(data['monthlyIncome']);
-        this.tfMonthlyHousingPayment.setValue(data['monthlyHousingPayment']);
-        this.tfCheckingAmount.setValue(data['checkingAmount']);
-        this.tfSavingsAmount.setValue(data['savingsAmount']);
-        this.tfInvestmentsAmount.setValue(data['investmentsAmount']);
-    }
-}
-export default new CreditFormPage();
 ```
 
 ### Features Test Data
