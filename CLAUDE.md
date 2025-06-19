@@ -31,7 +31,7 @@ All commands should be run from the **root directory**:
 # 1. ALWAYS run tests first - NO EXCEPTIONS. CRITCAL - Check for warnings in logs and fix them. Ensure we have 90% or better coverage.
 npm run test -- --coverage --verbose=false
 
-# 2. ALWAYS run quality checks - NO EXCEPTIONS
+# 2. ALWAYS run quality checks - NO EXCEPTIONS. CRITICAL - treat warnings like errors and remove them.
 npm run lint
 
 # 3. ALWAYS run E2E tests - NO EXCEPTIONS
@@ -457,3 +457,7 @@ Do what has been asked; nothing more, nothing less.
 NEVER create files unless they're absolutely necessary for achieving your goal.
 ALWAYS prefer editing an existing file to creating a new one.
 NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
+
+## Installing New Packages
+
+CRITICAL - When installing new package, check to see if there is an ESLint rule set for it. This will ensure proper use of the new package.
