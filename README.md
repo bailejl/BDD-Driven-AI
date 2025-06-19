@@ -6,7 +6,7 @@ to take what they learned in training and see a working implementation.
 
 Start with our [declarative gherkin docs](./docs/declarative-gherkin.md) to learn more about Declarative Gherkin and key concepts around Centralized Data Management, Cucumber Logging as well as app-specific terms used in the app like Back-end Ratio and Credit Score.
 
-The [first-bank-of-change/features](first-bank-of-change/features) folder contains Declarative Gherkin feature files (Given, When, Then style tests).
+The [/features](/features) folder contains Declarative Gherkin feature files (Given, When, Then style tests).
 
 See [Cucumber Logging](./docs/cucumber-logging.md) to troubleshoot e2e tests.
 
@@ -15,7 +15,7 @@ See [Cucumber Logging](./docs/cucumber-logging.md) to troubleshoot e2e tests.
 ```bash
 npm run setup
 
-# in a new shell in the first-bank-of-change folder - run the end to end tests
+# run the end to end tests
 npm run e2e:demo
 ```
 
