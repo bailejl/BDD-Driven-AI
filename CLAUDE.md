@@ -12,7 +12,7 @@ All commands should be run from the **root directory** (not from subdirectories)
 
 ### Development
 
-- `npm run dev` - Start the React app with Vite (accessible at <http://localhost:5173>)
+- `npm run dev` - Start the React app with Vite (accessible at <http://localhost:4200>)
 - `npm run build` - Build the application for production
 - `npm run preview` - Preview the production build
 - `npm run test` - Run all unit tests with Jest
@@ -25,14 +25,13 @@ All commands should be run from the **root directory** (not from subdirectories)
 
 All `npm run e2e` commands automatically start the app for testing, so no need to run `npm run dev` before running the tests.
 
-- `npm run e2e` - Run full E2E test suite with HTML server, does not exit
+- `npm run e2e` - Run full E2E test suite with HTML server, does not exit. IMPORTANT, never run `npm run e2e` as it does not exit after tests are done. Run `npm run e2e:ci`, as it exits immediately after the tests complete.
 - `npm run e2e:ci` - Run full E2E test suite without HTML server, exit after all tests run
-- `npm run e2e:headless` - Run E2E tests in headless mode
 - `npm run e2e:debug` - Run E2E tests with Playwright Inspector for debugging UI issues
 - `npm run e2e:ui` - Run tests with Playwright's UI mode for interactive debugging
 - `npm run snippets` - Generate Cucumber step definition snippets
 
-If you are going to manually run `npx playwright test` of any type, ensure `CI=true` is set. This cause the tests exit immeidately 
+If you are going to manually run `npx playwright test` of any type, ensure `CI=true` is set. This cause the tests exit immediately
 after the tests are complete. This speeds up feedback loops.
 
 ### Browser Debugging for UI Issues
@@ -163,7 +162,6 @@ src/
 
 - **Declarative Gherkin**: Business-readable test scenarios without technical implementation details
 - **Centralized Data Management**: Test data organized by personas with meaningful aliases
-- **Docker Integration**: Uses Docker Compose for consistent E2E testing environments
 - **Functional Programming**: Arrow functions and functional patterns throughout
 
 ### Test Data Pattern
@@ -282,7 +280,7 @@ For each feature in `features/*.feature`:
 
 ### 2. Implementation to Satisfy Existing Tests
 
-- **Review existing Cucumber step definitions** in `features/step-definitions/*.steps.ts`
+- **Review existing Cucumber step definitions** in `features/step-definitions/*.playwright.steps.ts`
 - **Run the E2E tests** to see which scenarios are currently failing
 - **Implement application features** to make the failing tests pass. Implement just enough application code to make the test pass
 - **After test passes, run quality checks**: `npm run lint` in the root directory

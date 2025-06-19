@@ -13,7 +13,6 @@
     "lint:fix": "eslint src/ --fix",
     "type-check": "tsc --noEmit",
     "e2e": "start-server-and-test dev 4200 'npx bddgen --tags \"not @brokenScenario\" && npx playwright test'",
-    "e2e:headless": "start-server-and-test dev 4200 'npx bddgen --tags \"not @brokenScenario\" && npx playwright test'",
     "e2e:debug": "start-server-and-test dev 4200 'npx bddgen --tags \"not @brokenScenario\" && npx playwright test --debug'",
     "e2e:ui": "start-server-and-test dev 4200 'npx playwright test --ui'",
     "e2e:ci": "CI=true npx bddgen --tags \"not @brokenScenario\" && npx playwright test",
