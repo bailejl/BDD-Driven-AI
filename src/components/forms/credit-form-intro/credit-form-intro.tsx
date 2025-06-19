@@ -16,7 +16,7 @@ import './credit-form-intro.module.scss';
 export interface CreditFormIntroProps { }
 
 // This routes to different pages within the new credit card application form.
-export function CreditFormIntro(props: CreditFormIntroProps) {
+export const CreditFormIntro = (props: CreditFormIntroProps) => {
   // React Router v7 uses relative paths automatically in nested routes
 
   return (

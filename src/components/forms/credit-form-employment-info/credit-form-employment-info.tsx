@@ -1,5 +1,5 @@
-import { useFormData } from '@services';
-import { Button, FormControl, FormHelperText, InputLabel, NativeSelect, Select, TextField, Typography } from '@mui/material';
+import { useFormData, createApplicationData } from '@services';
+import { Button, FormControl, FormHelperText, InputLabel, NativeSelect, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
@@ -36,7 +36,7 @@ const schema = yup.object().shape({
 });
 
 // This creates the employment section of the new creadit card application form
-export function CreditFormEmploymentInfo(props: CreditFormEmploymentInfoProps) {
+export const CreditFormEmploymentInfo = (props: CreditFormEmploymentInfoProps) => {
   const { register, handleSubmit, setValue, formState } = useForm<EmploymentInputs>({
     resolver: yupResolver(schema),
   });
@@ -47,34 +47,32 @@ export function CreditFormEmploymentInfo(props: CreditFormEmploymentInfoProps) {
   const [countryOfCitizenShipSecondary, setCountryOfCitizenShipSecondary] = React.useState('');
 
 
-  const cachedData = formData.data;
+  const cachedData = formData?.data || createApplicationData();
 
   // Submit this stage of the form and go to the next page
   const onSubmit = (data: EmploymentInputs) => {
-    console.log("onSubmit")
-    console.dir(data);
-    formData.appendFormData(data);
+    formData?.appendFormData(data);
     navigate("/user/form/page3");
   }
 
   // These input fields need special handling to get similar behaviors to 
   // other inputs, specifically how cached data is handled.
-  const handleChangecountryOfCitizenShip = (e: any) => {
+  const handleChangecountryOfCitizenShip = (e: SelectChangeEvent<string>) => {
     const newSelection = e.target.value;
     setValue("countryOfCitizenShip", newSelection, { shouldDirty: true });
     setCountryOfCitizenShip(newSelection);
     cachedData.countryOfCitizenShip = newSelection
-    formData.appendFormData(cachedData);
+    formData?.appendFormData(cachedData);
   }
 
   // These input fields need special handling to get similar behaviors to 
   // other inputs, specifically how cached data is handled.
-  const handleChangecountryOfCitizenShipSecondary = (e: any) => {
+  const handleChangecountryOfCitizenShipSecondary = (e: SelectChangeEvent<string>) => {
     const newSelection = e.target.value;
     setCountryOfCitizenShipSecondary(newSelection)
     setValue("countryOfCitizenShipSecondary", newSelection, { shouldDirty: true });
     cachedData.countryOfCitizenShipSecondary = newSelection
-    formData.appendFormData(cachedData);
+    formData?.appendFormData(cachedData);
   }
 
   // This code adds the cache data handling, so these inputs behave similar to

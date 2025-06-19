@@ -4,7 +4,11 @@ import { useProviderDB, dbContext } from '@services';
 
 // Emulates a DB for the simple app.  This makes it available to the 
 // children elements of this element.
-export function ProviderDB(props: any) {
+export interface ProviderDBProps {
+  children: React.ReactNode
+}
+
+export const ProviderDB = (props: ProviderDBProps) => {
   const db = useProviderDB();
   return (
     <dbContext.Provider value={db}>

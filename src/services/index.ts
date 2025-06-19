@@ -1,4 +1,5 @@
 // Data services
+export * from './application-data'
 export * from './fake-db'
 export * from './form-data'
 

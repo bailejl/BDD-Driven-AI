@@ -1,4 +1,4 @@
-import { useFormData } from '@services';
+import { useFormData, createApplicationData } from '@services';
 import { Button, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -34,7 +34,7 @@ const schema = yup.object().shape({
 export interface CreditFormPersonalInfoProps { }
 
 // Creates the personal info section of the new credit card application form
-export function CreditFormPersonalInfo(props: CreditFormPersonalInfoProps) {
+export const CreditFormPersonalInfo = (props: CreditFormPersonalInfoProps) => {
   const { register, handleSubmit, setValue, formState } = useForm<PersonalInputs>({
     resolver: yupResolver(schema),
   });
@@ -42,21 +42,17 @@ export function CreditFormPersonalInfo(props: CreditFormPersonalInfoProps) {
   const formData = useFormData();
   const navigate = useNavigate();
 
-  const cachedData = formData.data;
+  const cachedData = formData?.data || createApplicationData();
 
   // Used to set data in the date input to mimic other inputs ability to handle 
   // cached data
   const handleDateChange = (date: Date | null) => {
-    console.log('set date');
-    console.dir(date);
     setValue('dateOfBirth', date || new Date(), { shouldDirty: true });
   };
 
   // Move to the next page on completion.
   const onSubmit = (data: PersonalInputs) => {
-    console.log("onSubmit")
-    console.dir(data);
-    formData.appendFormData(data);
+    formData?.appendFormData(data);
     navigate("/user/form/page2");
   }
 

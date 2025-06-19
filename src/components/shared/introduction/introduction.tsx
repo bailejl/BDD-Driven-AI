@@ -11,7 +11,7 @@ export interface IntroductionProps { }
 
 // This is the first page to introduce people to the demo, so 
 // they get the most out of it.
-export function Introduction(props: IntroductionProps) {
+export const Introduction = (props: IntroductionProps) => {
   // Removed useHistory as it's no longer needed
 
   return (

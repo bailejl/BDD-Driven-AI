@@ -23,7 +23,7 @@ import {
 /*
 * Main app layout with components enulating a remote DB/API and auth server.
 */
-export function App() {
+export const App = () => {
   return (
     <div className={styles.app}>
       <Router>

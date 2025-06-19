@@ -1,10 +1,15 @@
 import { useContext, createContext, useState } from "react";
-import { ApplicationData } from "./application-data";
+import { ApplicationData, createApplicationData } from "./application-data";
 import * as userData from "./user-data.json";
 
-type FormDataContextType = any;
+export interface FormDataContextType {
+  data: ApplicationData
+  appendFormData: (dataFragment: Partial<ApplicationData>) => void
+  isValid: () => boolean
+  isApproved: () => boolean | undefined
+}
 
-export const formDataContext = createContext<FormDataContextType>(null);
+export const formDataContext = createContext<FormDataContextType | null>(null);
 
 /*
   This handles data used by the credit application form for a new credit card.
@@ -12,49 +17,49 @@ export const formDataContext = createContext<FormDataContextType>(null);
   valid for the next stage of processing
 */
 
-export function useFormData() {
-  return useContext(formDataContext);
+export const useFormData = () => {
+  return useContext(formDataContext)
 }
 
-function getUserData(firstName: string, lastName: string) {
-  return (userData as any)['default'][firstName + lastName];
+interface UserData {
+  creditScore: number
+}
+
+const getUserData = (firstName: string, lastName: string): UserData | undefined => {
+  const userDataObj = userData as unknown as { default: Record<string, UserData> }
+  return userDataObj.default[firstName + lastName]
 }
 
 // This function emulates a call to a remote credit score system.  It will 
 // even fail, if the user is "Kelly Baddy".
-function isAcceptableCreditScore(data: any) {
+const isAcceptableCreditScore = (data: ApplicationData): boolean | undefined => {
   if (data.firstName === 'Kelly' && data.lastName === 'Baddy') {
-    throw new Error('Credit scroe system unavailable.');
+    throw new Error('Credit scroe system unavailable.')
   }
   const user = getUserData(data.firstName, data.lastName)
-  console.log("isAcceptableCreditScore-user", 
-  JSON.stringify(user, null, 2));
-  console.log("isAcceptableCreditScore: ", user && user.creditScore >= 661)
   return user && user.creditScore >= 661
 }
 
 // This does a monthly debt to income check and ensure is acceptable.
-function isAcceptableBackEndRatio(data: any) {
+const isAcceptableBackEndRatio = (data: ApplicationData): boolean | undefined => {
   if (data && data.monthlyHousingPayment && data.monthlyIncome) {
     const backEndRatio = data.monthlyHousingPayment/data.monthlyIncome
-    console.log("backEndRatio", backEndRatio)
     const result = backEndRatio <= .36
-    console.log("isAcceptableBackEndRatio", result)
     return result
   }
 }
 
 // This makes the application data available via a hook.
-export function useProviderFormData() {
-  const [data, setData] = useState<ApplicationData>(new ApplicationData());
+export const useProviderFormData = () => {
+  const [data, setData] = useState<ApplicationData>(createApplicationData());
 
-  const appendFormData = (dataFragment: any) => {
+  const appendFormData = (dataFragment: Partial<ApplicationData>) => {
     const newData = Object.assign(data, dataFragment);
     return setData(newData);
   }
   const isValid = () => {
     return Object.keys(data).every((key) => {
-      return (data as any)[key] !== undefined 
+      return (data as unknown as Record<string, unknown>)[key] !== undefined 
       || key === 'countryOfCitizenShipSecondary' 
       || key === 'id';
     })

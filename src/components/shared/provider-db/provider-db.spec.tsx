@@ -5,7 +5,7 @@ import ProviderDb from './provider-db';
 
 describe('ProviderDb', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<ProviderDb />);
+    const { baseElement } = render(<ProviderDb><div>Test</div></ProviderDb>);
     expect(baseElement).toBeTruthy();
   });
 });

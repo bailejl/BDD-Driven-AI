@@ -1,4 +1,4 @@
-import { useFormData } from '@services';
+import { useFormData, createApplicationData } from '@services';
 import { Button, MenuItem, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { useForm } from "react-hook-form";
@@ -32,7 +32,7 @@ const schema = yup.object().shape({
 export interface CreditFormFinancialInfoProps { }
 
 // Generates the financial info part of the new credit card application form
-export function CreditFormFinancialInfo(props: CreditFormFinancialInfoProps) {
+export const CreditFormFinancialInfo = (props: CreditFormFinancialInfoProps) => {
   const { register, handleSubmit, formState } = useForm<FinancialInputs>({
     resolver: yupResolver(schema),
   });
@@ -40,15 +40,13 @@ export function CreditFormFinancialInfo(props: CreditFormFinancialInfoProps) {
   const formData = useFormData();
   const navigate = useNavigate();
 
-  const cachedData = formData.data;
+  const cachedData = formData?.data || createApplicationData();
 
   // This is the end of the form, so the submit button
   // TODO need to figure our the best way to do inversion of control, so a 
   // section is not aware of the form controls
   const onSubmit = (data: FinancialInputs) => {
-    console.log("onSubmit")
-    console.dir(data);
-    formData.appendFormData(data);
+    formData?.appendFormData(data);
     navigate("/user/form/complete");
   }
 

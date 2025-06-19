@@ -2,14 +2,20 @@ import { useContext, createContext, useState } from "react";
 import { v4 as uuid } from 'uuid';
 import { ApplicationData } from "./application-data";
 
-export const dbContext = createContext<any>(null);
+export interface DBContextType {
+  applications: ApplicationData[]
+  addUpdateApplciation: (app: ApplicationData) => void
+  deleteApplication: (deleteApp: ApplicationData) => void
+}
 
-export function useDB() {
-  return useContext(dbContext);
+export const dbContext = createContext<DBContextType | null>(null);
+
+export const useDB = () => {
+  return useContext(dbContext)
 }
 
 // Emulates a simple DB for app data and provided via a hook.
-export function useProviderDB() {
+export const useProviderDB = () => {
   const [applications, setApplciations] = useState<ApplicationData[]>([]);
 
   const addUpdateApplciation = (app: ApplicationData) => {

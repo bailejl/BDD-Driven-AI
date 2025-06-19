@@ -32,7 +32,8 @@
       "Bash(sed:*)",
       "WebFetch(domain:vitalets.github.io)",
       "WebFetch(domain:github.com)",
-      "Bash(npx:*)"
+      "Bash(npx:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }
