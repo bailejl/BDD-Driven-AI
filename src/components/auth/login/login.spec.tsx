@@ -169,7 +169,7 @@ describe('Login', () => {
   })
 
   it('should handle missing auth context gracefully', () => {
-    useAuth.mockReturnValue(null)
+    mockUseAuth.mockReturnValue(null)
 
     render(
       <MemoryRouter>

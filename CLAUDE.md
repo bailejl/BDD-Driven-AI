@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Table of Contents
 
 1. [Project Overview](#project-overview)
+   - [Quick Start for New Developers](#quick-start-for-new-developers)
 2. [🚨 MANDATORY WORKFLOW - NO EXCEPTIONS 🚨](#-mandatory-workflow---no-exceptions-)
 3. [Commands](#commands)
 4. [Development Approach](#development-approach)
@@ -18,6 +19,29 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 
 This is a Declarative Gherkin training project built with React, TypeScript, and Cucumber. It demonstrates how to write concise, business-readable test scenarios using the Declarative Gherkin methodology. The project uses a fictional "First Bank of Change" credit application as the demo application.
+
+### Quick Start for New Developers
+
+```bash
+# Clone the repository
+git clone https://github.com/bailejl/cucumber-declarative-gherkin.git
+cd cucumber-declarative-gherkin
+
+# One-command setup (installs dependencies, validates setup, runs all checks)
+npm run setup
+
+# Start development
+npm run dev
+```
+
+**That's it!** The `npm run setup` command will:
+
+1. Install all Node.js dependencies
+2. Install Playwright browsers for E2E testing
+3. Run type checking to ensure TypeScript is properly configured
+4. Run ESLint to validate code quality standards
+5. Run the full test suite with coverage to ensure everything works
+6. Display next steps for development
 
 ## 🚨 MANDATORY WORKFLOW - NO EXCEPTIONS 🚨
 
@@ -68,9 +92,16 @@ If ANY quality gate fails:
 
 All commands should be run from the **root directory** (not from subdirectories):
 
+### Setup Commands
+
+- `npm run setup` - **One-command setup for new developers** (installs dependencies, validates setup, runs all checks)
+- `npm run setup:install` - Install Node.js dependencies and Playwright browsers
+- `npm run setup:validate` - Run type checking, linting, and tests to validate setup
+- `npm run setup:complete` - Display setup completion message
+
 ### Development Commands
 
-- `npm install` - Install Node.js dependencies
+- `npm install` - Install Node.js dependencies only
 - `npm run dev` - Start the React app with Vite (accessible at <http://localhost:4200>)
 - `npm run build` - Build the application for production
 - `npm run preview` - Preview the production build
@@ -87,7 +118,8 @@ All commands should be run from the **root directory** (not from subdirectories)
 All `npm run e2e` commands automatically start the app for testing, so no need to run `npm run dev` before running the tests.
 
 - `npm run e2e:ci` - Run full E2E test suite without HTML server, exit after all tests run (**RECOMMENDED FOR CI**)
-- `npm run e2e` - Run full E2E test suite with HTML server, does not exit. **IMPORTANT**: never run `npm run e2e` as it does not exit after tests are done
+- `npm run e2e` - Run full E2E test suite with HTML server, does not exit on failures. **IMPORTANT**: never run `npm run e2e` as it does not exit after tests are done, when failures are present.
+- `npm run e2e:demo` - Run full E2E test suite with HTML server, which includes a failing scenario for training, so it will always fail.
 - `npm run e2e:debug` - Run E2E tests with Playwright Inspector for debugging UI issues
 - `npm run e2e:ui` - Run tests with Playwright's UI mode for interactive debugging
 - `npm run snippets` - Generate Cucumber step definition snippets
