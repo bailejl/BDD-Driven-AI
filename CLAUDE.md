@@ -182,7 +182,7 @@ This allows tests to be self-documenting and business-readable while referencing
 All commands should be run from the **root directory**:
 
 ```bash
-# 1. ALWAYS run tests first - NO EXCEPTIONS
+# 1. ALWAYS run tests first - NO EXCEPTIONS. CRITCAL - Check for warnings in logs and fix them. 
 npm run test
 
 # 2. ALWAYS run quality checks - NO EXCEPTIONS
@@ -238,7 +238,7 @@ The feature file contains comprehensive Gherkin scenarios that define the expect
 - **MANDATORY**: Use vanilla TypeScript
 - **MANDATORY**: Implement functional programming patterns throughout
 - **MANDATORY**: Use arrow functions exclusively for function definitions
-- **MANDATORY**: Avoid classes - use factory functions and closures instead (page objects are acceptable for testing)
+- **MANDATORY**: Avoid classes - use factory functions and closures instead (code uner `features` is acceptable for testing)
 - **MANDATORY**: Markdown formatting rules: use Markdown for documentation, no HTML tags
 - **MANDATORY**: Markdown needs to be markdownlint compliant with the default rules
 - **NO SEMICOLONS** (enforced by Prettier configuration)

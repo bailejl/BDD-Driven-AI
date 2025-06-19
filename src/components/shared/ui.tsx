@@ -5,7 +5,7 @@ import './ui.module.scss';
 /* eslint-disable-next-line */
 export interface UiProps {}
 
-export function Ui(props: UiProps) {
+export const Ui = (props: UiProps) => {
   return (
     <div>
       <h1>Welcome to ui!</h1>

@@ -5,7 +5,7 @@ import FormWizardContext from './form-wizard-context';
 
 describe('FormWizardContext', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<FormWizardContext />);
+    const { baseElement } = render(<FormWizardContext><div>Test</div></FormWizardContext>);
     expect(baseElement).toBeTruthy();
   });
 });

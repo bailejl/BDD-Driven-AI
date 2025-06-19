@@ -17,7 +17,7 @@ import { useState } from 'react';
 export interface LoginProps { }
 
 // Uses the emulating auth service to provide a basic login and user session.
-export function Login(props: LoginProps) {
+export const Login = (props: LoginProps) => {
   const navigate = useNavigate();
   const auth = useAuth();
   const location = useLocation();
@@ -28,6 +28,7 @@ export function Login(props: LoginProps) {
 
   const { from } = location.state || { from: { pathname: "/" } };
   const login = (username: string, password: string) => {
+    if (!auth) return;
     auth.signin(username, password,
       () => {
         navigate(from, { replace: true });

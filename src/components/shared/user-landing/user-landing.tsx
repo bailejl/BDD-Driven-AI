@@ -17,7 +17,7 @@ import './user-landing.module.scss';
 export interface UserLandingProps {}
 
 // When a user account successfully logs in, they will arrive at this page.
-export function UserLanding(props: UserLandingProps) {
+export const UserLanding = (props: UserLandingProps) => {
   // React Router v7 uses relative paths automatically
   const location = useLocation();
 

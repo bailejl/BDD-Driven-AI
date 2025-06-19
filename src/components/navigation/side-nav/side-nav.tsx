@@ -16,12 +16,12 @@ interface ListItemLinkProps {
 }
 
 // Builds a valid list item for Material Design to consume
-function ListItemLink(props: ListItemLinkProps) {
+const ListItemLink = (props: ListItemLinkProps) => {
   const { icon, primary, to, id } = props;
 
   const renderLink = React.useMemo(
     () =>
-      React.forwardRef<any, Omit<RouterLinkProps, 'to'>>((itemProps, ref) => (
+      React.forwardRef<HTMLAnchorElement, Omit<RouterLinkProps, 'to'>>((itemProps, ref) => (
         <RouterLink id={id} to={to} ref={ref} {...itemProps} />
       )),
     [to, id],
@@ -51,7 +51,7 @@ const useStyles = makeStyles({
   },
 });
 
-export function SideNav(props: SideNavProps) {
+export const SideNav = (props: SideNavProps) => {
   const classes = useStyles();
   const location = useLocation();
 

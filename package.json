@@ -15,7 +15,7 @@
     "e2e": "start-server-and-test dev 4200 'npx bddgen --tags \"not @brokenScenario\" && npx playwright test'",
     "e2e:debug": "start-server-and-test dev 4200 'npx bddgen --tags \"not @brokenScenario\" && npx playwright test --debug'",
     "e2e:ui": "start-server-and-test dev 4200 'npx playwright test --ui'",
-    "e2e:ci": "CI=true npx bddgen --tags \"not @brokenScenario\" && npx playwright test",
+    "e2e:ci": "start-server-and-test dev 4200 'CI=true npx bddgen --tags \"not @brokenScenario\" && npx playwright test'",
     "bdd-gen": "npx bdd-gen",
     "snippets": "npx bdd-gen --dry-run"
   },

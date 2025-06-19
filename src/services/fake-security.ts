@@ -2,12 +2,18 @@
 
 import { useContext, createContext, useState } from "react";
 
-export const authContext = createContext<any>(null);
+export interface AuthContextType {
+  user: string | null
+  signin: (username: string, password: string, successCb: () => void, failCb: (msg: string) => void) => void
+  signout: (cb: () => void) => void
+}
+
+export const authContext = createContext<AuthContextType | null>(null);
 
 // This provides the core auth functions
 const fakeAuth = {
   isAuthenticated: false,
-  signin(username: string, password: string, successCb: any, failCb: any) {
+  signin(username: string, password: string, successCb: () => void, failCb: (msg: string) => void) {
     if (username === null || username === undefined || password === null ||
        password === undefined ||
        password !== "GhekinIsFun") {
@@ -20,19 +26,19 @@ const fakeAuth = {
     localStorage.setItem('user', username);
     setTimeout(successCb, 100); // fake async
   },
-  signout(cb: any) {
+  signout(cb: () => void) {
     fakeAuth.isAuthenticated = false;
     localStorage.removeItem('user');
     setTimeout(cb, 100);
   }
 };
 
-export function useAuth() {
-  return useContext(authContext);
+export const useAuth = () => {
+  return useContext(authContext)
 }
 
 // This provides the auth unctions via a hook.
-export function useProvideAuth() {
+export const useProvideAuth = () => {
   // TODO need to change the username to null to get rid of the auto login
   const [user, setUser] = useState<string | null>(null);
   // const [password, setPassword] = useState(null);
@@ -42,19 +48,19 @@ export function useProvideAuth() {
     setUser(storedUser);
   }
 
-  const signin = (username: any, password: any, successCb: any, failCb: any) => {
+  const signin = (username: string, password: string, successCb: () => void, failCb: (msg: string) => void) => {
     return fakeAuth.signin(username, password,
       () => {
         setUser(username);
         successCb();
       },
-      (failMsg: any) => {
+      (failMsg: string) => {
         setUser(null);
         failCb(failMsg);
       });
   };
 
-  const signout = (cb: any) => {
+  const signout = (cb: () => void) => {
     return fakeAuth.signout(() => {
       setUser(null);
       cb();
@@ -67,6 +73,6 @@ export function useProvideAuth() {
     signout
   };
 }
-export function fakeSecurity(): string {
-  return 'fake-security';
+export const fakeSecurity = (): string => {
+  return 'fake-security'
 }
