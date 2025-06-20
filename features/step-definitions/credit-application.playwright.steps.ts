@@ -4,6 +4,7 @@ import { Given, When, Then } from '../fixtures/test';
 
 const sectionNameMap = {
   "personal information": FormSections.Personal,
+  "citizenship information": FormSections.Citizenship,
   "employment information": FormSections.Employment,
   "financial information": FormSections.Financial,
 };

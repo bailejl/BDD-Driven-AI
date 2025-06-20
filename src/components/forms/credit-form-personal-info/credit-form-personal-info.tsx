@@ -60,7 +60,7 @@ export const CreditFormPersonalInfo = () => {
   // Move to the next page on completion.
   const onSubmit = (data: PersonalInputs) => {
     formData?.appendFormData(data)
-    navigate('/user/form/page2')
+    navigate('/user/form/citizenship')
   }
 
   // Handles cached data similary to other inputs, due to issue with date field

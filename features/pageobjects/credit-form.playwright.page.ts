@@ -4,8 +4,9 @@ import PlaywrightPage from './playwright-page'
 // The sections of the credit form mapped to URL paths
 export enum FormSections {
   Personal = 'user/form',
-  Employment = 'user/form/page2',
-  Financial = 'user/form/page3',
+  Citizenship = 'user/form/citizenship',
+  Employment = 'user/form/employment',
+  Financial = 'user/form/financial',
 }
 
 /**
@@ -35,9 +36,11 @@ export default class CreditFormWizard extends PlaywrightPage {
     tfSsn: '[name="ssn"]',
     txtSsnHelperText: '#ssn-helper-text',
 
-    // Employment section elements
+    // Citizenship section elements
     slctCountryOfCitizenShip: '[name="countryOfCitizenShip"]',
     slctCountryOfCitizenShipSecondary: '[name="countryOfCitizenShipSecondary"]',
+
+    // Employment section elements
     tfCurrentEmployerName: '[name="currentEmployerName"]',
     tfWorkPhone: '[name="workPhone"]',
     tfYearsEmployed: '[name="yearsEmployed"]',
@@ -92,14 +95,20 @@ export default class CreditFormWizard extends PlaywrightPage {
 
     await this.click(this.selectors.btnContinue)
 
+    // Wait for navigation to citizenship section
+    await this.page.waitForURL('**/user/form/citizenship', { timeout: 15000 })
+
+    await this.filloutCitizenshipSection(data)
+    await this.click(this.selectors.btnContinue)
+
     // Wait for navigation to employment section
-    await this.page.waitForURL('**/user/form/page2', { timeout: 15000 })
+    await this.page.waitForURL('**/user/form/employment', { timeout: 15000 })
 
     await this.filloutEmploymentSection(data)
     await this.click(this.selectors.btnContinue)
 
     // Wait for navigation to financial section
-    await this.page.waitForURL('**/user/form/page3', { timeout: 15000 })
+    await this.page.waitForURL('**/user/form/financial', { timeout: 15000 })
 
     await this.filloutFinancialSection(data)
   }
@@ -199,9 +208,9 @@ export default class CreditFormWizard extends PlaywrightPage {
   }
 
   /**
-   * Fill out employment information section
+   * Fill out citizenship information section
    */
-  async filloutEmploymentSection(data: any) {
+  async filloutCitizenshipSection(data: any) {
     // Handle MUI native select - need to find the actual select element
     const countrySelect = this.page.locator(
       'select[name="countryOfCitizenShip"]'
@@ -214,6 +223,12 @@ export default class CreditFormWizard extends PlaywrightPage {
     await secondaryCountrySelect.selectOption(
       data['countryOfCitizenShipSecondary'] || ''
     )
+  }
+
+  /**
+   * Fill out employment information section
+   */
+  async filloutEmploymentSection(data: any) {
 
     await this.fill(
       this.selectors.tfCurrentEmployerName,

@@ -2,6 +2,7 @@ import { Typography } from '@mui/material'
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 
+import CreditFormCitizenshipInfo from '../credit-form-citizenship-info/credit-form-citizenship-info'
 import CreditFormComplete from '../credit-form-complete/credit-form-complete'
 import CreditFormEmploymentInfo from '../credit-form-employment-info/credit-form-employment-info'
 import CreditFormFinancialInfo from '../credit-form-financial-info/credit-form-financial-info'
@@ -28,8 +29,9 @@ export const CreditFormIntro = () => (
     </Typography>
     <Routes>
       <Route index element={<CreditFormPersonalInfo />} />
-      <Route path="page2" element={<CreditFormEmploymentInfo />} />
-      <Route path="page3" element={<CreditFormFinancialInfo />} />
+      <Route path="citizenship" element={<CreditFormCitizenshipInfo />} />
+      <Route path="employment" element={<CreditFormEmploymentInfo />} />
+      <Route path="financial" element={<CreditFormFinancialInfo />} />
       <Route path="complete" element={<CreditFormComplete />} />
     </Routes>
   </div>
