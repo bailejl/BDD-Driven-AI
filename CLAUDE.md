@@ -493,3 +493,9 @@ NEVER proactively create documentation files (*.md) or README files. Only create
 ## Installing New Packages
 
 CRITICAL - When installing new package, check to see if there is an ESLint rule set for it. This will ensure proper use of the new package.
+
+## MCP Guidance
+
+### Playwright MCP
+
+Make sure the app is running using `npm run dev`, as needed. This will allow you to access the site via <http://localhost:4200>.
