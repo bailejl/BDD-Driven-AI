@@ -40,5 +40,5 @@ back-end ratio.  The rest of Tom's data is valid and will not trigger an error.
 So, for this test scenario it fails, due to the merged named data fragment.
 
 The data management code in this example is located in
-`first-bank-of-change/features/data`.  The data management code is utilized in any steps
+`/features/data`.  The data management code is utilized in any steps
 where a name/alias is passed into a Gherkin step.

@@ -18,35 +18,16 @@ failing web-client, browser logs can be embedded into the HTML report.
 In our implementation, they are obtained at the end of scenario.  In addition,
 we only obtain error messages to keep the noise down.
 
-## Viewing the Cucumber HTML Report
+## Viewing the BDD HTML Report
 
 After running the e2e test suite, it generates a HTML report.  
 The e2e test suite creates a Cucumber HTML report in
-`<root-folder>/first-bank-of-change/.tmp/report`.  Opening `index.html` in a browser will
+`<root-folder>/playwright-report`.  Opening `index.html` in a browser will
 allow you see the failing and passing items.
 
 <!-- TODO need to add a failing test to describe here. -->
 
 ## Logging Stack Trace and Screenshots
 
-Logging of errors are provided by Cucumber and WebDriverIO, so there is no
-implementation required from us.  However, screenshots requires a few lines of
-code in the `afterStep` function in the `first-bank-of-change\wdio.conf.js` around line 305.
+See Playwright trace and it viewer for details. Also, look at the HTML report for Playwright-BDD.
 
-## Logging Browser Log Entries
-
-Logging web-client browser logs take a bit more effort.  The implementation here
-attempts to remove noise and returns just the error message.  It uses a modified
-version of protractor tool to retrieve browser logs and filter them by logging
-level.
-
-All the code is in `wdio.conf.js`, most of it is at top of the file with
-a couple of hooks making related calls.  The code starts `first-bank-of-change\wdio.conf.js`
-around line 7.
-The primary piece is the `logConsoleOutput` function, which retrieves the logs
-and filters them.
-
-## Logging in the Test Suite
-
-With Cucumber you can log within scenario steps.  An example of the code is
-`first-bank-of-change\wdio.conf.js` around line 10.

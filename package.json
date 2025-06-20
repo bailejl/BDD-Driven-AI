@@ -60,6 +60,7 @@
     "@cucumber/cucumber": "^11.1.0",
     "@jest/globals": "^30.0.0",
     "@mui/styles": "^6.4.12",
+    "@playwright/mcp": "^0.0.29",
     "@playwright/test": "^1.49.1",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^16.0.0",
