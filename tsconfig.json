@@ -27,13 +27,6 @@
       "@styles/*": ["./src/styles/*"]
     }
   },
-  "include": [
-    "src/**/*",
-    "features/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "first-bank-of-change"
-  ]
+  "include": ["src/**/*", "features/**/*"],
+  "exclude": ["node_modules", "dist", "first-bank-of-change"]
 }

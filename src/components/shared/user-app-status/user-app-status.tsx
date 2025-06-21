@@ -1,15 +1,13 @@
-import React from 'react';
-
-import './user-app-status.module.scss';
+import React from 'react'
 
 /* eslint-disable-next-line */
 export interface UserAppStatusProps {}
 
 // Is a placeholder for future features.
 export const UserAppStatus = () => (
-    <div>
-      <h1>Welcome to user-app-status!</h1>
-    </div>
-  )
+  <div>
+    <h1>Welcome to user-app-status!</h1>
+  </div>
+)
 
-export default UserAppStatus;
+export default UserAppStatus

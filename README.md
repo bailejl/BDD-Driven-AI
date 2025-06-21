@@ -6,7 +6,7 @@ to take what they learned in training and see a working implementation.
 
 Start with our [declarative gherkin docs](./docs/declarative-gherkin.md) to learn more about Declarative Gherkin and key concepts around Centralized Data Management, Cucumber Logging as well as app-specific terms used in the app like Back-end Ratio and Credit Score.
 
-The [/features](/features) folder contains Declarative Gherkin feature files (Given, When, Then style tests).
+The [/features](./features) folder contains Declarative Gherkin feature files (Given, When, Then style tests).
 
 See [Cucumber Logging](./docs/cucumber-logging.md) to troubleshoot e2e tests.
 
@@ -21,7 +21,7 @@ npm run e2e:demo
 
 The run should fail due to one failing test, but otherwise all tests should execute.
 
-The Palywright HTML test report will display in your default browser. If not, open the file `./playwright-report/index.html` in a browser to see the report.
+The Playwright HTML test report will display in your default browser. If not, open the file `./playwright-report/index.html` in a browser to see the report.
 
 ## Run the Example App
 
@@ -37,4 +37,4 @@ Open browser to  `http://localhost:4200`
 
 ## Local Development
 
-Read [CLAUDE.md](./CLAUDE.md) for deatils.
+Read [CLAUDE.md](./CLAUDE.md) for details.

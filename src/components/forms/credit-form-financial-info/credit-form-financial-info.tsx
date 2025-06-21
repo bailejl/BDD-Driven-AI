@@ -6,8 +6,6 @@ import * as yup from 'yup'
 
 import { createApplicationData, useFormData } from '@services'
 
-import './credit-form-financial-info.module.scss'
-
 // Financial inputs for the form
 type FinancialInputs = {
   monthlyIncome: number
@@ -131,7 +129,7 @@ export const CreditFormFinancialInfo = () => {
             Previous
           </Button> */}
           <Button variant="contained" color="primary" type="submit">
-            Submit Applciation
+            Submit application
           </Button>
         </div>
       </form>

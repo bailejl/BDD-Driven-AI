@@ -7,8 +7,6 @@ import {
   useLocation,
 } from 'react-router-dom'
 
-import './side-nav.module.scss'
-
 interface ListItemLinkProps {
   icon?: React.ReactElement
   primary: string

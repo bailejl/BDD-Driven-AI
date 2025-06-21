@@ -7,7 +7,6 @@ import CreditFormComplete from '../credit-form-complete/credit-form-complete'
 import CreditFormEmploymentInfo from '../credit-form-employment-info/credit-form-employment-info'
 import CreditFormFinancialInfo from '../credit-form-financial-info/credit-form-financial-info'
 import CreditFormPersonalInfo from '../credit-form-personal-info/credit-form-personal-info'
-import './credit-form-intro.module.scss'
 
 /* eslint-disable-next-line */
 export interface CreditFormIntroProps {}

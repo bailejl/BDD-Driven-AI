@@ -5,7 +5,7 @@ import { ApplicationData } from './application-data'
 
 export interface DBContextType {
   applications: ApplicationData[]
-  addUpdateApplciation: (app: ApplicationData) => void
+  addUpdateApplication: (app: ApplicationData) => void
   deleteApplication: (deleteApp: ApplicationData) => void
 }
 
@@ -15,28 +15,28 @@ export const useDB = () => useContext(dbContext)
 
 // Emulates a simple DB for app data and provided via a hook.
 export const useProviderDB = () => {
-  const [applications, setApplciations] = useState<ApplicationData[]>([])
+  const [applications, setApplications] = useState<ApplicationData[]>([])
 
-  const addUpdateApplciation = (app: ApplicationData) => {
+  const addUpdateApplication = (app: ApplicationData) => {
     if (!app || app.id) {
-      // do not add empty app or an alreay saved one.
+      // do not add empty app or an already saved one.
       return
     }
     app.id = uuid()
     applications.push(app)
-    setApplciations(applications)
+    setApplications(applications)
   }
 
   const deleteApplication = (deleteApp: ApplicationData) => {
     const newAppData = applications.filter(
       app => deleteApp && deleteApp.id && app.id === deleteApp.id
     )
-    setApplciations(newAppData)
+    setApplications(newAppData)
   }
 
   return {
     applications,
-    addUpdateApplciation,
+    addUpdateApplication,
     deleteApplication,
   }
 }

@@ -1,7 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-import './provider-auth.module.scss';
-import {authContext, useProvideAuth} from '@services';
+import { authContext, useProvideAuth } from '@services'
 
 // This is a simple auth service based on the code from:
 // https://reactrouter.com/web/example/auth-workflow
@@ -10,12 +9,10 @@ export interface ProviderAuthProps {
 }
 
 export const ProviderAuth = (props: ProviderAuthProps) => {
-  const auth = useProvideAuth();
+  const auth = useProvideAuth()
   return (
-    <authContext.Provider value={auth}>
-      {props.children}
-    </authContext.Provider>
-  );
+    <authContext.Provider value={auth}>{props.children}</authContext.Provider>
+  )
 }
 
-export default ProviderAuth;
+export default ProviderAuth

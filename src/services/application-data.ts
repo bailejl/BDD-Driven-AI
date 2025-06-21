@@ -39,11 +39,13 @@ export const createApplicationData = (): ApplicationData => ({
   checkingAmount: 0,
   savingsAmount: 0,
   investmentsAmount: 0,
-  monthlyIncome: 0
+  monthlyIncome: 0,
 })
 
 // Helper function to create ApplicationData with partial data
-export const createApplicationDataWithDefaults = (data: Partial<ApplicationData>): ApplicationData => ({
+export const createApplicationDataWithDefaults = (
+  data: Partial<ApplicationData>
+): ApplicationData => ({
   ...createApplicationData(),
-  ...data
+  ...data,
 })

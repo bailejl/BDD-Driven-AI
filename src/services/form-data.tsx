@@ -40,7 +40,7 @@ const isAcceptableCreditScore = (
   data: ApplicationData
 ): boolean | undefined => {
   if (data.firstName === 'Kelly' && data.lastName === 'Baddy') {
-    throw new Error('Credit scroe system unavailable.')
+    throw new Error('Credit score system unavailable.')
   }
   const user = getUserData(data.firstName, data.lastName)
   return user && user.creditScore >= 661

@@ -1,4 +1,4 @@
-# Concise Declarative Gherkin is the Answer!
+# Concise Declarative Gherkin is the Answer
 
 *Originally published by Joe Bailey on Medium (Contino Engineering) - July 26, 2021*
 [Concise Declarative Gherkin is the Answer!](https://medium.com/contino-engineering/declarative-gherkin-is-the-answer-c550adbc8ed0)
@@ -122,7 +122,7 @@ Then they see a "failing" submittal response
 
 Each previous example of Gherkin explains the behavior under test in four simple Gherkin steps. These steps describe the essential sequence to create the behavior. In addition, none of the technology or other system complexities are described in the Gherkin. It describes how a specific user is able to get a successful credit form submission while having a barely acceptable back-end ratio. This concise way of describing system behaviors from a user's perspective is a great way to communicate. While on the other extreme is imperative Gherkin.
 
-## Concise Declarative Gherkin Saves the Day!
+## Concise Declarative Gherkin Saves the Day
 
 Properly written CDG can address the failings of Imperative Gherkin. It improves critical communication between product teams and stakeholders. In the long run, CDG is easier to manage, saving time and money. The end result is a higher quality acceptance test suite.
 
@@ -197,9 +197,7 @@ As you can see, CDG is an important element of Contino's software delivery under
 
 ## Next Steps
 
-Want to see CDG in action? Then look at the demo app located here: https://github.com/contino/cucumber-declarative-gherkin.
-
-Reach out and connect with me on LinkedIn at https://www.linkedin.com/in/joelbaileyjr.
+Want to see CDG in action? Then look at the demo app located here: <https://github.com/contino/cucumber-declarative-gherkin>.
 
 ---
 

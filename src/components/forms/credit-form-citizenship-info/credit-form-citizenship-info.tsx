@@ -59,7 +59,7 @@ export const CreditFormCitizenshipInfo = () => {
 
   // These input fields need special handling to get similar behaviors to
   // other inputs, specifically how cached data is handled.
-  const handleChangecountryOfCitizenShip = (e: SelectChangeEvent<string>) => {
+  const handleChangeCountryOfCitizenShip = (e: SelectChangeEvent<string>) => {
     const newSelection = e.target.value
     setValue('countryOfCitizenShip', newSelection, { shouldDirty: true })
     setCountryOfCitizenShip(newSelection)
@@ -69,7 +69,7 @@ export const CreditFormCitizenshipInfo = () => {
 
   // These input fields need special handling to get similar behaviors to
   // other inputs, specifically how cached data is handled.
-  const handleChangecountryOfCitizenShipSecondary = (
+  const handleChangeCountryOfCitizenShipSecondary = (
     e: SelectChangeEvent<string>
   ) => {
     const newSelection = e.target.value
@@ -137,7 +137,7 @@ export const CreditFormCitizenshipInfo = () => {
             required
             native
             labelId="citizenship-country-label"
-            onChange={handleChangecountryOfCitizenShip}
+            onChange={handleChangeCountryOfCitizenShip}
             error={errors.countryOfCitizenShip?.message !== undefined}
             value={countryOfCitizenShip}
           >
@@ -280,7 +280,7 @@ export const CreditFormCitizenshipInfo = () => {
             required
             name="countryOfCitizenShipSecondary"
             id="second-citizenship-country-label"
-            onChange={handleChangecountryOfCitizenShipSecondary}
+            onChange={handleChangeCountryOfCitizenShipSecondary}
             error={errors.countryOfCitizenShipSecondary?.message !== undefined}
             value={countryOfCitizenShipSecondary}
           >

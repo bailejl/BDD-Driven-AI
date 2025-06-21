@@ -6,12 +6,10 @@ import * as yup from 'yup'
 
 import { createApplicationData, useFormData } from '@services'
 
-import './credit-form-employment-info.module.scss'
-
 /* eslint-disable-next-line */
 export interface CreditFormEmploymentInfoProps {}
 
-// User inputs for this section of the new credit card applciation form.
+// User inputs for this section of the new credit card application form.
 type EmploymentInputs = {
   currentEmployerName: string
   workPhone: string
@@ -41,7 +39,7 @@ const schema = yup.object().shape({
     .matches(/^[A-Za-z .]+$/i),
 })
 
-// This creates the employment section of the new creadit card application form
+// This creates the employment section of the new credit card application form
 export const CreditFormEmploymentInfo = () => {
   const { register, handleSubmit, formState } = useForm<EmploymentInputs>({
     resolver: yupResolver(schema),

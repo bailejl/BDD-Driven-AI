@@ -4,8 +4,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import { useAuth } from '@services'
 
-import classes from './login.module.scss'
-
 /* eslint-disable-next-line */
 export interface LoginProps {}
 
@@ -48,12 +46,7 @@ export const Login = () => {
   }
   return (
     <div>
-      <form
-        className={classes.root}
-        noValidate
-        autoComplete="off"
-        onSubmit={handleSubmit}
-      >
+      <form noValidate autoComplete="off" onSubmit={handleSubmit}>
         <Box display="flex" flexDirection="column">
           <div
             id="failMsg"

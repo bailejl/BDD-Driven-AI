@@ -2,8 +2,6 @@ import React from 'react'
 
 import { formDataContext, useProviderFormData } from '@services'
 
-import './form-wizard-context.module.scss'
-
 export interface FormWizardContextProps {
   children: React.ReactNode
 }

@@ -1,4 +1,5 @@
 import { Page } from '@playwright/test'
+
 import PlaywrightPage from './playwright-page'
 
 // The sections of the credit form mapped to URL paths
@@ -20,7 +21,7 @@ export default class CreditFormWizard extends PlaywrightPage {
   /**
    * Selectors for form elements
    */
-  private selectors = {
+  private readonly selectors = {
     // Helper texts
     pageHelperTexts: '.Mui-error',
 
@@ -87,8 +88,8 @@ export default class CreditFormWizard extends PlaywrightPage {
   /**
    * Fill out complete form with user data
    */
-  async filloutForm(data: any) {
-    await this.filloutPersonalSection(data)
+  async fillOutForm(data: any) {
+    await this.fillOutPersonalSection(data)
 
     // Wait a moment for validation to complete
     await this.page.waitForTimeout(500)
@@ -98,19 +99,19 @@ export default class CreditFormWizard extends PlaywrightPage {
     // Wait for navigation to citizenship section
     await this.page.waitForURL('**/user/form/citizenship', { timeout: 15000 })
 
-    await this.filloutCitizenshipSection(data)
+    await this.fillOutCitizenshipSection(data)
     await this.click(this.selectors.btnContinue)
 
     // Wait for navigation to employment section
     await this.page.waitForURL('**/user/form/employment', { timeout: 15000 })
 
-    await this.filloutEmploymentSection(data)
+    await this.fillOutEmploymentSection(data)
     await this.click(this.selectors.btnContinue)
 
     // Wait for navigation to financial section
     await this.page.waitForURL('**/user/form/financial', { timeout: 15000 })
 
-    await this.filloutFinancialSection(data)
+    await this.fillOutfinancialsection(data)
   }
 
   /**
@@ -155,7 +156,7 @@ export default class CreditFormWizard extends PlaywrightPage {
   /**
    * Fill out personal information section
    */
-  async filloutPersonalSection(data: any) {
+  async fillOutPersonalSection(data: any) {
     // Wait for form to be ready
     await this.page.waitForSelector(this.selectors.tfFirstName, {
       state: 'visible',
@@ -187,9 +188,9 @@ export default class CreditFormWizard extends PlaywrightPage {
     }
 
     // Fill all fields with proper values
-    await fillField(this.selectors.tfFirstName, data['firstName'] || '')
-    await fillField(this.selectors.tfMiddleInitial, data['middleInitial'] || '')
-    await fillField(this.selectors.tfLastName, data['lastName'] || '')
+    await fillField(this.selectors.tfFirstName, data.firstName || '')
+    await fillField(this.selectors.tfMiddleInitial, data.middleInitial || '')
+    await fillField(this.selectors.tfLastName, data.lastName || '')
 
     // Handle the DatePicker specially
     const dateInput = this.page.locator('#date-of-birth')
@@ -197,11 +198,11 @@ export default class CreditFormWizard extends PlaywrightPage {
     await dateInput.click()
     await dateInput.press('Control+a')
     await dateInput.press('Delete')
-    await dateInput.type(data['dateOfBirth'] || '', { delay: 10 })
+    await dateInput.type(data.dateOfBirth || '', { delay: 10 })
     await dateInput.blur()
 
     // Fill SSN
-    await fillField(this.selectors.tfSsn, data['ssn'] || '')
+    await fillField(this.selectors.tfSsn, data.ssn || '')
 
     // Wait for any validation to complete
     await this.page.waitForTimeout(1000)
@@ -210,65 +211,64 @@ export default class CreditFormWizard extends PlaywrightPage {
   /**
    * Fill out citizenship information section
    */
-  async filloutCitizenshipSection(data: any) {
+  async fillOutCitizenshipSection(data: any) {
     // Handle MUI native select - need to find the actual select element
     const countrySelect = this.page.locator(
       'select[name="countryOfCitizenShip"]'
     )
-    await countrySelect.selectOption(data['countryOfCitizenShip'] || '')
+    await countrySelect.selectOption(data.countryOfCitizenShip || '')
 
     const secondaryCountrySelect = this.page.locator(
       'select[name="countryOfCitizenShipSecondary"]'
     )
     await secondaryCountrySelect.selectOption(
-      data['countryOfCitizenShipSecondary'] || ''
+      data.countryOfCitizenShipSecondary || ''
     )
   }
 
   /**
    * Fill out employment information section
    */
-  async filloutEmploymentSection(data: any) {
-
+  async fillOutEmploymentSection(data: any) {
     await this.fill(
       this.selectors.tfCurrentEmployerName,
-      data['currentEmployerName'] || ''
+      data.currentEmployerName || ''
     )
-    await this.fill(this.selectors.tfWorkPhone, data['workPhone'] || '')
+    await this.fill(this.selectors.tfWorkPhone, data.workPhone || '')
     await this.fill(
       this.selectors.tfYearsEmployed,
-      String(data['yearsEmployed'] || '')
+      String(data.yearsEmployed || '')
     )
     await this.fill(
       this.selectors.tfMonthsEmployed,
-      String(data['monthsEmployed'] || '')
+      String(data.monthsEmployed || '')
     )
-    await this.fill(this.selectors.tfOccupation, data['occupation'] || '')
+    await this.fill(this.selectors.tfOccupation, data.occupation || '')
   }
 
   /**
    * Fill out financial information section
    */
-  async filloutFinancialSection(data: any) {
+  async fillOutfinancialsection(data: any) {
     await this.fill(
       this.selectors.tfMonthlyIncome,
-      String(data['monthlyIncome'] || '')
+      String(data.monthlyIncome || '')
     )
     await this.fill(
       this.selectors.tfMonthlyHousingPayment,
-      String(data['monthlyHousingPayment'] || '')
+      String(data.monthlyHousingPayment || '')
     )
     await this.fill(
       this.selectors.tfCheckingAmount,
-      String(data['checkingAmount'] || '')
+      String(data.checkingAmount || '')
     )
     await this.fill(
       this.selectors.tfSavingsAmount,
-      String(data['savingsAmount'] || '')
+      String(data.savingsAmount || '')
     )
     await this.fill(
       this.selectors.tfInvestmentsAmount,
-      String(data['investmentsAmount'] || '')
+      String(data.investmentsAmount || '')
     )
   }
 

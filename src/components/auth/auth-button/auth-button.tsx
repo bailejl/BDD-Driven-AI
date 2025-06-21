@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom'
 
 import { useAuth } from '@services'
 
-import './auth-button.module.scss'
-
 /* eslint-disable-next-line */
 export interface AuthButtonProps {}
 

@@ -1,6 +1,6 @@
 # BDD Guidance
 
-This document is to help people and I understand the context related to Concise Decelarative Gherkin.
+This document is to help people and I understand the context related to Concise Declarative Gherkin.
 By providing this context, the acceptance criteria can be smaller and easier to understand. AI can
 then implement code based on the BDD and related artifacts.
 
@@ -13,10 +13,9 @@ then implement code based on the BDD and related artifacts.
 **Implementation Details**:
 
 - Personal Information URL: `/user/form` (page 1)
-- Employment/Citizenship Information URL: `/user/form/page2` (still labeled "Personal Information" in UI)
-- Financial Information URL: `/user/form/page3`
-
-**Issue**: The UI labels page 2 as "Personal Information" but it contains citizenship and employment fields, which creates confusion between the Gherkin descriptions and actual implementation.
+- Employment Information URL: `/user/form/employment`
+- Citizenship Information URL: `/user/form/citizenship`
+- Financial Information URL: `/user/form/financial`
 
 ### 2. Form Section Naming Discrepancy
 
@@ -49,11 +48,11 @@ const sectionNameMap = {
 
 **Examples from `features/data/data.json`**:
 
-- "perosnal" instead of "personal"
-- "intial" instead of "initial"
-- "applciation" instead of "application" (seen in UI)
-- "demostraion" instead of "demonstration" (seen in homepage)
-- "simpale" instead of "simple" (seen in homepage)
+- "personal" instead of "personal"
+- "initial" instead of "initial"
+- "application" instead of "application" (seen in UI)
+- "demonstration" instead of "demonstration" (seen in homepage)
+- "simple" instead of "simple" (seen in homepage)
 
 ### 4. Error Message References
 
@@ -67,9 +66,9 @@ Then they see '<error message names>' name error messages
 
 **Data File Names**:
 
-- "required perosnal error msgs"
-- "perosnal at least X characters"
-- "middle intial must be X characters"
+- "required personal error msgs"
+- "personal at least X characters"
+- "middle initial must be X characters"
 
 ### 5. Login Flow Navigation
 
@@ -96,7 +95,7 @@ Then they see '<error message names>' name error messages
 
 **Gap**: Some concepts in the feature files may not have corresponding implementations.
 
-**Example**: The concept of "attempting" to continue (`they attept to continue to next section`) has a typo and the distinction between "attempt" vs actually continuing is not clear.
+**Example**: The concept of "attempting" to continue (`they attempt to continue to next section`) has a typo and the distinction between "attempt" vs actually continuing is not clear.
 
 ### 8. Test Data Structure
 
@@ -115,4 +114,4 @@ Then they see '<error message names>' name error messages
 3. **Document Navigation Paths**: Add comments or documentation explaining the full navigation flow
 4. **Standardize Error Message Names**: Use consistent, correctly-spelled names for error message groups
 5. **URL Documentation**: Document the URL structure for each form section
-6. **Fix Step Definition Typos**: Correct "attept" to "attempt" in the Gherkin step
+6. **Fix Step Definition Typos**: Correct "attempt" to "attempt" in the Gherkin step

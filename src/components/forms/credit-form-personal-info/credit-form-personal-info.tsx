@@ -10,8 +10,6 @@ import * as yup from 'yup'
 
 import { createApplicationData, useFormData } from '@services'
 
-import './credit-form-personal-info.module.scss'
-
 type PersonalInputs = {
   firstName: string
   middleInitial: string
@@ -63,7 +61,7 @@ export const CreditFormPersonalInfo = () => {
     navigate('/user/form/citizenship')
   }
 
-  // Handles cached data similary to other inputs, due to issue with date field
+  // Handles cached data similarly to other inputs, due to issue with date field
   React.useEffect(() => {
     register('dateOfBirth', { required: true }) // custom register dateOfBirth input
     if (cachedData.dateOfBirth) {

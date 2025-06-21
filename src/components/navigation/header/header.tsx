@@ -2,7 +2,6 @@ import { Box, Typography } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import './header.module.scss'
 import Logo from './logo.svg?react'
 import AuthButton from '../../auth/auth-button/auth-button'
 

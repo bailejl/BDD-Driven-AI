@@ -6,8 +6,6 @@ import CreditFormIntro from '../../forms/credit-form-intro/credit-form-intro'
 import FormWizardContext from '../../forms/form-wizard-context/form-wizard-context'
 import UserAppStatus from '../user-app-status/user-app-status'
 
-import './user-landing.module.scss'
-
 /* eslint-disable-next-line */
 export interface UserLandingProps {}
 

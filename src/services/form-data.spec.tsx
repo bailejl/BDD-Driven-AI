@@ -4,16 +4,16 @@ import { useProviderFormData } from './form-data'
 // Mock the user data
 jest.mock('./user-data.json', () => ({
   default: {
-    'TomSmith': { creditScore: 670 },
-    'LisaMach': { creditScore: 661 },
-    'KellyBaddy': { creditScore: 500 }
-  }
+    TomSmith: { creditScore: 670 },
+    LisaMach: { creditScore: 661 },
+    KellyBaddy: { creditScore: 500 },
+  },
 }))
 
 describe('useProviderFormData', () => {
   it('should initialize with empty application data', () => {
     const { result } = renderHook(() => useProviderFormData())
-    
+
     expect(result.current.data.firstName).toBe('')
     expect(result.current.data.lastName).toBe('')
     expect(result.current.data.monthlyIncome).toBe(0)
@@ -27,7 +27,7 @@ describe('useProviderFormData', () => {
       result.current.appendFormData({
         firstName: 'John',
         lastName: 'Doe',
-        monthlyIncome: 5000
+        monthlyIncome: 5000,
       })
     })
 
@@ -58,7 +58,7 @@ describe('useProviderFormData', () => {
         monthlyHousingPayment: 1500,
         checkingAmount: 1000,
         savingsAmount: 2000,
-        investmentsAmount: 5000
+        investmentsAmount: 5000,
       })
     })
 
@@ -73,7 +73,7 @@ describe('useProviderFormData', () => {
         firstName: 'Tom',
         lastName: 'Smith',
         monthlyIncome: 5000,
-        monthlyHousingPayment: 1500 // 30% ratio, acceptable
+        monthlyHousingPayment: 1500, // 30% ratio, acceptable
       })
     })
 
@@ -88,7 +88,7 @@ describe('useProviderFormData', () => {
         firstName: 'Tom',
         lastName: 'Smith',
         monthlyIncome: 5000,
-        monthlyHousingPayment: 2000 // 40% ratio, too high
+        monthlyHousingPayment: 2000, // 40% ratio, too high
       })
     })
 
@@ -103,11 +103,13 @@ describe('useProviderFormData', () => {
         firstName: 'Kelly',
         lastName: 'Baddy',
         monthlyIncome: 5000,
-        monthlyHousingPayment: 1500 // Good ratio but bad credit
+        monthlyHousingPayment: 1500, // Good ratio but bad credit
       })
     })
 
-    expect(() => result.current.isApproved()).toThrow('Credit scroe system unavailable.')
+    expect(() => result.current.isApproved()).toThrow(
+      'Credit score system unavailable.'
+    )
   })
 
   it('should handle edge case with Lisa Mach (minimum acceptable credit score)', () => {
@@ -118,7 +120,7 @@ describe('useProviderFormData', () => {
         firstName: 'Lisa',
         lastName: 'Mach',
         monthlyIncome: 5000,
-        monthlyHousingPayment: 1500
+        monthlyHousingPayment: 1500,
       })
     })
 
@@ -131,7 +133,7 @@ describe('useProviderFormData', () => {
     act(() => {
       result.current.appendFormData({
         firstName: 'Tom',
-        lastName: 'Smith'
+        lastName: 'Smith',
         // Missing income and housing payment (defaults to 0)
       })
     })

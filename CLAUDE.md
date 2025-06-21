@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 1. [Project Overview](#project-overview)
    - [Quick Start for New Developers](#quick-start-for-new-developers)
-2. [🚨 MANDATORY WORKFLOW - NO EXCEPTIONS 🚨](#-mandatory-workflow---no-exceptions-)
+2. [🚨 MANDATORY WORKFLOW - NO EXCEPTIONS 🚨](#mandatory-workflow---no-exceptions)
 3. [Commands](#commands)
 4. [Development Approach](#development-approach)
 5. [Architecture](#architecture)
@@ -43,7 +43,7 @@ npm run dev
 5. Run the full test suite with coverage to ensure everything works
 6. Display next steps for development
 
-## 🚨 MANDATORY WORKFLOW - NO EXCEPTIONS 🚨
+## MANDATORY WORKFLOW - NO EXCEPTIONS
 
 **CRITICAL**: After EVERY single code change, you MUST run both test and quality scripts. This is NON-NEGOTIABLE.
 
@@ -52,7 +52,7 @@ npm run dev
 All commands should be run from the **root directory**:
 
 ```bash
-# 1. ALWAYS run tests first - NO EXCEPTIONS. CRITCAL - Check for warnings in logs and fix them. Ensure we have 90% or better coverage.
+# 1. ALWAYS run tests first - NO EXCEPTIONS. CRITICAL - Check for warnings in logs and fix them. Ensure we have 90% or better coverage.
 npm run test -- --coverage --verbose=false
 
 # 2. ALWAYS run quality checks - NO EXCEPTIONS. CRITICAL - treat warnings like errors and remove them.
@@ -77,7 +77,7 @@ npm run e2e:ci
 - ✅ **Build succeeds**: `npm run build` completes successfully
 - ✅ **Type checking passes**: `npm run type-check` finds no errors
 - ✅ **Functional patterns**: Code follows functional programming constraints
-- ✅ **No Wanrings**: check logs of the Quality Gate processes and ensure there are no logs. CRITICAL - treat warning like errors.
+- ✅ **No Warnings**: check logs of the Quality Gate processes and ensure there are no logs. CRITICAL - treat warning like errors.
 
 ### Failure Response Protocol
 
@@ -188,7 +188,7 @@ src/
 
 - **Feature Files**: Located in `features/*.feature` using Declarative Gherkin syntax
 - **Step Definitions**: Located in `features/step-definitions/`
-- **Page Objects**: Located in `features/pageobjects/` following Playwright patterns
+- **Page Objects**: Located in `features/page-objects/` following Playwright patterns
 - **Data Management**: Centralized test data in `features/data/data.json`
 - **Unit Tests**: Jest tests co-located with components (`*.spec.tsx`)
 
@@ -301,8 +301,8 @@ All implementation must:
 
 ```javascript
 // features/step-definitions/common.playwright.steps.ts
-import HomePage from '../pageobjects/home.playwright.page';
-import LoginPage from '../pageobjects/login.playwright.page';
+import HomePage from '../page-objects/home.playwright.page';
+import LoginPage from '../page-objects/login.playwright.page';
 import { Given } from '../fixtures/test';
 
 Given('{string} logs in', async ({ page, dataManager }, userNameAlias: string) => {
@@ -363,7 +363,7 @@ Here is an example of features test data used by the `features` test suite. This
       "investmentsAmount": 20000,
       "monthlyIncome": 5000,
       "username": "kelly_baddy",
-      "password": "GhekinIsFun"
+      "password": "GherkinIsFun"
   },
   {
       "name": "failing back-end ratio",

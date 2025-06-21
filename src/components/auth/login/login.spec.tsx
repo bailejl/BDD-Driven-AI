@@ -53,9 +53,9 @@ describe('Login', () => {
     )
 
     const usernameInput = screen.getByLabelText('username')
-    fireEvent.change(usernameInput, { target: { value: 'testuser' } })
+    fireEvent.change(usernameInput, { target: { value: 'testUser' } })
 
-    expect(usernameInput).toHaveValue('testuser')
+    expect(usernameInput).toHaveValue('testUser')
   })
 
   it('should handle password input change', () => {
@@ -66,9 +66,9 @@ describe('Login', () => {
     )
 
     const passwordInput = screen.getByLabelText('password')
-    fireEvent.change(passwordInput, { target: { value: 'testpass' } })
+    fireEvent.change(passwordInput, { target: { value: 'testPass' } })
 
-    expect(passwordInput).toHaveValue('testpass')
+    expect(passwordInput).toHaveValue('testPass')
   })
 
   it('should call signin when form is submitted with valid credentials', () => {
@@ -82,13 +82,13 @@ describe('Login', () => {
     const passwordInput = screen.getByLabelText('password')
     const submitButton = screen.getByRole('button', { name: 'Login' })
 
-    fireEvent.change(usernameInput, { target: { value: 'testuser' } })
-    fireEvent.change(passwordInput, { target: { value: 'GhekinIsFun' } })
+    fireEvent.change(usernameInput, { target: { value: 'testUser' } })
+    fireEvent.change(passwordInput, { target: { value: 'GherkinIsFun' } })
     fireEvent.click(submitButton)
 
     expect(mockSignin).toHaveBeenCalledWith(
-      'testuser',
-      'GhekinIsFun',
+      'testUser',
+      'GherkinIsFun',
       expect.any(Function),
       expect.any(Function)
     )
@@ -105,8 +105,8 @@ describe('Login', () => {
     const passwordInput = screen.getByLabelText('password')
     const submitButton = screen.getByRole('button', { name: 'Login' })
 
-    fireEvent.change(usernameInput, { target: { value: 'testuser' } })
-    fireEvent.change(passwordInput, { target: { value: 'GhekinIsFun' } })
+    fireEvent.change(usernameInput, { target: { value: 'testUser' } })
+    fireEvent.change(passwordInput, { target: { value: 'GherkinIsFun' } })
     fireEvent.click(submitButton)
 
     // Simulate successful login callback
@@ -132,8 +132,8 @@ describe('Login', () => {
     const passwordInput = screen.getByLabelText('password')
     const submitButton = screen.getByRole('button', { name: 'Login' })
 
-    fireEvent.change(usernameInput, { target: { value: 'testuser' } })
-    fireEvent.change(passwordInput, { target: { value: 'wrongpassword' } })
+    fireEvent.change(usernameInput, { target: { value: 'testUser' } })
+    fireEvent.change(passwordInput, { target: { value: 'wrongPassword' } })
     fireEvent.click(submitButton)
 
     // Simulate failed login callback
@@ -157,12 +157,12 @@ describe('Login', () => {
     const passwordInput = screen.getByLabelText('password')
     const submitButton = screen.getByRole('button', { name: 'Login' })
 
-    fireEvent.change(passwordInput, { target: { value: 'GhekinIsFun' } })
+    fireEvent.change(passwordInput, { target: { value: 'GherkinIsFun' } })
     fireEvent.click(submitButton)
 
     expect(mockSignin).toHaveBeenCalledWith(
       '',
-      'GhekinIsFun',
+      'GherkinIsFun',
       expect.any(Function),
       expect.any(Function)
     )
@@ -181,8 +181,8 @@ describe('Login', () => {
     const passwordInput = screen.getByLabelText('password')
     const submitButton = screen.getByRole('button', { name: 'Login' })
 
-    fireEvent.change(usernameInput, { target: { value: 'testuser' } })
-    fireEvent.change(passwordInput, { target: { value: 'GhekinIsFun' } })
+    fireEvent.change(usernameInput, { target: { value: 'testUser' } })
+    fireEvent.change(passwordInput, { target: { value: 'GherkinIsFun' } })
     fireEvent.click(submitButton)
 
     // Should not crash when auth is null
@@ -204,8 +204,8 @@ describe('Login', () => {
     const passwordInput = screen.getByLabelText('password')
     const submitButton = screen.getByRole('button', { name: 'Login' })
 
-    fireEvent.change(usernameInput, { target: { value: 'testuser' } })
-    fireEvent.change(passwordInput, { target: { value: 'GhekinIsFun' } })
+    fireEvent.change(usernameInput, { target: { value: 'testUser' } })
+    fireEvent.change(passwordInput, { target: { value: 'GherkinIsFun' } })
     fireEvent.click(submitButton)
 
     // Simulate successful login callback

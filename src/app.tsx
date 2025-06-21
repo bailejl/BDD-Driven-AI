@@ -16,7 +16,7 @@ import {
 import styles from './app.module.scss'
 
 /*
- * Main app layout with components enulating a remote DB/API and auth server.
+ * Main app layout with components emulating a remote DB/API and auth server.
  */
 export const App = () => (
   <div className={styles.app}>
@@ -24,7 +24,7 @@ export const App = () => (
       <ProviderDB>
         <ProviderAuth>
           <Header />
-          <main className={styles.mainFrame}>
+          <main className={styles['main-frame']}>
             <SideNav />
             <Routes>
               <Route path="/" element={<Introduction />} />

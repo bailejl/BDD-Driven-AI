@@ -25,7 +25,7 @@ jest.mock('@services', () => ({
   }),
   useProviderDB: () => ({
     applications: [],
-    addUpdateApplciation: jest.fn(),
+    addUpdateApplication: jest.fn(),
     getApplication: jest.fn(),
   }),
   formDataContext: {

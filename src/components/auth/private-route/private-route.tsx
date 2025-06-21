@@ -1,8 +1,6 @@
 import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 
-import './private-route.module.scss'
-
 import { useAuth } from '@services'
 
 /* eslint-disable-next-line */

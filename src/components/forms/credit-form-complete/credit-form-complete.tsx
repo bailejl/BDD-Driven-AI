@@ -3,8 +3,6 @@ import React from 'react'
 
 import { useDB, useFormData } from '@services'
 
-import './credit-form-complete.module.scss'
-
 /* eslint-disable-next-line */
 export interface CreditFormCompleteProps {}
 
@@ -34,10 +32,10 @@ export const CreditFormComplete = () => {
   const { title, msg } = (() => {
     if (validForm && approvedForm) {
       if (formData?.data) {
-        db?.addUpdateApplciation(formData.data)
+        db?.addUpdateApplication(formData.data)
       }
       return {
-        title: 'Sucess!',
+        title: 'Success!',
         msg: 'Thank you, your application was submitted for further processing.',
       }
     } else if (hasErrored) {

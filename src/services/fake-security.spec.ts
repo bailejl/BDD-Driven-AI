@@ -41,14 +41,14 @@ describe('useProvideAuth', () => {
   })
 
   it('should restore user from localStorage', () => {
-    localStorageMock.getItem.mockReturnValue('testuser')
+    localStorageMock.getItem.mockReturnValue('testUser')
 
     const { result, rerender } = renderHook(() => useProvideAuth())
 
     // Force re-render to trigger localStorage check
     rerender()
 
-    expect(result.current.user).toBe('testuser')
+    expect(result.current.user).toBe('testUser')
   })
 
   it('should sign in successfully with correct credentials', () => {
@@ -58,8 +58,8 @@ describe('useProvideAuth', () => {
 
     act(() => {
       result.current.signin(
-        'testuser',
-        'GhekinIsFun',
+        'testUser',
+        'GherkinIsFun',
         successCallback,
         failCallback
       )
@@ -71,8 +71,8 @@ describe('useProvideAuth', () => {
 
     expect(successCallback).toHaveBeenCalled()
     expect(failCallback).not.toHaveBeenCalled()
-    expect(result.current.user).toBe('testuser')
-    expect(localStorageMock.setItem).toHaveBeenCalledWith('user', 'testuser')
+    expect(result.current.user).toBe('testUser')
+    expect(localStorageMock.setItem).toHaveBeenCalledWith('user', 'testUser')
   })
 
   it('should fail signin with incorrect password', () => {
@@ -82,8 +82,8 @@ describe('useProvideAuth', () => {
 
     act(() => {
       result.current.signin(
-        'testuser',
-        'wrongpassword',
+        'testUser',
+        'wrongPassword',
         successCallback,
         failCallback
       )
@@ -107,7 +107,7 @@ describe('useProvideAuth', () => {
     act(() => {
       result.current.signin(
         null as unknown as string,
-        'GhekinIsFun',
+        'GherkinIsFun',
         successCallback,
         failCallback
       )
@@ -130,7 +130,7 @@ describe('useProvideAuth', () => {
     act(() => {
       result.current.signin(
         undefined as unknown as string,
-        'GhekinIsFun',
+        'GherkinIsFun',
         successCallback,
         failCallback
       )
@@ -152,7 +152,7 @@ describe('useProvideAuth', () => {
 
     act(() => {
       result.current.signin(
-        'testuser',
+        'testUser',
         null as unknown as string,
         successCallback,
         failCallback
@@ -175,7 +175,7 @@ describe('useProvideAuth', () => {
 
     act(() => {
       result.current.signin(
-        'testuser',
+        'testUser',
         undefined as unknown as string,
         successCallback,
         failCallback
@@ -198,14 +198,14 @@ describe('useProvideAuth', () => {
 
     // First sign in a user
     act(() => {
-      result.current.signin('testuser', 'GhekinIsFun', jest.fn(), jest.fn())
+      result.current.signin('testUser', 'GherkinIsFun', jest.fn(), jest.fn())
     })
 
     act(() => {
       jest.runAllTimers()
     })
 
-    expect(result.current.user).toBe('testuser')
+    expect(result.current.user).toBe('testUser')
 
     // Then sign out
     act(() => {

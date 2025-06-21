@@ -5,7 +5,7 @@ import { ApplicationData, createApplicationData } from './application-data'
 // Mock uuid to return predictable IDs
 let uuidCounter = 0
 jest.mock('uuid', () => ({
-  v4: jest.fn(() => `mock-uuid-${++uuidCounter}`)
+  v4: jest.fn(() => `mock-uuid-${++uuidCounter}`),
 }))
 
 describe('useProviderDB', () => {
@@ -25,7 +25,7 @@ describe('useProviderDB', () => {
     testApp.lastName = 'Doe'
 
     act(() => {
-      result.current.addUpdateApplciation(testApp)
+      result.current.addUpdateApplication(testApp)
     })
 
     expect(result.current.applications).toHaveLength(1)
@@ -41,7 +41,7 @@ describe('useProviderDB', () => {
     testApp.firstName = 'John'
 
     act(() => {
-      result.current.addUpdateApplciation(testApp)
+      result.current.addUpdateApplication(testApp)
     })
 
     expect(result.current.applications).toHaveLength(0)
@@ -51,7 +51,7 @@ describe('useProviderDB', () => {
     const { result } = renderHook(() => useProviderDB())
 
     act(() => {
-      result.current.addUpdateApplciation(null as unknown as ApplicationData)
+      result.current.addUpdateApplication(null as unknown as ApplicationData)
     })
 
     expect(result.current.applications).toHaveLength(0)
@@ -66,8 +66,8 @@ describe('useProviderDB', () => {
 
     // Add two applications
     act(() => {
-      result.current.addUpdateApplciation(testApp1)
-      result.current.addUpdateApplciation(testApp2)
+      result.current.addUpdateApplication(testApp1)
+      result.current.addUpdateApplication(testApp2)
     })
 
     expect(result.current.applications).toHaveLength(2)
@@ -88,7 +88,7 @@ describe('useProviderDB', () => {
     testApp.firstName = 'John'
 
     act(() => {
-      result.current.addUpdateApplciation(testApp)
+      result.current.addUpdateApplication(testApp)
     })
 
     expect(result.current.applications).toHaveLength(1)

@@ -45,7 +45,7 @@ describe('AuthButton', () => {
 
   it('should render logout button when user is authenticated', () => {
     mockUseAuth.mockReturnValue({
-      user: 'testuser',
+      user: 'testUser',
       signin: jest.fn(),
       signout: mockSignout,
     })
@@ -79,7 +79,7 @@ describe('AuthButton', () => {
 
   it('should call signout and navigate to home when logout button is clicked', () => {
     mockUseAuth.mockReturnValue({
-      user: 'testuser',
+      user: 'testUser',
       signin: jest.fn(),
       signout: mockSignout,
     })

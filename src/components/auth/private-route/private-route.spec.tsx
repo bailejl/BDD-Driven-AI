@@ -7,7 +7,7 @@ import PrivateRoute from './private-route'
 // Mock the auth service
 jest.mock('@services', () => ({
   useAuth: () => ({
-    user: 'testuser',
+    user: 'testUser',
   }),
 }))
 
