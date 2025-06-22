@@ -11,10 +11,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 4. [Development Approach](#development-approach)
 5. [Architecture](#architecture)
 6. [Technical Constraints](#technical-constraints)
-7. [Implementation Process - ATDD Workflow](#implementation-process---atdd-workflow)
-8. [Testing and Debugging](#testing-and-debugging)
-9. [Success Criteria](#success-criteria)
-10. [Important Instruction Reminders](#important-instruction-reminders)
+7. [Security Standards](#security-standards)
+8. [Implementation Process - ATDD Workflow](#implementation-process---atdd-workflow)
+9. [Testing and Debugging](#testing-and-debugging)
+10. [Success Criteria](#success-criteria)
+11. [Important Instruction Reminders](#important-instruction-reminders)
 
 ## Project Overview
 
@@ -24,8 +25,8 @@ This is a Declarative Gherkin training project built with React, TypeScript, and
 
 ```bash
 # Clone the repository
-git clone https://github.com/bailejl/cucumber-declarative-gherkin.git
-cd cucumber-declarative-gherkin
+git clone https://github.com/bailejl/BDD-Driven-AI.git
+cd BDD-Driven-AI
 
 # One-command setup (installs dependencies, validates setup, runs all checks)
 npm run setup
@@ -45,7 +46,7 @@ npm run dev
 
 ## MANDATORY WORKFLOW - NO EXCEPTIONS
 
-**CRITICAL**: After EVERY single code change, you MUST run both test and quality scripts. This is NON-NEGOTIABLE.
+**CRITICAL**: 🚨 After EVERY single code change, you MUST run both test and quality scripts. This is NON-NEGOTIABLE.
 
 ### Required Commands After Every Change
 
@@ -55,16 +56,19 @@ All commands should be run from the **root directory**:
 # 1. ALWAYS run tests first - NO EXCEPTIONS. CRITICAL - Check for warnings in logs and fix them. Ensure we have 90% or better coverage.
 npm run test -- --coverage --verbose=false
 
-# 2. ALWAYS run quality checks - NO EXCEPTIONS. CRITICAL - treat warnings like errors and remove them.
+# 2. ALWAYS run quality checks - NO EXCEPTIONS. CRITICAL - treat warnings like errors and fix them.
 npm run lint
 
-# 3. ALWAYS run E2E tests - NO EXCEPTIONS
+# 3. ALWAYS run comprehensive quality checks - NO EXCEPTIONS. CRITICAL - includes mega-linter security scans.
+npm run lint:mega
+
+# 4. ALWAYS run E2E tests - NO EXCEPTIONS
 npm run e2e:ci
 ```
 
 ### Workflow Enforcement Rules
 
-1. **NEVER proceed to the next task** until both `npm run test` and `npm run lint` pass from the root directory
+1. **NEVER proceed to the next task** until `npm run test`, `npm run lint`, and `npm run lint:mega` all pass from the root directory
 2. **NEVER skip this workflow** - even for "small changes" or "quick fixes"
 3. **ALWAYS run the full test suite** - no selective testing
 4. **ALWAYS verify quality standards** - no exceptions for any file type
@@ -73,11 +77,11 @@ npm run e2e:ci
 ### Quality Gates - ALL Must Pass
 
 - ✅ **All tests pass**: `npm run test` returns success
-- ✅ **No linting errors**: ESLint finds no issues
+- ✅ **No linting errors or warnings**: `npm run lint` and `npm run lint:mega` has no errors or warnings
 - ✅ **Build succeeds**: `npm run build` completes successfully
 - ✅ **Type checking passes**: `npm run type-check` finds no errors
 - ✅ **Functional patterns**: Code follows functional programming constraints
-- ✅ **No Warnings**: check logs of the Quality Gate processes and ensure there are no logs. CRITICAL - treat warning like errors.
+- ✅ **No Warnings**: check logs of the Quality Gate processes and ensure there are no logs. CRITICAL - treat warnings like errors.
 
 ### Failure Response Protocol
 
@@ -130,6 +134,7 @@ All `npm run e2e` commands automatically start the app for testing, so no need t
 
 - `npm run lint` - Run linting checks with ESLint
 - `npm run lint:fix` - Fix auto-fixable linting issues
+- `npm run lint:mega` - Run comprehensive MegaLinter security and quality scans
 - `npm run type-check` - Run TypeScript type checking
 
 ## Development Approach
@@ -235,6 +240,29 @@ This allows tests to be self-documenting and business-readable while referencing
 - No var declarations
 - Consistent arrow function spacing
 - No duplicate imports
+
+## Security Standards
+
+### GitHub Actions Security
+
+- **MANDATORY**: All workflows must have restrictive top-level permissions
+- **MANDATORY**: No `write-all` permissions unless absolutely necessary
+- **MANDATORY**: Workflow dispatch triggers must not have user-controllable inputs that affect build output
+- **MANDATORY**: Follow principle of least privilege for all CI/CD processes
+
+### Code Security
+
+- **MANDATORY**: All code changes must pass MegaLinter security scans (`npm run lint:mega`)
+- **MANDATORY**: No hardcoded secrets, tokens, or API keys in code
+- **MANDATORY**: All dependencies must be audited for security vulnerabilities
+- **MANDATORY**: Use `npm audit --audit-level=high` to check for critical vulnerabilities
+
+### Current Security Compliance
+
+- ✅ **Checkov Security**: 100% compliance with GitHub Actions security best practices
+- ✅ **Workflow Permissions**: All workflows use minimum required permissions
+- ✅ **Build Security**: No user-controllable parameters in build processes
+- ✅ **Dependency Security**: Regular security audits via CI/CD pipeline
 
 ## Implementation Process - ATDD Workflow
 
