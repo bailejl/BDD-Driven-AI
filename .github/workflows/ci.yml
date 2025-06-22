@@ -86,6 +86,7 @@ jobs:
         run: npm run e2e:ci
         env:
           SELENIUM_HOST: localhost
+          PLAYWRIGHT_HTML_OPEN: never
 
       - name: Upload E2E screenshots
         if: failure()

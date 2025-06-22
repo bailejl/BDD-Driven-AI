@@ -13,7 +13,7 @@ export default defineConfig({
   testDir,
 
   /* Run tests in files in parallel */
-  fullyParallel: false,
+  fullyParallel: process.env.CI ? false : true,
 
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,

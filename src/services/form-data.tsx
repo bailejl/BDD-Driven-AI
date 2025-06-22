@@ -66,15 +66,23 @@ export const useProviderFormData = () => {
     return setData(newData)
   }
   const isValid = () =>
-    Object.keys(data).every(
-      (key) =>
-        // eslint-disable-next-line security/detect-object-injection
+    Object.keys(data).every((key) => {
+      // eslint-disable-next-line security/detect-object-injection
+      const result =
         (data as unknown as Record<string, unknown>)[key] !== undefined ||
         key === 'countryOfCitizenShipSecondary' ||
         key === 'id'
-    )
-  const isApproved = () =>
-    isAcceptableCreditScore(data) && isAcceptableBackEndRatio(data)
+      // eslint-disable-next-line no-console
+      console.log(`isValid: ${result}`)
+      return result
+    })
+  const isApproved = () => {
+    const result =
+      isAcceptableCreditScore(data) && isAcceptableBackEndRatio(data)
+    // eslint-disable-next-line no-console
+    console.log(`isApproved: ${result}`)
+    return result
+  }
   return {
     data,
     appendFormData,

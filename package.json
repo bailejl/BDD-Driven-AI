@@ -1,5 +1,5 @@
 {
-  "name": "cucumber-declarative-gherkin",
+  "name": "bdd-driven-ai",
   "version": "1.0.0",
   "description": "Demo of how to write declarative Gherkin",
   "type": "module",
@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bailejl/cucumber-declarative-gherkin.git"
+    "url": "git+https://github.com/bailejl/BDD-Driven-AI.git"
   },
   "keywords": [
     "cucumber",
@@ -41,9 +41,9 @@
   "author": "Joe L. Bailey",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bailejl/cucumber-declarative-gherkin/issues"
+    "url": "https://github.com/bailejl/BDD-Driven-AI/issues"
   },
-  "homepage": "https://github.com/bailejl/cucumber-declarative-gherkin#readme",
+  "homepage": "https://github.com/bailejl/BDD-Driven-AI#readme",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",

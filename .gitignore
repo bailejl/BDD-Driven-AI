@@ -57,3 +57,5 @@ Thumbs.db
 megalinter-reports/
 
 /*.core
+
+.claude/settings.local.json

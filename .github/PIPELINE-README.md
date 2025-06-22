@@ -149,8 +149,8 @@ git push origin upgrade/eslint-9
 Add these to your README.md to show pipeline status:
 
 ```markdown
-![CI Pipeline](https://github.com/bailejl/cucumber-declarative-gherkin/workflows/CI%20Pipeline/badge.svg)
-![Deploy Status](https://github.com/bailejl/cucumber-declarative-gherkin/workflows/Deploy%20to%20Main/badge.svg)
+![CI Pipeline](https://github.com/bailejl/BDD-Driven-AI/workflows/CI%20Pipeline/badge.svg)
+![Deploy Status](https://github.com/bailejl/BDD-Driven-AI/workflows/Deploy%20to%20Main/badge.svg)
 ```
 
 ## Troubleshooting

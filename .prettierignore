@@ -10,3 +10,4 @@ playwright-report/
 test-results/
 features/step-definitions/
 *.html
+.claude/settings.local.json
