@@ -36,14 +36,14 @@ git checkout -b upgrade/eslint-9
 # Follow UPGRADE_PLANS.md section "3. ESLint Configuration Migration"
 ```
 
-### Slot 2: Testing Framework (READY)  
+### Slot 2: Testing Framework (READY)
 
 **Branch**: `upgrade/testing-framework`  
 **Dependencies**: None  
 **AI Agent Instructions**:
 
 ```bash
-git checkout -b upgrade/testing-framework  
+git checkout -b upgrade/testing-framework
 # Follow UPGRADE_PLANS.md section "4. Testing Framework Updates"
 ```
 
@@ -132,9 +132,9 @@ git checkout -b upgrade/react-19
    ```bash
    # Run full test suite
    make npm run test
-   make npm run lint  
+   make npm run lint
    make npm run build
-   
+
    # For branches that affect E2E:
    docker compose up selenium -d
    make npm run e2e-headless
@@ -145,10 +145,10 @@ git checkout -b upgrade/react-19
    ```bash
    # Update progress file
    echo "$(date): COMPLETED - Ready for merge" >> PROGRESS_$(git branch --show-current).md
-   
+
    # Update UPGRADE_PLANS.md with lessons learned
    # Mark section as COMPLETED
-   
+
    git add .
    git commit -m "Complete $(git branch --show-current) upgrade"
    git push
@@ -170,7 +170,7 @@ git checkout -b upgrade/react-19
    ```bash
    git fetch --all
    git checkout upgrade/[branch-name]
-   
+
    # Run validation
    make npm run test
    make npm run lint
@@ -183,7 +183,7 @@ git checkout -b upgrade/react-19
    git checkout main
    git merge upgrade/[branch-name]
    git push origin main
-   
+
    # Clean up
    git branch -d upgrade/[branch-name]
    git push origin --delete upgrade/[branch-name]
@@ -230,7 +230,7 @@ Each AI agent should update their progress file with:
 
 - Start time
 - Major milestones
-- Blocking issues  
+- Blocking issues
 - Completion status
 - Lessons learned
 
@@ -272,4 +272,4 @@ git push
 
 ---
 
-*This workflow enables 3-4 parallel upgrade streams while preventing conflicts and ensuring coordination.*
+_This workflow enables 3-4 parallel upgrade streams while preventing conflicts and ensuring coordination._

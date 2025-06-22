@@ -9,7 +9,7 @@ import PlaywrightPage from './playwright-page'
 export default class LoginPage extends PlaywrightPage {
   private readonly header: HeaderPage
 
-  constructor (page: Page) {
+  constructor(page: Page) {
     super(page)
     this.header = new HeaderPage(page)
   }
@@ -20,13 +20,13 @@ export default class LoginPage extends PlaywrightPage {
   private readonly selectors = {
     inputUsername: '#username',
     inputPassword: '#password',
-    btnSubmit: 'button[type="submit"]'
+    btnSubmit: 'button[type="submit"]',
   }
 
   /**
    * Perform login with username and password
    */
-  async login (username: string, password: string) {
+  async login(username: string, password: string) {
     // Check if already logged in and sign out if needed
     if (await this.header.isSignOutButtonVisible()) {
       await this.header.clickSignOut()
@@ -44,7 +44,7 @@ export default class LoginPage extends PlaywrightPage {
   /**
    * Navigate to login page
    */
-  async open () {
+  async open() {
     await super.open('login')
   }
 }

@@ -25,10 +25,10 @@ then implement code based on the BDD and related artifacts.
 
 ```typescript
 const sectionNameMap = {
-  "personal information": FormSections.Personal,
-  "employment information": FormSections.Employment,
-  "financial information": FormSections.Financial,
-};
+  'personal information': FormSections.Personal,
+  'employment information': FormSections.Employment,
+  'financial information': FormSections.Financial,
+}
 ```
 
 **Implementation Reality**:

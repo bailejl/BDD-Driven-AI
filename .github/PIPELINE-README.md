@@ -72,7 +72,7 @@ The pipeline has special support for the parallel upgrade strategy defined in `P
 ### Supported Upgrade Branches
 
 - `upgrade/eslint-9` - ESLint 9 migration
-- `upgrade/testing-framework` - Jest/ts-jest updates  
+- `upgrade/testing-framework` - Jest/ts-jest updates
 - `upgrade/dev-tooling` - Node.js/Docker/CI updates
 - `upgrade/nx-workspace` - Nx workspace migration
 - `upgrade/react-19` - React ecosystem upgrade

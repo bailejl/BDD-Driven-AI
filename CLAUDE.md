@@ -53,16 +53,19 @@ npm run dev
 All commands should be run from the **root directory**:
 
 ```bash
-# 1. ALWAYS run tests first - NO EXCEPTIONS. CRITICAL - Check for warnings in logs and fix them. Ensure we have 90% or better coverage.
+# 1. ALWAYS ensure code meet formatting standards.
+npm run prettier:write
+
+# 2. ALWAYS run tests first - NO EXCEPTIONS. CRITICAL - Check for warnings in logs and fix them. Ensure we have 90% or better coverage.
 npm run test -- --coverage --verbose=false
 
-# 2. ALWAYS run quality checks - NO EXCEPTIONS. CRITICAL - treat warnings like errors and fix them.
+# 3. ALWAYS run quality checks - NO EXCEPTIONS. CRITICAL - treat warnings like errors and fix them.
 npm run lint
 
-# 3. ALWAYS run comprehensive quality checks - NO EXCEPTIONS. CRITICAL - includes mega-linter security scans.
+# 4. ALWAYS run comprehensive quality checks - NO EXCEPTIONS. CRITICAL - includes mega-linter security scans.
 npm run lint:mega
 
-# 4. ALWAYS run E2E tests - NO EXCEPTIONS
+# 5. ALWAYS run E2E tests - NO EXCEPTIONS
 npm run e2e:ci
 ```
 
@@ -337,7 +340,7 @@ Given('{string} logs in', async ({ page, dataManager }, userNameAlias: string) =
   const userData = dataManager.getData(userNameAlias, true);
   const homePage = new HomePage(page);
   const loginPage = new LoginPage(page);
-  
+
   await homePage.open();
   await loginPage.login(userData.username, userData.password);
 });
@@ -347,7 +350,7 @@ Given('{string} logs in with these mods', async ({ page, dataManager }, userName
   const userData = dataManager.getDataWithMods(userNameAlias, modDataNames);
   const homePage = new HomePage(page);
   const loginPage = new LoginPage(page);
-  
+
   await homePage.open();
   await loginPage.login(userData.username, userData.password);
 });
@@ -356,7 +359,7 @@ Given('{string} logs in with this mod {string}', async ({ page, dataManager }, u
   const userData = dataManager.getDataWithMods(userNameAlias, [modName]);
   const homePage = new HomePage(page);
   const loginPage = new LoginPage(page);
-  
+
   await homePage.open();
   await loginPage.login(userData.username, userData.password);
 });
@@ -369,34 +372,32 @@ Here is an example of features test data used by the `features` test suite. This
 ```json
 [
   {
-      "name": "Kelly Baddy",
-      "aliases": [
-          "Kelly Baddy w/ the ability to break things"
-      ],
-      "firstName": "Kelly",
-      "middleInitial": "A",
-      "lastName": "Baddy",
-      "dateOfBirth": "10/11/1980",
-      "ssn": "555-22-5555",
-      "countryOfCitizenShip": "GB",
-      "countryOfCitizenShipSecondary": "US",
-      "currentEmployerName": "Acme Oil",
-      "workPhone": "(555)111-2222",
-      "yearsEmployed": 10,
-      "monthsEmployed": 1,
-      "occupation": "CIO",
-      "monthlyHousingPayment": 1800,
-      "checkingAmount": 2000,
-      "savingsAmount": 2000,
-      "investmentsAmount": 20000,
-      "monthlyIncome": 5000,
-      "username": "kelly_baddy",
-      "password": "GherkinIsFun"
+    "name": "Kelly Baddy",
+    "aliases": ["Kelly Baddy w/ the ability to break things"],
+    "firstName": "Kelly",
+    "middleInitial": "A",
+    "lastName": "Baddy",
+    "dateOfBirth": "10/11/1980",
+    "ssn": "555-22-5555",
+    "countryOfCitizenShip": "GB",
+    "countryOfCitizenShipSecondary": "US",
+    "currentEmployerName": "Acme Oil",
+    "workPhone": "(555)111-2222",
+    "yearsEmployed": 10,
+    "monthsEmployed": 1,
+    "occupation": "CIO",
+    "monthlyHousingPayment": 1800,
+    "checkingAmount": 2000,
+    "savingsAmount": 2000,
+    "investmentsAmount": 20000,
+    "monthlyIncome": 5000,
+    "username": "kelly_baddy",
+    "password": "GherkinIsFun"
   },
   {
-      "name": "failing back-end ratio",
-      "monthlyHousingPayment": 18001,
-      "monthlyIncome": 50000
+    "name": "failing back-end ratio",
+    "monthlyHousingPayment": 18001,
+    "monthlyIncome": 50000
   }
 ]
 ```
@@ -457,13 +458,15 @@ Add these to your test code when debugging:
 
 ```typescript
 // Take a screenshot at any point
-await page.screenshot({ path: 'screenshots/debug-issue.png' });
+await page.screenshot({ path: 'screenshots/debug-issue.png' })
 
 // Take full page screenshot
-await page.screenshot({ path: 'screenshots/full-page.png', fullPage: true });
+await page.screenshot({ path: 'screenshots/full-page.png', fullPage: true })
 
 // Screenshot specific element
-await page.locator('.error-message').screenshot({ path: 'screenshots/error.png' });
+await page
+  .locator('.error-message')
+  .screenshot({ path: 'screenshots/error.png' })
 ```
 
 #### Slow Down Execution
@@ -477,7 +480,7 @@ npx playwright test --headed --slow-mo=1000  # 1 second delay between actions
 
 ```typescript
 // Pause test and open DevTools
-await page.pause();  // This will pause execution and let you inspect
+await page.pause() // This will pause execution and let you inspect
 ```
 
 ### Claude Code Browser Usage
@@ -516,7 +519,7 @@ The application should satisfy ALL scenarios in `features/*.feature`:
 Do what has been asked; nothing more, nothing less.
 NEVER create files unless they're absolutely necessary for achieving your goal.
 ALWAYS prefer editing an existing file to creating a new one.
-NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
+NEVER proactively create documentation files (\*.md) or README files. Only create documentation files if explicitly requested by the User.
 
 ## Installing New Packages
 

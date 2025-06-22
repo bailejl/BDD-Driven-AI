@@ -4,8 +4,8 @@ describe('Header', () => {
     // const { baseElement } = render(
     //   <Router>
     //     <Header />
-    //   </Router>  
+    //   </Router>
     // );
     // expect(baseElement).toBeTruthy();
-  });
-});
+  })
+})

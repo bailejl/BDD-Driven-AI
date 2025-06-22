@@ -1,6 +1,6 @@
 # Concise Declarative Gherkin is the Answer
 
-*Originally published by Joe Bailey on Medium (Contino Engineering) - July 26, 2021*
+_Originally published by Joe Bailey on Medium (Contino Engineering) - July 26, 2021_
 [Concise Declarative Gherkin is the Answer!](https://medium.com/contino-engineering/declarative-gherkin-is-the-answer-c550adbc8ed0)
 
 Sick of newly created software having the wrong behaviors? Hate the hard-to-understand acceptance criteria? Want to speed up backlog refinement and story estimation? Desire better collaboration with vital stakeholders and SMEs? If you answer yes to any of these questions or just want to improve your Cucumber Gherkin writing, then this article is for you. In addition, Concise Declarative Gherkin (CDG) is an important element of Contino's software delivery under its pillars of excellence. CDG fits in the pillars of [Enterprise DevOps Transformation](https://www.contino.io/services/enterprise-devops-transformation) and [Cloud Native Software Development](https://www.contino.io/services/cloud-native-software-development).

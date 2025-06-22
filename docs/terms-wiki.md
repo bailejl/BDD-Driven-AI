@@ -1,15 +1,15 @@
 # Organization and Industry Terms Wiki
 
 This wiki contains the term definitions used by the organization and industry.
-Product teams use this wiki to clarify terms in declarative Gherkin.  In
+Product teams use this wiki to clarify terms in declarative Gherkin. In
 addition, it contains the organization's limits and constraints related to
-each term.  Example, what is the acceptable credit score for a credit
+each term. Example, what is the acceptable credit score for a credit
 application.
 
 The wiki requires versioning, so work tickets can reference a specific
-version of the wiki page.  It is better to reference a wiki version, as it is
-a source of truth.  Copying terms, definitions and calculations into a ticket
-is error prone and does not support traceability.  
+version of the wiki page. It is better to reference a wiki version, as it is
+a source of truth. Copying terms, definitions and calculations into a ticket
+is error prone and does not support traceability.
 
 ## Back-end Ratio
 
@@ -19,7 +19,7 @@ cards, car payments, student loans, etc.) divided by your monthly pre-tax
 income. Traditionally, lenders wouldn’t give people loans that increased this
 ratio past 36%, but they often do now. “
 
-Acceptable back-end ratio is 36% or less.  Anything higher is a not acceptable.
+Acceptable back-end ratio is 36% or less. Anything higher is a not acceptable.
 
 ## Credit Score
 

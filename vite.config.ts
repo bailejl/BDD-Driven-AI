@@ -8,11 +8,11 @@ export default defineConfig({
     react(),
     svgr({
       include: '**/*.svg?react',
-    })
+    }),
   ],
   server: {
     port: 4200,
-    host: '0.0.0.0'
+    host: '0.0.0.0',
   },
   resolve: {
     alias: {
@@ -23,8 +23,8 @@ export default defineConfig({
       '@hooks': resolve(__dirname, './src/hooks'),
       '@utils': resolve(__dirname, './src/utils'),
       '@types': resolve(__dirname, './src/types'),
-      '@styles': resolve(__dirname, './src/styles')
-    }
+      '@styles': resolve(__dirname, './src/styles'),
+    },
   },
   build: {
     outDir: 'dist',
@@ -34,9 +34,9 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
-          mui: ['@mui/material', '@mui/icons-material']
-        }
-      }
-    }
-  }
+          mui: ['@mui/material', '@mui/icons-material'],
+        },
+      },
+    },
+  },
 })

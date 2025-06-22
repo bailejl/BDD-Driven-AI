@@ -67,7 +67,7 @@ export const useProviderFormData = () => {
   }
   const isValid = () =>
     Object.keys(data).every(
-      key =>
+      (key) =>
         // eslint-disable-next-line security/detect-object-injection
         (data as unknown as Record<string, unknown>)[key] !== undefined ||
         key === 'countryOfCitizenShipSecondary' ||

@@ -1,7 +1,7 @@
 # Sample project for Declarative Gherkin via Cucumber
 
-This is a training aide to help people learn Declarative Gherkin.  It is not
-easy to learn Declarative Gherkin.  Thus, this app helps people understand how
+This is a training aide to help people learn Declarative Gherkin. It is not
+easy to learn Declarative Gherkin. Thus, this app helps people understand how
 to take what they learned in training and see a working implementation.
 
 Start with our [declarative gherkin docs](./docs/declarative-gherkin.md) to learn more about Declarative Gherkin and key concepts around Centralized Data Management, Cucumber Logging as well as app-specific terms used in the app like Back-end Ratio and Credit Score.
@@ -25,7 +25,7 @@ The Playwright HTML test report will display in your default browser. If not, op
 
 ## Run the Example App
 
-This demo uses a single app with everything running in memory.  No servers are
+This demo uses a single app with everything running in memory. No servers are
 used for this demo.
 
 ```bash
@@ -33,7 +33,7 @@ used for this demo.
 npm run dev
 ```
 
-Open browser to  `http://localhost:4200`
+Open browser to `http://localhost:4200`
 
 ## Local Development
 

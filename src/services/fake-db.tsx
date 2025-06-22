@@ -29,7 +29,7 @@ export const useProviderDB = () => {
 
   const deleteApplication = (deleteApp: ApplicationData) => {
     const newAppData = applications.filter(
-      app => deleteApp && deleteApp.id && app.id === deleteApp.id
+      (app) => deleteApp && deleteApp.id && app.id === deleteApp.id
     )
     setApplications(newAppData)
   }

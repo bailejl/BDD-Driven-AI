@@ -19,12 +19,13 @@ export class DataManager {
   // Retrieves data directly from the JSON test data file.  No data  retrieved
   // is cached for later use.
   getNonCachedData(nameAlias: string): Persona | DataChunk {
-    const foundData: Persona | DataChunk | undefined = testData.find(data => {
+    const foundData: Persona | DataChunk | undefined = testData.find((data) => {
       if (data.name === nameAlias) {
         return true
       }
       if (data.aliases != null) {
-        const d = data.aliases.find(alias => alias === nameAlias) !== undefined
+        const d =
+          data.aliases.find((alias) => alias === nameAlias) !== undefined
         return d
       }
       return false
@@ -58,7 +59,7 @@ export class DataManager {
   // returned and cached for later use.
   getDataWithMods(nameAlias: string, modDataNames: string[]) {
     let finalData = this.getNonCachedData(nameAlias)
-    modDataNames.forEach(innerNameAlias => {
+    modDataNames.forEach((innerNameAlias) => {
       const data: any = this.getNonCachedData(innerNameAlias)
       delete data.name
       finalData = Object.assign(finalData, data)

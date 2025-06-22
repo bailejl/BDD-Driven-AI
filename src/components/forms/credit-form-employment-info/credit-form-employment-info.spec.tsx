@@ -1,9 +1,9 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import React from 'react'
+import { render } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 
-import CreditFormEmploymentInfo from './credit-form-employment-info';
-import FormWizardContext from '../form-wizard-context/form-wizard-context';
+import CreditFormEmploymentInfo from './credit-form-employment-info'
+import FormWizardContext from '../form-wizard-context/form-wizard-context'
 
 // Mock react-hook-form
 jest.mock('react-hook-form', () => ({
@@ -11,10 +11,10 @@ jest.mock('react-hook-form', () => ({
     register: jest.fn(() => ({ name: 'test' })),
     handleSubmit: jest.fn((fn) => fn),
     setValue: jest.fn(),
-    errors: {}
+    errors: {},
   }),
-  Controller: ({ children }: { children: React.ReactNode }) => children
-}));
+  Controller: ({ children }: { children: React.ReactNode }) => children,
+}))
 
 // Mock the form data service
 jest.mock('@services', () => ({
@@ -26,20 +26,24 @@ jest.mock('@services', () => ({
       workPhone: '(555)123-4567',
       yearsEmployed: 5,
       monthsEmployed: 6,
-      occupation: 'Engineer'
+      occupation: 'Engineer',
     },
-    appendFormData: jest.fn()
+    appendFormData: jest.fn(),
   }),
   useProviderFormData: () => ({
     data: {},
-    appendFormData: jest.fn()
+    appendFormData: jest.fn(),
   }),
   formDataContext: {
     Provider: ({ children }: { children: React.ReactNode }) => children,
-    Consumer: ({ children }: { children: (value: unknown) => React.ReactNode }) => children({})
+    Consumer: ({
+      children,
+    }: {
+      children: (value: unknown) => React.ReactNode
+    }) => children({}),
   },
-  createApplicationData: () => ({})
-}));
+  createApplicationData: () => ({}),
+}))
 
 describe('CreditFormEmploymentInfo', () => {
   it('should render successfully', () => {
@@ -49,7 +53,7 @@ describe('CreditFormEmploymentInfo', () => {
           <CreditFormEmploymentInfo />
         </FormWizardContext>
       </MemoryRouter>
-    );
-    expect(baseElement).toBeTruthy();
-  });
-});
+    )
+    expect(baseElement).toBeTruthy()
+  })
+})

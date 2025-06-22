@@ -1,9 +1,9 @@
-import React from 'react';
-import { render } from '@testing-library/react';
+import React from 'react'
+import { render } from '@testing-library/react'
 
-import CreditFormComplete from './credit-form-complete';
-import FormWizardContext from '../form-wizard-context/form-wizard-context';
-import ProviderDB from '../../shared/provider-db/provider-db';
+import CreditFormComplete from './credit-form-complete'
+import FormWizardContext from '../form-wizard-context/form-wizard-context'
+import ProviderDB from '../../shared/provider-db/provider-db'
 
 describe('CreditFormComplete', () => {
   it('should render successfully', () => {
@@ -13,7 +13,7 @@ describe('CreditFormComplete', () => {
           <CreditFormComplete />
         </FormWizardContext>
       </ProviderDB>
-    );
-    expect(baseElement).toBeTruthy();
-  });
-});
+    )
+    expect(baseElement).toBeTruthy()
+  })
+})

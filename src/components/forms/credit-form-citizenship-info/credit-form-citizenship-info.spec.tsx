@@ -9,7 +9,7 @@ import FormWizardContext from '../form-wizard-context/form-wizard-context'
 jest.mock('react-hook-form', () => ({
   useForm: () => ({
     register: jest.fn(() => ({ name: 'test' })),
-    handleSubmit: jest.fn(fn => fn),
+    handleSubmit: jest.fn((fn) => fn),
     setValue: jest.fn(),
     errors: {},
   }),
