@@ -30,4 +30,3 @@ allow you see the failing and passing items.
 ## Logging Stack Trace and Screenshots
 
 See Playwright trace and it viewer for details. Also, look at the HTML report for Playwright-BDD.
-

@@ -198,7 +198,3 @@ As you can see, CDG is an important element of Contino's software delivery under
 ## Next Steps
 
 Want to see CDG in action? Then look at the demo app located here: <https://github.com/contino/cucumber-declarative-gherkin>.
-
----
-
-*Tags: Testing, BDD, Cucumber, Gherkin*

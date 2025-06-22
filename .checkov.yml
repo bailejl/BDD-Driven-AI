@@ -1,1 +1,6 @@
-skip-path: features/
+skip-path:
+  - features/
+  - megalinter-reports/
+  - tmp/
+  - .github/workflows/mega-linter.yml
+quiet: true

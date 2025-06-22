@@ -5,9 +5,11 @@ This directory contains the GitHub Actions workflows for the Cucumber Declarativ
 ## Workflows Overview
 
 ### 1. CI Pipeline (`ci.yml`)
+
 **Triggers:** Push to main, Pull requests to main, Manual dispatch
 
 **Jobs:**
+
 - **test** - Unit tests, linting, and build validation
 - **e2e-tests** - End-to-end testing with Selenium
 - **security-audit** - Security vulnerability scanning
@@ -15,15 +17,18 @@ This directory contains the GitHub Actions workflows for the Cucumber Declarativ
 - **parallel-upgrade-validation** - Special validation for upgrade branches
 
 **Key Features:**
+
 - Runs on Node.js 24
 - Uses npm cache for faster builds
 - Uploads test coverage and E2E screenshots on failure
 - Fails on high/critical security vulnerabilities
 
 ### 2. PR Validation (`pr-validation.yml`)
+
 **Triggers:** PR opened, synchronized, reopened, ready for review
 
 **Jobs:**
+
 - **pr-info** - Detects upgrade branches and sets context
 - **validation** - Validates upgrade branch requirements
 - **mandatory-tests** - Core test suite (unit, lint, build, security)
@@ -32,6 +37,7 @@ This directory contains the GitHub Actions workflows for the Cucumber Declarativ
 - **upgrade-conflict-detection** - Checks for conflicting upgrade work
 
 **Special Features for Upgrade Branches:**
+
 - Validates progress file existence
 - Checks dependency order (React waits for Nx)
 - Ensures proper upgrade branch naming
@@ -39,9 +45,11 @@ This directory contains the GitHub Actions workflows for the Cucumber Declarativ
 - Detects conflicting parallel upgrade work
 
 ### 3. Deploy Pipeline (`deploy.yml`)
+
 **Triggers:** Push to main, Manual dispatch with environment selection
 
 **Jobs:**
+
 - **post-merge-validation** - Comprehensive validation after merge
 - **e2e-smoke-tests** - Full E2E test suite on main
 - **build-and-package** - Creates production build artifacts
@@ -50,6 +58,7 @@ This directory contains the GitHub Actions workflows for the Cucumber Declarativ
 - **upgrade-coordination** - Notifies other upgrade branches of merges
 
 **Deployment Features:**
+
 - Automatic staging deployment on main branch pushes
 - Manual production deployment with approval gates
 - Artifact management with appropriate retention periods
@@ -61,6 +70,7 @@ This directory contains the GitHub Actions workflows for the Cucumber Declarativ
 The pipeline has special support for the parallel upgrade strategy defined in `PARALLEL_WORKFLOW.md`:
 
 ### Supported Upgrade Branches
+
 - `upgrade/eslint-9` - ESLint 9 migration
 - `upgrade/testing-framework` - Jest/ts-jest updates  
 - `upgrade/dev-tooling` - Node.js/Docker/CI updates
@@ -68,6 +78,7 @@ The pipeline has special support for the parallel upgrade strategy defined in `P
 - `upgrade/react-19` - React ecosystem upgrade
 
 ### Validation Requirements
+
 1. **Progress File** - Must have `PROGRESS_upgrade-[type].md`
 2. **Naming Convention** - Must follow exact branch naming
 3. **Dependency Order** - React upgrade waits for Nx completion
@@ -75,6 +86,7 @@ The pipeline has special support for the parallel upgrade strategy defined in `P
 5. **Completion Status** - Progress file must indicate "COMPLETED"
 
 ### Coordination Features
+
 - Detects conflicting parallel upgrade work
 - Validates dependency relationships
 - Comments PR status and checklists
@@ -84,16 +96,19 @@ The pipeline has special support for the parallel upgrade strategy defined in `P
 ## Environment Configuration
 
 ### Node.js Version
+
 - **Version:** 24 (latest LTS)
 - **Cache:** npm dependencies cached by package-lock.json hash
 - **Working Directory:** `first-bank-of-change/`
 
 ### Security Requirements
+
 - **Audit Level:** Fails on high/critical vulnerabilities
 - **Dependencies:** Checks for unused packages
 - **Code Quality:** Enforces TypeScript compilation and formatting
 
 ### E2E Testing
+
 - **Browser:** Chrome via Selenium standalone container
 - **Port Mapping:** 4444 (Selenium), 7900 (VNC)
 - **Triggers:** All upgrade branches, PRs tagged with `[e2e]`
@@ -102,6 +117,7 @@ The pipeline has special support for the parallel upgrade strategy defined in `P
 ## Usage Examples
 
 ### Standard Feature Development
+
 ```bash
 git checkout -b feature/new-functionality
 # Make changes...
@@ -110,6 +126,7 @@ git push origin feature/new-functionality
 ```
 
 ### Upgrade Branch Development
+
 ```bash
 git checkout -b upgrade/eslint-9
 echo "Started ESLint 9 migration $(date)" > PROGRESS_upgrade-eslint-9.md
@@ -120,6 +137,7 @@ git push origin upgrade/eslint-9
 ```
 
 ### Manual Production Deployment
+
 1. Go to Actions tab in GitHub
 2. Select "Deploy to Main" workflow
 3. Click "Run workflow"
@@ -140,21 +158,25 @@ Add these to your README.md to show pipeline status:
 ### Common Issues
 
 **Tests failing on PR:**
+
 1. Check unit test output in CI logs
 2. Ensure all dependencies are in package.json
 3. Verify Node.js version compatibility
 
 **E2E tests timing out:**
+
 1. Check Selenium container startup logs
 2. Verify application is starting correctly
 3. Check for port conflicts
 
 **Security audit failures:**
+
 1. Run `npm audit fix` locally
 2. Update vulnerable dependencies
 3. Check for new critical vulnerabilities
 
 **Upgrade branch validation errors:**
+
 1. Ensure progress file exists and has correct name
 2. Check branch naming follows exact convention
 3. Verify dependency order (React after Nx)
@@ -170,12 +192,14 @@ Add these to your README.md to show pipeline status:
 ## Maintenance
 
 ### Regular Tasks
+
 - Monitor security vulnerability reports
 - Update Node.js version in workflows when new LTS available
 - Review and update dependency versions quarterly
 - Clean up old workflow runs and artifacts
 
 ### Workflow Updates
+
 - Test changes in feature branches first
 - Use workflow_dispatch for manual testing
 - Validate with upgrade branches before merging
