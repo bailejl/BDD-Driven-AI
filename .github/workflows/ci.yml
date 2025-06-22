@@ -75,6 +75,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install Playwright
+        run: npx playwright install
+
       - name: Wait for Selenium
         run: |
           timeout 60s bash -c 'until curl -f http://localhost:4444/wd/hub/status; do sleep 2; done'
