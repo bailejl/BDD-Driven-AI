@@ -33,7 +33,8 @@ export class DataManager {
     if (foundData === undefined) {
       throw new Error(`No data found for name alias: ${nameAlias}`)
     }
-    return foundData
+    // Return a deep copy to prevent mutation of original data
+    return JSON.parse(JSON.stringify(foundData))
   }
 
   // Gets cached data, if available, by default.  Otherwise, it will
@@ -43,9 +44,11 @@ export class DataManager {
   getData(nameAlias: string, resetCache = false) {
     if (this.cachedData === undefined || resetCache) {
       const foundData = this.getNonCachedData(nameAlias)
-      this.cachedData = foundData
+      // Cache a deep copy to prevent external mutation
+      this.cachedData = JSON.parse(JSON.stringify(foundData))
     }
-    return this.cachedData
+    // Return a deep copy to prevent external mutation of cached data
+    return JSON.parse(JSON.stringify(this.cachedData))
   }
 
   // Resets back to default state
@@ -61,18 +64,22 @@ export class DataManager {
     let finalData = this.getNonCachedData(nameAlias)
     modDataNames.forEach((innerNameAlias) => {
       const data: any = this.getNonCachedData(innerNameAlias)
-      delete data.name
-      finalData = Object.assign(finalData, data)
+      // Create a copy of the modification data before removing name property
+      const modData = { ...data }
+      delete modData.name
+      finalData = Object.assign(finalData, modData)
     })
-    this.cachedData = finalData
-    return this.cachedData
+    // Cache a deep copy to prevent external mutation
+    this.cachedData = JSON.parse(JSON.stringify(finalData))
+    // Return a deep copy to prevent external mutation of cached data
+    return JSON.parse(JSON.stringify(this.cachedData))
   }
 
   // This is a convenience function to convert a Gherkin rawTable into
   // an array of strings to be used as modDataNames in getDataWithMods().
   getDataTableColumnValues(table: DataTable, columnIndex: number) {
     const columnValues: string[] = []
-    table.rows().forEach((row: string[], index: number) => {
+    table.rows().forEach((row: string[]) => {
       columnValues.push(row[columnIndex])
     })
     return columnValues
