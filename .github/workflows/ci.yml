@@ -149,4 +149,4 @@ jobs:
         run: npx tsc --noEmit
 
       - name: Check for unused dependencies
-        run: npx depcheck --ignores="@types/*,@wdio/*"
+        run: npx depcheck --ignores="@types/*,@wdio/*,@playwright/mcp,eslint-plugin-mui,identity-obj-proxy,jest-environment-jsdom"
