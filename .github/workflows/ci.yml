@@ -80,7 +80,7 @@ jobs:
           timeout 60s bash -c 'until curl -f http://localhost:4444/wd/hub/status; do sleep 2; done'
 
       - name: Run E2E tests
-        run: npm run e2e:headless
+        run: npm run e2e:ci
         env:
           SELENIUM_HOST: localhost
 
