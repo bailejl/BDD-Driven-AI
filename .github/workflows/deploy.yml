@@ -81,7 +81,6 @@ jobs:
       - name: Run E2E smoke tests
         run: npm run e2e:ci
         env:
-          SELENIUM_HOST: localhost
           PLAYWRIGHT_HTML_OPEN: never
 
       - name: Upload E2E artifacts on failure
