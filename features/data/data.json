@@ -183,5 +183,14 @@
     "lastName": "lastName is a required field",
     "dateOfBirth": "dateOfBirth must be at least 3 characters",
     "ssn": "ssn must be at least 3 characters"
+  },
+  {
+    "name": "invalid credentials",
+    "username": "invalid_user",
+    "password": "wrong_password"
+  },
+  {
+    "name": "login error messages",
+    "general": "Invalid username or password. Please try again."
   }
 ]

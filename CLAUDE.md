@@ -65,7 +65,7 @@ npm run lint
 # 4. ALWAYS run comprehensive quality checks - NO EXCEPTIONS. CRITICAL - includes mega-linter security scans.
 npm run lint:mega
 
-# 5. ALWAYS run E2E tests - NO EXCEPTIONS
+# 5. ALWAYS run E2E tests - NO EXCEPTIONS. CRITICAL - Use PLAYWRIGHT_HTML_OPEN=never to stop it showing the HTML report, otherwise the process never ends.
 npm run e2e:ci
 ```
 
@@ -75,7 +75,7 @@ npm run e2e:ci
 2. **NEVER skip this workflow** - even for "small changes" or "quick fixes"
 3. **ALWAYS run the full test suite** - no selective testing
 4. **ALWAYS verify quality standards** - no exceptions for any file type
-5. **ALWAYS verify e2e before a push** ensure `npm run e2e:ci` passes from the root directory
+5. **ALWAYS verify e2e before a push** ensure `npm run e2e:ci` passes from the root directory. Use PLAYWRIGHT_HTML_OPEN=never to stop it showing the HTML report, otherwise the process never ends.
 
 ### Quality Gates - ALL Must Pass
 
@@ -131,6 +131,8 @@ All `npm run e2e` commands automatically start the app for testing, so no need t
 - `npm run e2e:ui` - Run tests with Playwright's UI mode for interactive debugging
 - `npm run snippets` - Generate Cucumber step definition snippets
 
+**Note**: Use PLAYWRIGHT_HTML_OPEN=never to stop it showing the HTML report, otherwise the process never ends.
+
 **Note**: If you are going to manually run `npx playwright test` of any type, ensure `CI=true` is set. This causes the tests to exit immediately after completion, speeding up feedback loops.
 
 ### Quality Assurance Commands
@@ -144,15 +146,16 @@ All `npm run e2e` commands automatically start the app for testing, so no need t
 
 **IMPORTANT**: This project uses Acceptance Test Driven Development (ATDD) with Playwright-BDD/Playwright. Before implementing any feature:
 
-1. **Read the feature specifications** in `features/*.feature`
+1. **Read the feature specifications** in `features/*.feature` and CRITICAL you read [design/bdd-and-gherkin-guidance.md](design/bdd-and-gherkin-guidance.md) to understand the feature files.
 2. **Write Cucumber acceptance tests** that describe the expected behavior in BDD style
 3. **Implement features to satisfy the acceptance tests**
 4. **Validate each test passes** before moving to the next
 5. **Reference the feature file continuously** during development to ensure requirements are met
+6. **Implement unit test for changes** add unit tests as you go
 
 The feature file contains comprehensive Gherkin scenarios that define the expected behavior. Translate these into Playwright-BDD/Playwright as executable specifications.
 
-**All development must satisfy the acceptance criteria defined in the feature files.**
+**CRITICAL - All development must satisfy the acceptance criteria defined in the feature files.**
 
 ## Architecture
 

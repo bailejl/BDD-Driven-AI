@@ -21,6 +21,7 @@ export default class LoginPage extends PlaywrightPage {
     inputUsername: '#username',
     inputPassword: '#password',
     btnSubmit: 'button[type="submit"]',
+    errorMessage: '.error-message, .alert-error, #login-error',
   }
 
   /**
@@ -39,6 +40,40 @@ export default class LoginPage extends PlaywrightPage {
     await this.fill(this.selectors.inputUsername, username)
     await this.fill(this.selectors.inputPassword, password)
     await this.click(this.selectors.btnSubmit)
+  }
+
+  /**
+   * Attempt login with credentials (without navigation)
+   */
+  async attemptLogin(username: string, password: string) {
+    // Fill login form
+    await this.fill(this.selectors.inputUsername, username)
+    await this.fill(this.selectors.inputPassword, password)
+    await this.click(this.selectors.btnSubmit)
+  }
+
+  /**
+   * Check if error messages are displayed
+   */
+  async hasErrorMessages(): Promise<boolean> {
+    return await this.isVisible(this.selectors.errorMessage)
+  }
+
+  /**
+   * Get error message text
+   */
+  async getErrorMessage(): Promise<string> {
+    return await this.getText(this.selectors.errorMessage)
+  }
+
+  /**
+   * Check if login page is viewable by verifying form elements are visible
+   */
+  async isViewable(): Promise<boolean> {
+    const isUsernameVisible = await this.isVisible(this.selectors.inputUsername)
+    const isPasswordVisible = await this.isVisible(this.selectors.inputPassword)
+    const isSubmitVisible = await this.isVisible(this.selectors.btnSubmit)
+    return isUsernameVisible && isPasswordVisible && isSubmitVisible
   }
 
   /**

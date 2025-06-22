@@ -18,6 +18,8 @@ export default class HomePage extends PlaywrightPage {
     applicationTitle: '#application-title',
     runGherkinTestTitle: '#run-Gherkin-tests-title',
     usingAppTitle: '#using-app-title',
+    userHomepageLink: 'text="Go to User Homepage"',
+    applyLink: 'text="Apply"',
   }
 
   /**
@@ -53,6 +55,31 @@ export default class HomePage extends PlaywrightPage {
    */
   async areDemoInstructionsVisible(): Promise<boolean> {
     return await this.isVisible(this.selectors.applicationTitle)
+  }
+
+  /**
+   * Navigate to user homepage by clicking the "Go to User Homepage" link
+   */
+  async navigateToUserHomepage() {
+    await this.click(this.selectors.userHomepageLink)
+  }
+
+  /**
+   * Navigate to credit application by clicking the "Apply" link
+   */
+  async navigateToCreditApplication() {
+    await this.click(this.selectors.applyLink)
+  }
+
+  /**
+   * Check if home page is viewable by verifying key elements are visible
+   */
+  async isViewable(): Promise<boolean> {
+    const isTitleVisible = await this.isVisible(this.selectors.title)
+    const isApplicationTitleVisible = await this.isVisible(
+      this.selectors.applicationTitle
+    )
+    return isTitleVisible && isApplicationTitleVisible
   }
 
   /**

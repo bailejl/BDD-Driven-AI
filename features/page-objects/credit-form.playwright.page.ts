@@ -292,4 +292,14 @@ export default class CreditFormWizard extends PlaywrightPage {
   async hasErrors(): Promise<boolean> {
     return await this.isVisible(this.selectors.pageHelperTexts)
   }
+
+  /**
+   * Check if credit form is viewable by verifying key form elements are visible
+   */
+  async isViewable(): Promise<boolean> {
+    // Check for any of the main form elements that should be present
+    const isFirstNameVisible = await this.isVisible(this.selectors.tfFirstName)
+    const isContinueVisible = await this.isVisible(this.selectors.btnContinue)
+    return isFirstNameVisible || isContinueVisible
+  }
 }
