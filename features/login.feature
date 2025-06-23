@@ -1,7 +1,7 @@
 Feature: User Authentication and Navigation
 
 # This scenario tests the complete login flow from homepage to credit application.
-# The navigation path follows: Homepage ’ Sign In ’ Login ’ Homepage ’ User Homepage ’ Credit Form
+# The navigation path follows: Homepage ï¿½ Sign In ï¿½ Login ï¿½ Homepage ï¿½ User Homepage ï¿½ Credit Form
 Scenario: Successful login and navigation to credit application
   Given they are on the home page
   When they sign in as "Tom Smith"
@@ -23,5 +23,5 @@ Scenario: Successful logout from user session
   Given "Mike Fog" is logged in
   And they are on the user homepage
   When they log out
-  Then they are redirected to the home page
+  Then they are redirected to the login page
   And they cannot access protected areas without authentication

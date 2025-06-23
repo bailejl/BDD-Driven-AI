@@ -300,6 +300,21 @@ export default class CreditFormWizard extends PlaywrightPage {
     // Check for any of the main form elements that should be present
     const isFirstNameVisible = await this.isVisible(this.selectors.tfFirstName)
     const isContinueVisible = await this.isVisible(this.selectors.btnContinue)
+
+    // Wait for page to load if elements aren't visible yet
+    if (!isFirstNameVisible && !isContinueVisible) {
+      await this.page.waitForTimeout(2000)
+
+      const isFirstNameVisibleAfterWait = await this.isVisible(
+        this.selectors.tfFirstName
+      )
+      const isContinueVisibleAfterWait = await this.isVisible(
+        this.selectors.btnContinue
+      )
+
+      return isFirstNameVisibleAfterWait || isContinueVisibleAfterWait
+    }
+
     return isFirstNameVisible || isContinueVisible
   }
 }

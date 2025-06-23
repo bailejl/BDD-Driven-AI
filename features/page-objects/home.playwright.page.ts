@@ -79,6 +79,19 @@ export default class HomePage extends PlaywrightPage {
     const isApplicationTitleVisible = await this.isVisible(
       this.selectors.applicationTitle
     )
+
+    // Wait for page to load if elements aren't visible yet
+    if (!isTitleVisible || !isApplicationTitleVisible) {
+      await this.page.waitForTimeout(2000)
+
+      const isTitleVisibleAfterWait = await this.isVisible(this.selectors.title)
+      const isApplicationTitleVisibleAfterWait = await this.isVisible(
+        this.selectors.applicationTitle
+      )
+
+      return isTitleVisibleAfterWait && isApplicationTitleVisibleAfterWait
+    }
+
     return isTitleVisible && isApplicationTitleVisible
   }
 

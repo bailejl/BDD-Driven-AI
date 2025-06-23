@@ -191,6 +191,6 @@
   },
   {
     "name": "login error messages",
-    "general": "Invalid username or password. Please try again."
+    "general": "Failed login attempt."
   }
 ]

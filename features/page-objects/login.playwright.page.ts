@@ -22,6 +22,7 @@ export default class LoginPage extends PlaywrightPage {
     inputPassword: '#password',
     btnSubmit: 'button[type="submit"]',
     errorMessage: '.error-message, .alert-error, #login-error',
+    failedLoginText: 'text="Failed login attempt."',
   }
 
   /**
@@ -56,13 +57,31 @@ export default class LoginPage extends PlaywrightPage {
    * Check if error messages are displayed
    */
   async hasErrorMessages(): Promise<boolean> {
-    return await this.isVisible(this.selectors.errorMessage)
+    // Wait a moment for error messages to appear after failed login
+    await this.page.waitForTimeout(1000)
+
+    // Check both CSS selectors and text-based selector
+    const hasErrorElement = await this.isVisible(this.selectors.errorMessage)
+    const hasFailedLoginText = await this.isVisible(
+      this.selectors.failedLoginText
+    )
+
+    return hasErrorElement || hasFailedLoginText
   }
 
   /**
    * Get error message text
    */
   async getErrorMessage(): Promise<string> {
+    // Check if we have the specific failed login text first
+    const hasFailedLoginText = await this.isVisible(
+      this.selectors.failedLoginText
+    )
+    if (hasFailedLoginText) {
+      return await this.getText(this.selectors.failedLoginText)
+    }
+
+    // Otherwise try the generic error selectors
     return await this.getText(this.selectors.errorMessage)
   }
 
@@ -73,6 +92,28 @@ export default class LoginPage extends PlaywrightPage {
     const isUsernameVisible = await this.isVisible(this.selectors.inputUsername)
     const isPasswordVisible = await this.isVisible(this.selectors.inputPassword)
     const isSubmitVisible = await this.isVisible(this.selectors.btnSubmit)
+
+    // Wait for page to load if elements aren't visible yet
+    if (!isUsernameVisible || !isPasswordVisible || !isSubmitVisible) {
+      await this.page.waitForTimeout(2000)
+
+      const isUsernameVisibleAfterWait = await this.isVisible(
+        this.selectors.inputUsername
+      )
+      const isPasswordVisibleAfterWait = await this.isVisible(
+        this.selectors.inputPassword
+      )
+      const isSubmitVisibleAfterWait = await this.isVisible(
+        this.selectors.btnSubmit
+      )
+
+      return (
+        isUsernameVisibleAfterWait &&
+        isPasswordVisibleAfterWait &&
+        isSubmitVisibleAfterWait
+      )
+    }
+
     return isUsernameVisible && isPasswordVisible && isSubmitVisible
   }
 

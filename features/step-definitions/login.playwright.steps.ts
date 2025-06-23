@@ -66,6 +66,12 @@ Then('they remain on the login page', async ({ page }) => {
   expect(isViewable).toBe(true)
 })
 
+Then('they are redirected to the login page', async ({ page }) => {
+  const loginPage = new LoginPage(page)
+  const isViewable = await loginPage.isViewable()
+  expect(isViewable).toBe(true)
+})
+
 Given('{string} is logged in', async ({ page, dataManager }, userNameAlias: string) => {
   const userData = dataManager.getData(userNameAlias, true)
   const homePage = new HomePage(page)
@@ -82,6 +88,8 @@ Given('they are on the user homepage', async ({ page }) => {
 When('they log out', async ({ page }) => {
   const headerPage = new HeaderPage(page)
   await headerPage.clickSignOut()
+  // Wait for redirect to complete
+  await page.waitForTimeout(1000)
 })
 
 Then('they cannot access protected areas without authentication', async ({ page }) => {

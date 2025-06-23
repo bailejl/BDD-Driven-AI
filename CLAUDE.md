@@ -146,7 +146,7 @@ All `npm run e2e` commands automatically start the app for testing, so no need t
 
 **IMPORTANT**: This project uses Acceptance Test Driven Development (ATDD) with Playwright-BDD/Playwright. Before implementing any feature:
 
-1. **Read the feature specifications** in `features/*.feature` and CRITICAL you read [design/bdd-and-gherkin-guidance.md](design/bdd-and-gherkin-guidance.md) to understand the feature files.
+1. **Read the feature specifications** in `features/*.feature` and CRITICAL you read [docs/bdd-and-gherkin-guidance.md](docs/bdd-and-gherkin-guidance.md) to understand the feature files.
 2. **Write Cucumber acceptance tests** that describe the expected behavior in BDD style
 3. **Implement features to satisfy the acceptance tests**
 4. **Validate each test passes** before moving to the next

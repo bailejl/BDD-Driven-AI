@@ -23,6 +23,17 @@ export default class UserPage extends PlaywrightPage {
    */
   async isViewable(): Promise<boolean> {
     const isWelcomeVisible = await this.isVisible(this.selectors.welcomeText)
+
+    // Wait for page to load if elements aren't visible yet
+    if (!isWelcomeVisible) {
+      await this.page.waitForTimeout(2000)
+
+      const isWelcomeVisibleAfterWait = await this.isVisible(
+        this.selectors.welcomeText
+      )
+      return isWelcomeVisibleAfterWait
+    }
+
     return isWelcomeVisible
   }
 
