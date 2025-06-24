@@ -38,6 +38,7 @@ testem.log
 .npm
 .config
 .local
+.vite
 
 # System Files
 .DS_Store
