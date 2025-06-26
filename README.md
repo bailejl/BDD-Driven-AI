@@ -1,39 +1,24 @@
-# Sample project for Declarative Gherkin via Cucumber
+# BDD-Driven AI
 
-This is a training aide to help people learn Declarative Gherkin. It is not
-easy to learn Declarative Gherkin. Thus, this app helps people understand how
-to take what they learned in training and see a working implementation.
+Is setup to try ever complex scenarios to see the limitations of AI. The intent is to try to get AI to create new features with minimal input from the developer. While progressing from a simple proof of concept app to an enterprise-like system. Along the way, the process will evolve and learning shared.
 
-Start with our [declarative gherkin docs](./docs/declarative-gherkin.md) to learn more about Declarative Gherkin and key concepts around Centralized Data Management, Cucumber Logging as well as app-specific terms used in the app like Back-end Ratio and Credit Score.
+Scenarios are used to test AI and are on their own branch. More details can be found in [scenarios](#scenarios) below.
 
-The [/features](./features) folder contains Declarative Gherkin feature files (Given, When, Then style tests).
+## Background
 
-See [Cucumber Logging](./docs/cucumber-logging.md) to troubleshoot e2e tests.
+This app started a proof of concept for Concise Declarative Gherkin, which was about 5 years old. So, it was updated and technologies replaced to test AI, which it did well. To learn more, read about [the journey.](./docs/the-journey.md)
 
-## How to run the full declarative Gherkin demo (app and end to end tests)
+## AI Used
 
-```bash
-npm run setup
+Tracks the AI by timeframe.
 
-# run the end to end tests
-npm run e2e:demo
-```
+- Claude Code - started 19Jun25
 
-The run should fail due to one failing test, but otherwise all tests should execute.
+## Scenarios
 
-The Playwright HTML test report will display in your default browser. If not, open the file `./playwright-report/index.html` in a browser to see the report.
+Each scenario resides in its own branch. They progress from simplistic using the proof of concept code, progressing to realistic enterprise-like solutions. Read [scenarios](./scenarios/scenarios.md) for more info.
 
-## Run the Example App
-
-This demo uses a single app with everything running in memory. No servers are
-used for this demo.
-
-```bash
-# start the app
-npm run dev
-```
-
-Open browser to `http://localhost:4200`
+**Recommend**: looking at the branches in the repo to see what scenarios are available.
 
 ## Local Development
 
