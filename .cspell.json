@@ -20,7 +20,8 @@
     ".gitignore",
     ".*",
     "*-megalinter_file_names_cspell.txt",
-    "**/*.scss"
+    "**/*.scss",
+    "CLAUDE.md"
   ],
   "language": "en",
   "noConfigSearch": true,
