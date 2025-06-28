@@ -134,7 +134,7 @@ All `npm run e2e` commands automatically start the app for testing, so no need t
 
 **Note**: Use PLAYWRIGHT_HTML_OPEN=never to stop it showing the HTML report, otherwise the process never ends.
 
-**Note**: If you are going to manually run `npx playwright test` of any type, ensure `CI=true` is set. This causes the tests to exit immediately after completion, speeding up feedback loops.
+**Note**: If you are going to manually run `npx playwright test` of any type, ensure `PLAYWRIGHT_HTML_OPEN=never` is set. This causes the tests to exit immediately after completion, speeding up feedback loops.
 
 ### Quality Assurance Commands
 
