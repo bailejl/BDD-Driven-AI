@@ -2,7 +2,7 @@
 
 This document chronicles the comprehensive modernization journey of the BDD-Driven-AI repository, transforming it from a legacy Nx monorepo structure into a streamlined, AI-friendly development environment.
 
-This was a nearly 5 year old repo, based on Node v12 abd is now v24 with a lot of changes. About 95% was done by AI. This is due to the guidelines and processes used.
+This was a nearly 5 year old repo, based on Node v12 and is now v24 with a lot of changes. About 95% was done by AI. This is due to the guidelines and processes used.
 
 The Journey, is about **what** happen to the code base, while the [upgrade process with ai](./upgrade-process-with-ai.md) is the **how**.
 
