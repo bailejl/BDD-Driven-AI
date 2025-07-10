@@ -62,7 +62,7 @@ npm run test -- --coverage --verbose=false
 # 3. ALWAYS run quality checks - NO EXCEPTIONS. CRITICAL - treat warnings like errors and fix them.
 npm run lint
 
-# 4. ALWAYS run comprehensive quality checks - NO EXCEPTIONS. CRITICAL - includes mega-linter security scans.
+# 4. ALWAYS run comprehensive quality checks - NO EXCEPTIONS. CRITICAL - includes mega-linter security scans. It takes a couple of minutes, so wait for it.
 npm run lint:mega
 
 # 5. ALWAYS run E2E tests - NO EXCEPTIONS. CRITICAL - Use PLAYWRIGHT_HTML_OPEN=never to stop it showing the HTML report, otherwise the process never ends.
@@ -139,7 +139,7 @@ All `npm run e2e` commands automatically start the app for testing, so no need t
 
 - `npm run lint` - Run linting checks with ESLint
 - `npm run lint:fix` - Fix auto-fixable linting issues
-- `npm run lint:mega` - Run comprehensive MegaLinter security and quality scans
+- `npm run lint:mega` - Run comprehensive MegaLinter security and quality scans. It takes a couple of minutes, so wait for it.
 - `npm run type-check` - Run TypeScript type checking
 
 ## Development Approach
@@ -258,7 +258,7 @@ This allows tests to be self-documenting and business-readable while referencing
 
 ### Code Security
 
-- **MANDATORY**: All code changes must pass MegaLinter security scans (`npm run lint:mega`)
+- **MANDATORY**: All code changes must pass MegaLinter security scans (`npm run lint:mega`). It takes a couple of minutes, so wait for it.
 - **MANDATORY**: No hardcoded secrets, tokens, or API keys in code
 - **MANDATORY**: All dependencies must be audited for security vulnerabilities
 - **MANDATORY**: Use `npm audit --audit-level=high` to check for critical vulnerabilities
