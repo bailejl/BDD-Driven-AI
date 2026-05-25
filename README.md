@@ -1,25 +1,51 @@
 # BDD-Driven AI
 
-Is setup to try ever complex scenarios to see the limitations of AI. The intent is to try to get AI to create new features with minimal input from the developer. While progressing from a simple proof of concept app to an enterprise-like system. Along the way, the process will evolve and learning shared.
+**A 5-year-old reference codebase modernized with Claude Code doing 95%
+of the work — and a journey log of exactly how.**
 
-Scenarios are used to test AI and are on their own branch. More details can be found in [scenarios](#scenarios) below.
+In 35 commits, this repo moved from a complex Nx monorepo on Node 12 to
+a flat, AI-friendly architecture on Node 24. Stack swaps included
+WebDriverIO → Playwright-BDD, Nx → Vite, plus comprehensive security
+and lint modernization. The result:
 
-## Background
+- **92.39% test coverage** with zero lint errors
+- **78+ code quality issues** resolved
+- **~38,960 lines** of dependency / pattern updates
+- **~95%** of the work done by Claude Code under deliberate guardrails
 
-This app started a proof of concept for Concise Declarative Gherkin, which was about 5 years old. So, it was updated and technologies replaced to test AI, which it did well. To learn more, read about [the journey.](./docs/the-journey.md)
+The point of this repo isn't the app. It's the **operating model** —
+how a single engineer plus Claude Code can take a legacy codebase from
+crusty to modern without the AI hallucinating its way through a
+rewrite.
 
-## AI Used
+## Read these first
 
-Tracks the AI by timeframe.
+- 📖 [`docs/the-journey.md`](docs/the-journey.md) — the full 35-commit story:
+  what worked, what broke, what the AI got wrong, and the guardrails
+  that made 95%-AI delivery actually safe.
+- 🤖 [`CLAUDE.md`](CLAUDE.md) — the agent contract. The single most
+  important file for keeping AI behavior consistent across sessions.
 
-- Claude Code - started 19Jun25
+## What this looks like in practice
 
-## Scenarios
+Each branch holds one scenario — a Gherkin spec handed to the AI, with
+a graded outcome on what the AI shipped, how much steering it needed,
+and where it failed. Scenarios progress from toy PoC to enterprise-grade.
 
-Each scenario resides in its own branch. They progress from simplistic using the proof of concept code, progressing to realistic enterprise-like solutions. Read [scenarios](./scenarios/scenarios.md) for more info.
+git branch -a
 
-**Recommend**: looking at the branches in the repo to see what scenarios are available.
+## Why this matters for R&D operations
 
-## Local Development
+The interesting question isn't "can AI write code." It's
+"**at what scenario complexity does AI cost more coordination than it
+saves**, and what guardrails change that line?" This repo is a working
+attempt to answer both, in public, with the receipts.
 
-Read [CLAUDE.md](./CLAUDE.md) for details.
+## Local development
+
+See [`CLAUDE.md`](CLAUDE.md) for the AI-first development workflow,
+or [`docs/local-dev.md`](docs/local-dev.md) for the human one.
+
+## License
+
+Apache-2.0.
